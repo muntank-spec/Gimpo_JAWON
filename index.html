@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4facfe">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <title>김포시 자원화센터</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+        body {
+            margin: 0; padding: 0; overflow: hidden;
+            background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+            font-family: 'Jua', sans-serif;
+            user-select: none; -webkit-user-select: none;
+            color: #333; touch-action: none;
+        }
+
+        /* 배경 애니메이션 */
+        #background-shapes { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; overflow: hidden; }
+        .bg-icon { position: absolute; font-size: 50px; opacity: 0.25; animation: float 15s infinite linear; color: rgba(255, 255, 255, 0.8); }
+        @keyframes float { 0% { transform: translateY(110vh) rotate(0deg); } 100% { transform: translateY(-10vh) rotate(360deg); } }
+
+        .page {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: none; flex-direction: column; 
+            align-items: center; justify-content: center; text-align: center;
+            z-index: 100; overflow-y: auto; -webkit-overflow-scrolling: touch;
+        }
+        
+        #main-menu { display: flex; padding-top: 20px; box-sizing: border-box; } 
+
+        .main-logo { 
+            font-size: 10vw; margin-bottom: 20px; color: #1e3799; 
+            text-shadow: 2px 2px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 4px 4px 5px rgba(0,0,0,0.2);
+            z-index: 10; letter-spacing: 2px; font-weight: 900; word-break: keep-all; line-height: 1.2;
+        }
+        #logoCanvas { margin-bottom: 10px; margin-top: 20px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2)); }
+
+        .white-panel {
+            background: rgba(255, 255, 255, 0.95); border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15); color: #2c3e50; padding: 25px; 
+            margin-top: 20px; text-align: left; border: 3px solid #fff; width: 85%; max-width: 600px;
+        }
+
+        .btn {
+            border: none; padding: 15px 0; width: 85%; max-width: 400px;
+            font-size: 24px; font-family: 'Jua', sans-serif; border-radius: 50px; cursor: pointer; margin: 10px 0;
+            transition: all 0.1s; color: white; box-shadow: 0 5px 0 rgba(0,0,0,0.2); position: relative; overflow: hidden;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3); pointer-events: auto; touch-action: manipulation;
+        }
+        .btn:active { transform: translateY(4px); box-shadow: none; }
+
+        .btn-home { background: #ff9f43; position: absolute; top: 55px; right: 15px; z-index: 300; font-size: 18px; padding: 8px 20px; border: 2px solid white; width: auto; }
+        .btn-bgm { background: rgba(0,0,0,0.2); position: absolute; top: 55px; left: 15px; z-index: 300; font-size: 14px; padding: 8px 15px; border: 1px solid white; color: white; border-radius: 20px; cursor: pointer; width: auto; margin: 0; }
+
+        .btn-exit-game {
+            position: absolute; top: 55px; left: 15px; z-index: 300;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white; border: 2px solid #fff; border-radius: 20px;
+            padding: 8px 16px; font-size: 14px; font-family: 'Jua', sans-serif;
+            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3); transition: transform 0.1s;
+        }
+        .btn-exit-game:active { transform: scale(0.92); }
+
+        .btn-hint {
+            position: absolute; bottom: 20px; right: 20px; z-index: 300;
+            background: rgba(255, 235, 59, 0.8); border: 2px solid #fbc02d;
+            border-radius: 50%; width: 50px; height: 50px; font-size: 24px;
+            display: flex; justify-content: center; align-items: center; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: none; 
+        }
+
+        .btn-game { background: linear-gradient(to bottom, #2ecc71, #27ae60); font-size: 32px; padding: 20px 0; }
+        .btn-info { background: linear-gradient(to bottom, #3498db, #2980b9); }
+        .btn-promo { background: linear-gradient(to bottom, #9b59b6, #8e44ad); }
+        
+        .btn-select-sort { background: white; color: #333; border: 3px solid #2ecc71; padding: 15px 20px; display:flex; align-items:center; justify-content: space-between; text-shadow: none; margin: 8px 0;}
+        .btn-select-pipe { background: white; color: #333; border: 3px solid #e74c3c; padding: 15px 20px; display:flex; align-items:center; justify-content: space-between; text-shadow: none; margin: 8px 0;}
+        .btn-select-shooter { background: white; color: #333; border: 3px solid #9b59b6; padding: 15px 20px; display:flex; align-items:center; justify-content: space-between; text-shadow: none; margin: 8px 0;}
+        .btn-select-sichuan { background: white; color: #333; border: 3px solid #f39c12; padding: 15px 20px; display:flex; align-items:center; justify-content: space-between; text-shadow: none; margin: 8px 0;}
+
+        .top-counter {
+            background: rgba(255, 255, 255, 0.9); padding: 8px 20px; border-radius: 30px;
+            color: #1e3799; font-size: 16px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 10px; display: inline-block;
+        }
+
+        .content-box { font-size: 18px; line-height: 1.6; }
+        .content-title { font-size: 32px; color: #1e3799; margin-bottom: 15px; font-weight: bold; text-shadow: 2px 2px 0px #fff; }
+        
+        #gameCanvas { display: block; position: absolute; top: 0; left: 0; z-index: 50; touch-action: none; }
+        
+        #game-ui-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.85); z-index: 150;
+            display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; 
+        }
+        
+        #score-board { 
+            position: absolute; top: 55px; right: 15px; left: auto; transform: none;
+            color: white; font-size: 14px; font-weight: bold; z-index: 60; 
+            background: rgba(0,0,0,0.6); padding: 8px 15px; border-radius: 20px; border: 2px solid white; white-space: nowrap;
+        }
+        
+        #rank-board { width: 100%; max-width: 400px; max-height: 200px; overflow-y: auto; margin: 10px 0; color: #2c3e50; }
+        .rank-item { display: flex; justify-content: space-between; border-bottom: 1px solid #ddd; padding: 10px 0; font-size: 18px; }
+        .rank-item:nth-child(1) { color: #e74c3c; font-weight: bold; } 
+        
+        .blink { animation: blinker 1.5s linear infinite; color: #fff; font-size: 24px; cursor: pointer; border: 3px solid #fff; padding: 15px 40px; border-radius: 50px; background: #e74c3c; box-shadow: 0 5px 15px rgba(0,0,0,0.3); margin-top: 15px;}
+        @keyframes blinker { 50% { opacity: 0.8; transform: scale(0.98); } }
+
+        /* 가로 모드 차단 */
+        #orientation-warning {
+            display: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #2c3e50; z-index: 99999;
+            flex-direction: column; justify-content: center; align-items: center;
+            color: white; text-align: center;
+        }
+
+        @media only screen and (orientation: landscape) {
+            #orientation-warning { display: flex !important; }
+            .page, #gameCanvas, #background-shapes, #game-ui-layer { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="orientation-warning">
+        <div style="font-size: 80px; margin-bottom: 20px;">📲🚫</div>
+        <h2 style="margin: 0; font-size: 28px;">핸드폰을 세로로<br>돌려주세요!</h2>
+        <p style="font-size: 16px; color: #bdc3c7; margin-top: 15px;">이 게임은 세로 모드 전용입니다.</p>
+    </div>
+
+    <div id="background-shapes"></div>
+
+    <div id="main-menu" class="page">
+        <button id="bgm-toggle" class="btn-bgm" onclick="Sound.toggleBGM()">🔇 사운드: OFF</button>
+        <button class="btn-home" style="opacity:0; pointer-events:none;">.</button>
+        
+        <div style="height: 80px;"></div>
+        <div class="top-counter">🌱 환경에 다가간 횟수: <span id="mainUserCount">0</span>회</div>
+        
+        <canvas id="logoCanvas" width="200" height="160"></canvas>
+        <h1 class="main-logo">김포시<br>자원화센터</h1>
+        
+        <button class="btn btn-info" onclick="Sound.click(); goPage('notice')">📢 이용 안내사항</button>
+        <button class="btn btn-promo" onclick="Sound.click(); goPage('promo')">🏢 시설 홍보</button>
+        <div style="height: 10px;"></div>
+        <button class="btn btn-game" onclick="Sound.click(); goPage('game-select')">🎮 게임 시작하기</button>
+        
+        <div style="margin-top: 30px; font-size: 14px; color: rgba(0,0,0,0.5);">
+             <span style="text-decoration: underline; cursor: pointer;" onclick="resetData()">[관리자 데이터 초기화]</span>
+        </div>
+    </div>
+
+    <div id="game-select-page" class="page">
+        <button class="btn btn-home" onclick="Sound.click(); goHome()">🏠 홈</button>
+        <div style="height: 60px;"></div>
+        <div class="content-title">🎮 게임을 선택하세요</div>
+        <button class="btn btn-select-sort" onclick="Sound.click(); selectGame('sorting')">
+            <div style="text-align:left;">
+                <div style="font-size:22px; color:#27ae60;">♻️ <b>분리배출 마스터</b></div>
+                <div style="font-size:13px; font-weight:normal; color:#555; margin-top:3px;">쓰레기를 올바르게 담으세요!</div>
+            </div>
+            <div style="font-size:24px;">👉</div>
+        </button>
+        <button class="btn btn-select-pipe" onclick="Sound.click(); selectGame('pipe')">
+            <div style="text-align:left;">
+                <div style="font-size:22px; color:#c0392b;">♨️ <b>온수 공급 대작전</b></div>
+                <div style="font-size:13px; font-weight:normal; color:#555; margin-top:3px;">위에서 아래로 배관 연결!</div>
+            </div>
+            <div style="font-size:24px;">👉</div>
+        </button>
+        <button class="btn btn-select-shooter" onclick="Sound.click(); selectGame('shooter')">
+            <div style="text-align:left;">
+                <div style="font-size:22px; color:#9b59b6;">🚀 <b>오염물질 제로 미션</b></div>
+                <div style="font-size:13px; font-weight:normal; color:#555; margin-top:3px;">레이저와 유도탄으로 소탕!</div>
+            </div>
+            <div style="font-size:24px;">👉</div>
+        </button>
+        <button class="btn btn-select-sichuan" onclick="Sound.click(); selectGame('sichuan')">
+            <div style="text-align:left;">
+                <div style="font-size:22px; color:#f39c12;">🧩 <b>에코 정화 링크</b></div>
+                <div style="font-size:13px; font-weight:normal; color:#555; margin-top:3px;">오염물질과 정화약품을 연결!</div>
+            </div>
+            <div style="font-size:24px;">👉</div>
+        </button>
+    </div>
+
+    <div id="notice-page" class="page">
+        <button class="btn btn-home" onclick="Sound.click(); goHome()">🏠 홈</button>
+        <div style="height: 60px;"></div>
+        <div class="content-title">📢 이용 안내사항</div>
+        <div id="notice-content" class="content-box white-panel"></div>
+    </div>
+
+    <div id="promo-page" class="page">
+        <button class="btn btn-home" onclick="Sound.click(); goHome()">🏠 홈</button>
+        <div style="height: 60px;"></div>
+        <div class="content-title">🏢 깨끗한 김포, 맑은 에너지</div>
+        <div id="promo-content" class="content-box white-panel"></div>
+    </div>
+
+    <div id="game-play-page" class="page" style="display:none; overflow: hidden;">
+        
+        <button id="ingame-home-btn" class="btn-exit-game" style="display:none;" onclick="forceQuitGame()">🚪 나가기</button>
+
+        <div id="score-board"></div>
+        <canvas id="gameCanvas"></canvas>
+        
+        <div id="hint-btn" class="btn-hint" onclick="Sound.click(); showHint()">💡</div>
+
+        <div id="game-ui-layer">
+            <h1 id="gameTitle" style="font-size: 40px; margin-bottom: 20px; color:#fff; text-shadow: 3px 3px 0 #000;">게임 제목</h1>
+            <div id="gameGuide" class="white-panel" style="width: 80%; text-align:center; font-size:20px;">가이드 내용</div>
+            <div id="rankArea" class="white-panel" style="display:none; width:90%; max-width:500px; flex-direction:column; align-items:center; padding:15px;">
+                <div style="font-size:26px; color:#e67e22; font-weight:bold; margin-bottom:5px;">🏆 명예의 전당 🏆</div>
+                <div id="rank-board" style="width:100%;"></div>
+                <div id="eco-quote" style="margin-top:10px; font-size:16px; color:#27ae60; background:#e8f8f5; padding:10px; border-radius:10px; line-height:1.4;"></div>
+            </div>
+            <div id="start-btn-area"><div class="blink" onclick="Sound.click(); startGame()">터치하여 시작</div></div>
+            <div id="gameover-btn-area" style="display:none; margin-top:15px;">
+                <button class="btn btn-restart" onclick="Sound.click(); startGame()">🔄 다시 하기</button>
+                <button class="btn btn-quit" onclick="Sound.click(); goPage('game-select')">🔙 게임 선택</button>
+                <button class="btn btn-quit" onclick="Sound.click(); goHome()">🏠 홈으로</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // =========================================================================
+    // 💡 [텍스트 설정] 안내사항, 홍보내용, 랜덤 문구를 여기서 손쉽게 수정하세요!
+    // =========================================================================
+    const CONFIG = {
+        noticeText: `
+            <p>✅ <b style="color:#27ae60;">반입 가능 폐기물 (소각용):</b><br>종량제 봉투에 담긴 가연성 쓰레기, 헌옷, 신발, 가방 등 타는 쓰레기.</p><br>
+            <p>❌ <b style="color:#c0392b;">반입 불가 폐기물:</b><br>음식물류, 재활용품(캔, 병, 플라스틱), 불연성(도자기, 유리), 폭발성 위험물.</p>
+            <br><hr style="border: 1px dashed #ccc; margin: 10px 0;"><br>
+            <p style="font-size: 16px;">📞 <b style="color:#2c3e50;">문의처 안내:</b><br>
+            - <b>폐기물 허가/배출:</b> 김포시청 자원순환과<br>
+            - <b>크린넷 키 구입:</b> 브니엘네이처</p>
+        `,
+        promoText: `
+            <p>🌱 <b style="color:#27ae60;">친환경 소각 기술:</b><br>최첨단 오염 방지 시설을 통해 다이옥신 등 유해 물질을 완벽하게 제거합니다.</p><br>
+            <p>⚡ <b style="color:#f39c12;">폐기물을 에너지로:</b><br>쓰레기를 태울 때 발생하는 열을 이용하여 스포츠센터에 온수와 냉난방을 하고 남은 열은 지역 난방에 공급합니다.</p><br>
+            <p>🏊 <b style="color:#2980b9;">주민과 함께하는 공간:</b><br>수영장, 헬스장 등 주민 편익 시설을 운영하며 지역 사회와 상생합니다.</p>
+        `,
+        ecoQuotes: [
+            "🌱 환경보호는 나 자신부터",
+            "🏭 자원화센터는 깨끗한 김포를 위해 항상 노력합니다",
+            "♻️ 올바른 분리수거는 미래를 위한 첫 노력",
+            "💧 아껴 쓴 자원, 후대에게 물려줄 소중한 유산입니다",
+            "✨ 깨끗한 김포, 맑은 에너지! 우리가 만들어갑니다"
+        ]
+    };
+    // =========================================================================
+
+    // --- 🎧 사운드 매니저 ---
+    const Sound = {
+        ctx: null, bgmInterval: null, isSoundOn: false,
+        init: function() {
+            if(!this.ctx) { 
+                this.ctx = new (window.AudioContext || window.webkitAudioContext)(); 
+            }
+            if(this.ctx.state === 'suspended') {
+                this.ctx.resume();
+            }
+        },
+        playTone: function(freq, type, duration, vol) {
+            this.init(); 
+            if(!this.ctx || this.ctx.state !== 'running' || !this.isSoundOn) return; 
+            let osc = this.ctx.createOscillator(); 
+            let gain = this.ctx.createGain();
+            osc.type = type; 
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+            gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+            osc.connect(gain); 
+            gain.connect(this.ctx.destination);
+            osc.start(); 
+            osc.stop(this.ctx.currentTime + duration);
+        },
+        playNoise: function(duration, vol) {
+            this.init();
+            if(!this.ctx || this.ctx.state !== 'running' || !this.isSoundOn) return; 
+            let bufferSize = this.ctx.sampleRate * duration;
+            let buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+            let data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+            let noise = this.ctx.createBufferSource(); noise.buffer = buffer;
+            let gain = this.ctx.createGain();
+            gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+            noise.connect(gain); gain.connect(this.ctx.destination); noise.start();
+        },
+        shoot: function() { this.playTone(800, 'square', 0.1, 0.08); },
+        explosion: function() { this.playNoise(0.3, 0.3); },
+        score: function() { this.playTone(600, 'sine', 0.1, 0.2); setTimeout(()=>this.playTone(800, 'sine', 0.15, 0.2), 100); },
+        error: function() { this.playTone(150, 'sawtooth', 0.4, 0.3); },
+        click: function() { this.playTone(500, 'sine', 0.05, 0.2); },
+        levelUp: function() { [440, 554, 659, 880].forEach((f, i) => setTimeout(() => this.playTone(f, 'square', 0.2, 0.2), i * 120)); },
+        toggleBGM: function() {
+            this.init();
+            this.isSoundOn = !this.isSoundOn;
+            let btn = document.getElementById('bgm-toggle');
+            if(btn) btn.innerText = this.isSoundOn ? "🔊 사운드: ON" : "🔇 사운드: OFF";
+            
+            if(this.isSoundOn) {
+                const melody = [
+                    261.6, 329.6, 392.0, 523.3, 392.0, 329.6, 
+                    349.2, 440.0, 523.3, 698.5, 523.3, 440.0, 
+                    392.0, 493.9, 587.3, 784.0, 587.3, 493.9  
+                ]; 
+                let idx = 0;
+                if(this.bgmInterval) clearInterval(this.bgmInterval);
+                
+                this.bgmInterval = setInterval(() => {
+                    if(this.ctx && this.ctx.state === 'running' && this.isSoundOn) {
+                        let osc = this.ctx.createOscillator(); let gain = this.ctx.createGain();
+                        osc.type = 'square'; osc.frequency.setValueAtTime(melody[idx], this.ctx.currentTime);
+                        gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.15);
+                        osc.connect(gain); gain.connect(this.ctx.destination);
+                        osc.start(); osc.stop(this.ctx.currentTime + 0.15);
+                    }
+                    idx = (idx + 1) % melody.length;
+                }, 200); 
+            } else {
+                clearInterval(this.bgmInterval);
+            }
+        }
+    };
+
+    let audioUnlocked = false;
+    function unlockAudio() {
+        if (audioUnlocked) return;
+        Sound.init();
+        if(Sound.ctx) {
+            Sound.ctx.resume().then(() => {
+                let buffer = Sound.ctx.createBuffer(1, 1, 22050);
+                let source = Sound.ctx.createBufferSource();
+                source.buffer = buffer;
+                source.connect(Sound.ctx.destination);
+                source.start(0);
+                audioUnlocked = true;
+                if (!Sound.isSoundOn) { Sound.toggleBGM(); }
+            });
+        }
+    }
+    
+    document.body.addEventListener('touchstart', unlockAudio, {once:true});
+    document.body.addEventListener('click', unlockAudio, {once:true});
+
+    if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./service-worker.js').catch(err => console.log(err)); }); }
+    function safeGetItem(key) { try { return localStorage.getItem(key); } catch(e) { return "0"; } }
+    function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
+    function safeClear() { try { localStorage.clear(); } catch(e) {} }
+
+    function createBackgroundShapes() {
+        const container = document.getElementById('background-shapes');
+        const icons = ['🌱', '💧', '♻️', '☁️', '🍂', '✨', '🏭'];
+        for(let i=0; i<20; i++) {
+            let el = document.createElement('div'); el.classList.add('bg-icon');
+            el.innerText = icons[Math.floor(Math.random() * icons.length)];
+            el.style.left = Math.random() * 100 + '%';
+            el.style.animationDuration = (Math.random() * 8 + 12) + 's'; 
+            el.style.animationDelay = (Math.random() * 10) + 's';
+            el.style.fontSize = (Math.random() * 30 + 40) + 'px';
+            container.appendChild(el);
+        }
+    }
+    createBackgroundShapes();
+
+    var totalPlayCount = 0; var currentGameMode = ''; var gameTimeLeft = 30;
+    var logoCanvas = document.getElementById('logoCanvas'); var logoCtx = logoCanvas.getContext('2d');
+    var logoSmoke = []; var logoFrame = 0; var logoAnimId;
+
+    window.onload = function() { 
+        document.getElementById('notice-content').innerHTML = CONFIG.noticeText;
+        document.getElementById('promo-content').innerHTML = CONFIG.promoText;
+        resize(); window.addEventListener('resize', resize); updateMainCounter(); startMenuLogo(); 
+    };
+
+    function startMenuLogo() { if(logoAnimId) cancelAnimationFrame(logoAnimId); logoSmoke = []; animLoopLogo(); }
+    function animLoopLogo() { logoFrame++; drawMenuLogo(); logoAnimId = requestAnimationFrame(animLoopLogo); }
+    function drawMenuLogo() {
+        logoCtx.clearRect(0,0, 200, 160); var cx = 100; var cy = 100;
+        logoCtx.save(); logoCtx.shadowBlur = 10; logoCtx.shadowColor = 'rgba(0,0,0,0.2)';
+        logoCtx.fillStyle = '#f1f2f6'; logoCtx.fillRect(cx - 60, cy, 80, 50); logoCtx.fillRect(cx - 20, cy - 20, 70, 70);
+        logoCtx.strokeStyle = '#ced6e0'; logoCtx.lineWidth=3; logoCtx.strokeRect(cx-60, cy, 80, 50); logoCtx.strokeRect(cx-20, cy-20, 70, 70);
+        logoCtx.fillStyle = '#70a1ff'; logoCtx.fillRect(cx - 50, cy + 10, 15, 15); logoCtx.fillRect(cx - 30, cy + 10, 15, 15); logoCtx.fillRect(cx - 10, cy - 10, 50, 10); logoCtx.fillRect(cx - 10, cy + 10, 50, 30); 
+        logoCtx.fillStyle = '#a4b0be'; logoCtx.fillRect(cx + 30, cy - 70, 15, 60); 
+        logoCtx.fillStyle = '#ff6b81'; logoCtx.fillRect(cx + 30, cy - 65, 15, 6);
+        logoCtx.fillStyle = '#2ed573'; logoCtx.beginPath(); logoCtx.ellipse(cx + 5, cy + 25, 10, 18, Math.PI/4, 0, Math.PI*2); logoCtx.fill();
+        logoCtx.restore();
+        if(logoFrame % 10 === 0) logoSmoke.push({x: cx + 37, y: cy - 75, r: 5, alpha: 0.8});
+        for(var i=0; i<logoSmoke.length; i++) {
+            var s = logoSmoke[i]; s.y -= 1.2; s.x += Math.sin(logoFrame*0.05 + i) * 0.5; s.r += 0.15; s.alpha -= 0.015;
+            logoCtx.fillStyle = 'rgba(255, 255, 255, ' + s.alpha + ')'; logoCtx.beginPath(); logoCtx.arc(s.x, s.y, s.r, 0, Math.PI*2); logoCtx.fill();
+            if(s.alpha <= 0) { logoSmoke.splice(i, 1); i--; }
+        }
+    }
+
+    function increaseUserCount() { totalPlayCount = parseInt(safeGetItem('gimpoPlayCount') || "0"); totalPlayCount++; safeSetItem('gimpoPlayCount', totalPlayCount); updateMainCounter(); }
+    function updateMainCounter() { var count = parseInt(safeGetItem('gimpoPlayCount') || "0"); var el = document.getElementById('mainUserCount'); if(el) el.innerText = count; }
+    
+    function forceQuitGame() {
+        Sound.click();
+        if (confirm("게임을 종료하고 메뉴로 돌아가시겠습니까?")) {
+            gameRunning = false;
+            document.getElementById('ingame-home-btn').style.display = 'none';
+            goHome();
+        }
+    }
+
+    function goPage(pageName) {
+        document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+        document.getElementById('ingame-home-btn').style.display = 'none';
+
+        if(logoAnimId && pageName !== 'main') cancelAnimationFrame(logoAnimId);
+        if (pageName === 'game-select') document.getElementById('game-select-page').style.display = 'flex';
+        else if (pageName === 'game-play') document.getElementById('game-play-page').style.display = 'block';
+        else if (pageName === 'notice') { document.getElementById('notice-page').style.display = 'flex'; increaseUserCount(); }
+        else if (pageName === 'promo') { document.getElementById('promo-page').style.display = 'flex'; increaseUserCount(); }
+        else { document.getElementById('main-menu').style.display = 'flex'; updateMainCounter(); startMenuLogo(); }
+    }
+    function goHome() { gameRunning = false; goPage('main'); }
+    function resetData() { 
+        var pwd = prompt("관리자 비밀번호를 입력하세요:");
+        if (pwd === "9730") { if(confirm("초기화 하시겠습니까?")) { safeClear(); alert("완료"); location.reload(); } } else if(pwd!==null) alert("비밀번호 오류");
+    }
+
+    function drawRoundRect(ctx, x, y, width, height, radius) {
+        if (width < 0) width = 0; if (height < 0) height = 0;
+        ctx.beginPath(); ctx.moveTo(x + radius, y); ctx.lineTo(x + width - radius, y); ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius); ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height); ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius); ctx.lineTo(x, y + radius); ctx.quadraticCurveTo(x, y, x + radius, y); ctx.closePath();
+    }
+
+    var uiLayer = document.getElementById('game-ui-layer'); var gameTitle = document.getElementById('gameTitle'); var gameGuide = document.getElementById('gameGuide'); var startBtnArea = document.getElementById('start-btn-area'); var gameoverBtnArea = document.getElementById('gameover-btn-area'); var rankArea = document.getElementById('rankArea'); var scoreBoard = document.getElementById('score-board'); var rankBoard = document.getElementById('rank-board'); var canvas = document.getElementById('gameCanvas'); var ctx = canvas.getContext('2d');
+    var hintBtn = document.getElementById('hint-btn');
+    var ecoQuoteArea = document.getElementById('eco-quote');
+
+    function selectGame(mode) {
+        currentGameMode = mode; goPage('game-play'); resize(); 
+        uiLayer.style.display = 'flex'; uiLayer.style.background = 'rgba(0,0,0,0.85)';
+        rankArea.style.display = 'none'; startBtnArea.style.display = 'block'; gameoverBtnArea.style.display = 'none';
+        document.getElementById('ingame-home-btn').style.display = 'none';
+
+        if (mode === 'sorting') {
+            gameTitle.innerText = "분리배출 마스터";
+            gameGuide.innerHTML = "⭕ <b>먹기:</b> 휴지, 마스크, 뼈, 헌옷<br>❌ <b>피하기:</b> 건전지, 음식물, 고철, 병";
+            scoreBoard.innerHTML = "점수: <span id='scoreVal'>0</span>";
+            hintBtn.style.display = 'none';
+        } else if (mode === 'pipe') {
+            gameTitle.innerText = "온수 공급 대작전";
+            gameGuide.innerHTML = "🔥소각장 → 🏊수영장<br>위에서 아래로 배관을 연결하세요!";
+            scoreBoard.innerHTML = "Lv <span id='lvlVal'>1</span> | <span id='timerVal'>30</span>초";
+            hintBtn.style.display = 'flex'; 
+        } else if (mode === 'shooter') {
+            gameTitle.innerText = "오염물질 제로 미션";
+            gameGuide.innerHTML = "<b style='color:#9b59b6; font-size:26px;'>레이저(3) + 유도탄(5)</b><br><br><b>게이트</b>를 통과해 무기를 늘리고<br>스마트 유도탄으로 적을 추적하세요!";
+            scoreBoard.innerHTML = "Lv <span id='lvlVal'>1</span> | 점수: <span id='scoreVal'>0</span> | 오염도: <span id='pollutionVal'>0</span>%";
+            hintBtn.style.display = 'none';
+        } else if (mode === 'sichuan') {
+            gameTitle.innerText = "에코 정화 링크";
+            gameGuide.innerHTML = "<b style='color:#f39c12; font-size:24px;'>오염물질과 정화설비를 짝지어주세요!</b><br><br><span style='color:#3498db'>☁️NOx ↔ 💧암모니아</span><br><span style='color:#e74c3c'>☠️HCl ↔ 🧂소석회</span><br><span style='color:#2ecc71'>🌫️먼지 ↔ ⚙️집진기</span><br><span style='color:#9b59b6'>☣️다이옥신 ↔ 🪨활성탄</span><br><br><span style='font-size:16px; color:#bdc3c7'>💡 꺾이는 횟수가 2번 이하일 때만 파괴됩니다!</span>";
+            scoreBoard.innerHTML = "Lv <span id='lvlVal'>1</span> | 점수: <span id='scoreVal'>0</span> | <span id='timerVal'>60</span>초";
+            hintBtn.style.display = 'flex'; 
+        }
+    }
+
+    var gameRunning = false; var score = 0; var frameCount = 0; var screenWidth = window.innerWidth; var screenHeight = window.innerHeight; var currentLevel = 1;
+    var player = { x: 0, y: 0, size: 105, speed: 8 }; var enemies = []; var inputLeft = false; var inputRight = false; var isDragging = false; var dragOffsetX = 0;
+    
+    var itemsList = [ 
+        { text: "🧻", type: 1, name: "더러운 휴지" }, { text: "😷", type: 1, name: "마스크" }, { text: "🦴", type: 1, name: "뼈다귀" }, { text: "🧣", type: 1, name: "헝겊" }, { text: "👕", type: 1, name: "헌 옷" },
+        { text: "🔋", type: 0, name: "건전지" }, { text: "🍎", type: 0, name: "음식물" }, { text: "🔩", type: 0, name: "고철" }, { text: "🍾", type: 0, name: "빈 병" }
+    ];
+
+    var gridCols = 3; var gridRows = 3; var cellSize = 0; var grid = []; var pipeOffsetX = 0; var pipeOffsetY = 0; var isPipeSolved = false; var solveAnimTimer = 0; var startCol = 0; var endCol = 0; var solvedPath = [];
+    var showLevelMessageTimer = 0; var isHinting = false; var hintTimer = 0;
+
+    var bullets = []; var missiles = []; var pollutants = []; var shooterParticles = []; var floatingTexts = []; var gates = [];
+    var pollutionLevel = 0; var nextHealScore = 1000; var laserCount = 1; var missileCount = 0; 
+    var pollutantTypes = [
+        { text: "NOx", color: "#e74c3c", name: "질소산화물" }, { text: "SOx", color: "#f1c40f", name: "황산화물" }, 
+        { text: "HCl", color: "#2ecc71", name: "염화수소" }, { text: "☠️", color: "#9b59b6", name: "다이옥신" }, { text: "☁️", color: "#95a5a6", name: "미세먼지" }
+    ];
+
+    var scCols = 4; var scRows = 8; var scTileSize = 0; var scOffsetX = 0; var scOffsetY = 0;
+    var scGrid = []; var scSelected = null; var scPath = null; var scPathTimer = 0; var scHintMatch = null; var scRemoving = null; 
+    var scPairs = [
+        { id: 1, p: "☁️NOx\n(질소)", c: "💧암모니아", color: "#3498db" }, { id: 2, p: "☠️HCl\n(염소)", c: "🧂소석회", color: "#e74c3c" },
+        { id: 3, p: "🌫️먼지\n(분진)", c: "⚙️집진기", color: "#2ecc71" }, { id: 4, p: "☣️다이옥신", c: "🪨활성탄", color: "#9b59b6" }
+    ];
+
+    var fps = 60; var fpsInterval = 1000 / fps; var then = Date.now(); var startTime = then;
+
+    function resize() { 
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight; 
+        screenWidth = canvas.width; screenHeight = canvas.height; 
+        player.x = screenWidth / 2 - player.size / 2; player.y = screenHeight - player.size - 20; 
+        if(currentGameMode === 'pipe') initPipeLevel(); 
+        if(currentGameMode === 'sichuan') initSichuanLayout();
+    }
+    
+    function startGame() { 
+        gameRunning = true; score = 0; currentLevel = 1; frameCount = 0; increaseUserCount(); uiLayer.style.display = 'none'; 
+        document.getElementById('ingame-home-btn').style.display = 'block';
+
+        if(currentGameMode === 'sorting') { enemies = []; scoreBoard.innerHTML = "점수: <span id='scoreVal'>0</span>"; } 
+        else if(currentGameMode === 'pipe') { gameTimeLeft = 30; scoreBoard.innerHTML = "Lv <span id='lvlVal'>1</span> | <span id='timerVal'>30</span>초"; initPipeLevel(); } 
+        else if(currentGameMode === 'shooter') {
+            bullets = []; pollutants = []; shooterParticles = []; floatingTexts = []; gates = [];
+            pollutionLevel = 0; nextHealScore = 1000; laserCount = 1; missileCount = 0;
+            scoreBoard.innerHTML = "Lv <span id='lvlVal'>1</span> | 점수: <span id='scoreVal'>0</span> | 오염도: <span id='pollutionVal'>0</span>%";
+        } 
+        else if(currentGameMode === 'sichuan') {
+            gameTimeLeft = 60; scoreBoard.innerHTML = "Lv <span id='lvlVal'>1</span> | 점수: <span id='scoreVal'>0</span> | <span id='timerVal'>60</span>초"; 
+            shooterParticles = []; floatingTexts = []; initSichuanLayout(); initSichuanLevel();
+        }
+        then = Date.now(); startTime = then; loop(); 
+    }
+    
+    function loop() { 
+        if (!gameRunning) return; 
+        requestAnimationFrame(loop); 
+        var now = Date.now(); var elapsed = now - then;
+        if (elapsed > fpsInterval) {
+            then = now - (elapsed % fpsInterval);
+            try {
+                if (currentGameMode === 'sorting') { updateSorting(); drawSorting(); } 
+                else if (currentGameMode === 'pipe') { updatePipePuzzle(); drawPipePuzzle(); }
+                else if (currentGameMode === 'shooter') { updateShooter(); drawShooter(); } 
+                else if (currentGameMode === 'sichuan') { updateSichuan(); drawSichuan(); }
+            } catch(e) { console.error(e); } 
+        }
+    }
+
+    // --- [1] 분리배출 로직 ---
+    function updateSorting() {
+        if (inputLeft && player.x > 0) player.x -= player.speed; 
+        if (inputRight && player.x < canvas.width - player.size) player.x += player.speed;
+        if (player.x < 0) player.x = 0; if (player.x > canvas.width - player.size) player.x = canvas.width - player.size;
+        
+        var calculatedLevel = Math.floor(score / 100) + 1; 
+        if (calculatedLevel > currentLevel) { currentLevel = calculatedLevel; showLevelMsg(); }
+        
+        frameCount++; var spawnRate = Math.max(15, 35 - (currentLevel * 3)); 
+        if (frameCount % spawnRate === 0) { 
+            var size = 55; var x = Math.random() * (canvas.width - size); var randObj = itemsList[Math.floor(Math.random() * itemsList.length)]; var dropSpeed = 5 + (currentLevel * 1.5); enemies.push({ x: x, y: -size, size: size, text: randObj.text, type: randObj.type, name: randObj.name, speed: dropSpeed }); 
+        }
+        for (var i = 0; i < enemies.length; i++) { 
+            var e = enemies[i]; if(!e) continue; e.y += e.speed; 
+            if (player.x < e.x + e.size - 15 && player.x + player.size > e.x + 15 && player.y + 25 < e.y + e.size && player.y + player.size > e.y) { 
+                if (e.type === 1) { score += 10; document.getElementById('scoreVal').innerText = score; enemies.splice(i, 1); i--; Sound.score(); } 
+                else { gameOver(e.text, e.name); return; } 
+            } else if (e.y > canvas.height) { enemies.splice(i, 1); i--; } 
+        }
+    }
+    function drawSorting() { 
+        ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.fillRect(0, 0, canvas.width, canvas.height); 
+        drawBag(player.x, player.y, player.size); ctx.textAlign = "center"; ctx.textBaseline = "middle"; 
+        for (var i=0; i<enemies.length; i++) { var e = enemies[i]; if(!e) continue; ctx.save(); ctx.shadowColor = 'white'; ctx.shadowBlur = 25; ctx.fillStyle = 'white'; ctx.font = "bold " + (e.size * 1.2) + "px sans-serif"; ctx.fillText(e.text, e.x + e.size/2, e.y + e.size/2); ctx.restore(); } 
+        drawLevelMessage(); 
+    }
+    function drawBag(x, y, size) { ctx.save(); ctx.shadowColor = 'rgba(0,0,0,0.3)'; ctx.shadowBlur = 10; ctx.shadowOffsetY = 5; ctx.fillStyle = '#ffffff'; ctx.strokeStyle = '#dddddd'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x+size*0.1, y+size*0.25); ctx.quadraticCurveTo(x-size*0.05, y+size*0.6, x+size*0.1, y+size*0.95); ctx.quadraticCurveTo(x+size*0.5, y+size*1.05, x+size*0.9, y+size*0.95); ctx.quadraticCurveTo(x+size*1.05, y+size*0.6, x+size*0.9, y+size*0.25); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.shadowColor = 'transparent'; ctx.fillStyle = '#ffffff'; ctx.strokeStyle = '#cccccc'; ctx.beginPath(); ctx.arc(x+size*0.35, y+size*0.2, size*0.12, 0, Math.PI*2); ctx.arc(x+size*0.65, y+size*0.2, size*0.12, 0, Math.PI*2); ctx.fill(); ctx.stroke(); ctx.beginPath(); ctx.arc(x+size*0.5, y+size*0.2, size*0.08, 0, Math.PI*2); ctx.fill(); ctx.stroke(); ctx.fillStyle = '#2c3e50'; ctx.textAlign = 'center'; ctx.font = 'bold '+(size*0.2)+'px Arial'; ctx.fillText("김포", x+size/2, y+size*0.6); ctx.fillStyle = '#e74c3c'; ctx.font = 'bold '+(size*0.14)+'px Arial'; ctx.fillText("소각용", x+size/2, y+size*0.8); ctx.restore(); }
+
+    // --- [2] 파이프 게임 로직 ---
+    function drawValve(x, y, spin) { 
+        ctx.save(); ctx.translate(x, y); 
+        if(spin) ctx.rotate(frameCount * 0.1); 
+        ctx.beginPath(); ctx.arc(0, 0, 18, 0, Math.PI*2); ctx.fillStyle = '#c0392b'; ctx.fill(); 
+        ctx.strokeStyle='#e74c3c'; ctx.lineWidth=4; ctx.stroke(); 
+        ctx.strokeStyle = '#922b21'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(0, -18); ctx.lineTo(0, 18); ctx.moveTo(-18, 0); ctx.lineTo(18, 0); ctx.stroke(); 
+        ctx.fillStyle = '#ecf0f1'; ctx.beginPath(); ctx.arc(0, 0, 5, 0, Math.PI*2); ctx.fill(); 
+        ctx.restore(); 
+    }
+    
+    function drawIncinerator(x, y) { 
+        ctx.save(); ctx.translate(x, y); 
+        ctx.fillStyle = 'rgba(255,255,255,0.6)'; ctx.beginPath(); ctx.arc(30, -50 - (frameCount%20), 10+(frameCount%10), 0, Math.PI*2); ctx.fill(); 
+        ctx.fillStyle = '#2c3e50'; ctx.fillRect(-50, -30, 100, 60); 
+        ctx.fillStyle = '#e74c3c'; ctx.fillRect(-50, -30, 100, 10); 
+        ctx.fillStyle = '#7f8c8d'; ctx.fillRect(20, -60, 20, 30); 
+        ctx.fillStyle = '#f1c40f'; ctx.fillRect(20, -60, 20, 5); 
+        ctx.fillStyle = '#ecf0f1'; ctx.fillRect(-40, -10, 15, 20); ctx.fillRect(-15, -10, 15, 20); 
+        
+        ctx.fillStyle = '#1e272e'; drawRoundRect(ctx, -65, 35, 130, 28, 14); ctx.fill();
+        ctx.strokeStyle = '#f1c40f'; ctx.lineWidth = 2; ctx.stroke();
+        ctx.fillStyle = '#ffffff'; ctx.font = 'bold 16px Jua'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText("🔥자원화센터", 0, 49); 
+        ctx.restore(); 
+    }
+    
+    function drawPool(x, y) { 
+        ctx.save(); ctx.translate(x, y); 
+        ctx.fillStyle = '#ecf0f1'; ctx.fillRect(-60, -30, 120, 60); 
+        ctx.fillStyle = '#3498db'; ctx.fillRect(-50, -20, 100, 40); 
+        ctx.strokeStyle = '#bdc3c7'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(-35, -25); ctx.lineTo(-35, -5); ctx.moveTo(-25, -25); ctx.lineTo(-25, -5); ctx.stroke(); 
+        
+        if(isPipeSolved) { 
+            var totalTiles = solvedPath.length; var timePerTile = 10; var startDelay = totalTiles * timePerTile + 30; 
+            if (solveAnimTimer > startDelay) { 
+                ctx.fillStyle = 'rgba(0, 255, 255, 0.4)'; 
+                var waterH = Math.min(40, (solveAnimTimer - startDelay) * 1.5); 
+                ctx.fillRect(-50, 20 - waterH, 100, waterH); 
+            } 
+        } 
+        ctx.fillStyle = '#1e272e'; drawRoundRect(ctx, -65, 35, 130, 28, 14); ctx.fill();
+        ctx.strokeStyle = '#3498db'; ctx.lineWidth = 2; ctx.stroke();
+        ctx.fillStyle = '#ffffff'; ctx.font = 'bold 16px Jua'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText("🏊스포츠센터", 0, 49); 
+        ctx.restore(); 
+    }
+
+    function initPipeLevel() {
+        gridCols = 4 + Math.floor((currentLevel-1)/3); gridRows = 5 + Math.floor((currentLevel-1)/2); if(gridCols > 6) gridCols = 6; if(gridRows > 8) gridRows = 8;
+        var headerSpace = Math.min(160, screenHeight * 0.25); var footerSpace = Math.min(160, screenHeight * 0.25);
+        var availableW = Math.max(100, screenWidth - 20); var availableH = Math.max(100, screenHeight - (headerSpace + footerSpace)); 
+        cellSize = Math.max(10, Math.min(availableW / gridCols, availableH / gridRows));
+        pipeOffsetX = (screenWidth - (cellSize * gridCols)) / 2; pipeOffsetY = headerSpace + (availableH - (cellSize * gridRows)) / 2; 
+        startCol = Math.floor(Math.random() * gridCols); endCol = Math.floor(Math.random() * gridCols); generatePuzzle(); isPipeSolved = false; solveAnimTimer = 0; solvedPath = []; isHinting = false; hintTimer = 0;
+    }
+    
+    function generatePuzzle() {
+        grid = []; for(var x=0; x<gridCols; x++) { grid[x] = []; for(var y=0; y<gridRows; y++) { grid[x][y] = { type: 'I', rotation: 0, connected: false, isPath: false }; } }
+        var currX = startCol; var currY = 0; var path = [{x:currX, y:currY}]; grid[currX][currY].isPath = true;
+        var loop1 = 0;
+        while(currY < gridRows - 1 && loop1++ < 200) {
+            var possibleMoves = []; possibleMoves.push({dx:0, dy:1}); if(currX > 0 && !isVisited(path, currX-1, currY)) possibleMoves.push({dx:-1, dy:0}); if(currX < gridCols - 1 && !isVisited(path, currX+1, currY)) possibleMoves.push({dx:1, dy:0});
+            var move; var wantDir = (endCol > currX) ? 1 : (endCol < currX ? -1 : 0); var r = Math.random();
+            if(r < 0.4) { move = {dx:0, dy:1}; } else { var horizontalMoves = possibleMoves.filter(m => m.dy === 0); if(horizontalMoves.length > 0) { var bestMove = horizontalMoves.find(m => m.dx === wantDir); move = bestMove ? bestMove : horizontalMoves[Math.floor(Math.random() * horizontalMoves.length)]; } else { move = {dx:0, dy:1}; } }
+            currX += move.dx; currY += move.dy; path.push({x:currX, y:currY}); grid[currX][currY].isPath = true;
+        }
+        var loop2 = 0;
+        while(currX !== endCol && loop2++ < 200) { var dx = (endCol > currX) ? 1 : -1; currX += dx; path.push({x:currX, y:currY}); grid[currX][currY].isPath = true; }
+        for(var i=0; i<path.length; i++) { var curr = path[i]; var prev = (i>0) ? path[i-1] : {x:startCol, y:-1}; var next = (i<path.length-1) ? path[i+1] : {x:endCol, y:gridRows}; var fromDir = getDir(curr, prev); var toDir = getDir(curr, next); setPipeType(curr.x, curr.y, fromDir, toDir); }
+        for(var x=0; x<gridCols; x++) { for(var y=0; y<gridRows; y++) { if(!grid[x][y].isPath) { grid[x][y].type = Math.random() < 0.5 ? 'I' : 'L'; } grid[x][y].rotation = Math.floor(Math.random() * 4) * 90; } }
+    }
+    
+    function isVisited(path, x, y) { return path.some(p => p.x === x && p.y === y); }
+    function getDir(curr, target) { if(target.x < curr.x) return 'left'; if(target.x > curr.x) return 'right'; if(target.y < curr.y) return 'up'; if(target.y > curr.y) return 'down'; return 'none'; }
+    function setPipeType(x, y, d1, d2) { var dirs = [d1, d2].sort(); var type = 'L'; if((dirs[0]==='left' && dirs[1]==='right') || (dirs[0]==='down' && dirs[1]==='up')) type = 'I'; grid[x][y].type = type; }
+    
+    function checkConnection() {
+        for(var x=0; x<gridCols; x++) for(var y=0; y<gridRows; y++) grid[x][y].connected = false;
+        if(!isOpen(startCol, 0, 'up')) return null; 
+        var queue = [{x:startCol, y:0, path:[{x:startCol, y:0}]}]; grid[startCol][0].connected = true;
+        var loop3 = 0;
+        while(queue.length > 0 && loop3++ < 1000) {
+            var curr = queue.shift();
+            if(curr.x === endCol && curr.y === gridRows - 1) { if(isOpen(curr.x, curr.y, 'down')) return curr.path; }
+            var dirs = [{dx:0, dy:-1, dir:'up', opp:'down'}, {dx:0, dy:1, dir:'down', opp:'up'}, {dx:-1, dy:0, dir:'left', opp:'right'}, {dx:1, dy:0, dir:'right', opp:'left'}];
+            for(var d of dirs) { var nx = curr.x + d.dx; var ny = curr.y + d.dy; if(nx>=0 && nx<gridCols && ny>=0 && ny<gridRows) { if(!grid[nx][ny].connected && isOpen(curr.x, curr.y, d.dir) && isOpen(nx, ny, d.opp)) { grid[nx][ny].connected = true; var newPath = curr.path.slice(); newPath.push({x:nx, y:ny}); queue.push({x:nx, y:ny, path:newPath}); } } }
+        } return null;
+    }
+    
+    function isOpen(x, y, dir) { var t = grid[x][y]; var rot = t.rotation % 360; var c = {t:false, r:false, b:false, l:false}; if (t.type === 'I') { if (rot === 0 || rot === 180) { c.l=true; c.r=true; } else { c.t=true; c.b=true; } } else { if (rot === 0) { c.r=true; c.b=true; } else if (rot === 90) { c.b=true; c.l=true; } else if (rot === 180) { c.l=true; c.t=true; } else if (rot === 270) { c.t=true; c.r=true; } } if(dir==='up') return c.t; if(dir==='right') return c.r; if(dir==='down') return c.b; if(dir==='left') return c.l; return false; }
+    
+    function updatePipePuzzle() {
+        if(isPipeSolved) { solveAnimTimer++; var totalTiles = solvedPath.length > 0 ? solvedPath.length : gridRows; if (solveAnimTimer > totalTiles * 10 + 60 || solveAnimTimer > 180) levelUpPipeGame(); return; }
+        frameCount++; if (frameCount % 60 === 0) { gameTimeLeft--; document.getElementById('timerVal').innerText = gameTimeLeft; if (gameTimeLeft <= 0) gameOver("시간 초과!", "온수 공급 실패"); }
+        var path = checkConnection(); if(path) { isPipeSolved = true; solvedPath = path; solveAnimTimer = 0; Sound.score(); }
+        if(isHinting) { hintTimer--; if(hintTimer <= 0) isHinting = false; }
+    }
+    
+    function levelUpPipeGame() { 
+        score += 1000; currentLevel++; 
+        if(currentLevel > 38) { gameClear(); return; } 
+        var reduction = Math.floor((currentLevel - 1) / 10) * 5; gameTimeLeft = Math.max(10, 30 - reduction); showLevelMsg(); 
+        var lvlEl = document.getElementById('lvlVal'); if(lvlEl) lvlEl.innerText = currentLevel;
+        var timerEl = document.getElementById('timerVal'); if(timerEl) timerEl.innerText = gameTimeLeft;
+        initPipeLevel(); 
+    }
+    
+    function drawConnectors(x1, y1, x2, y2, isStart) { 
+        var thick = Math.max(6, cellSize * 0.3); 
+        ctx.lineWidth = thick; ctx.lineCap = 'round'; ctx.strokeStyle = '#7f8c8d'; 
+        var midY = (y1 + y2) / 2; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1, midY); ctx.lineTo(x2, midY); ctx.lineTo(x2, y2); ctx.stroke(); 
+        
+        if(isPipeSolved) { 
+            ctx.strokeStyle = '#3498db'; ctx.lineWidth = thick * 0.7; var shouldDraw = false; var totalTiles = solvedPath.length; var timePerTile = 10; 
+            if(isStart) { if(solveAnimTimer > 0) shouldDraw = true; } else { if(solveAnimTimer > totalTiles * timePerTile) shouldDraw = true; } 
+            if(shouldDraw) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1, midY); ctx.lineTo(x2, midY); ctx.lineTo(x2, y2); ctx.stroke(); } 
+        } 
+    }
+    
+    function drawPipePuzzle() {
+        ctx.clearRect(0,0,canvas.width, canvas.height); 
+        ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+        drawRoundRect(ctx, pipeOffsetX - 15, pipeOffsetY - 15, gridCols * cellSize + 30, gridRows * cellSize + 30, 15);
+        ctx.fill();
+
+        var startX = pipeOffsetX + startCol*cellSize + cellSize/2; var endX = pipeOffsetX + endCol*cellSize + cellSize/2;
+        var topY = pipeOffsetY; var bottomY = pipeOffsetY + gridRows*cellSize;
+        var incineratorY = pipeOffsetY - 90; var poolY = bottomY + 60; 
+        
+        for(var x=0; x<gridCols; x++) for(var y=0; y<gridRows; y++) drawTile(x, y);
+
+        drawConnectors(screenWidth / 2, incineratorY + 50, startX, topY, true);
+        drawConnectors(endX, bottomY, screenWidth / 2, poolY - 30, false);
+        drawValve(startX, topY, isPipeSolved); drawValve(endX, bottomY, isPipeSolved);
+        
+        drawIncinerator(screenWidth / 2, incineratorY); 
+        drawPool(screenWidth / 2, poolY); 
+        
+        ctx.fillStyle = (frameCount % 60 < 30) ? '#ffeb3b' : '#ff9800'; ctx.font = '30px Jua'; ctx.textAlign='center'; 
+        ctx.fillText("⬇️", startX, topY - 15); ctx.fillText("⬇️", endX, bottomY + 30);
+        
+        drawLevelMessage();
+    }
+    
+    function drawTile(gx, gy) { 
+        var tile = grid[gx][gy]; var cx = pipeOffsetX + gx*cellSize + cellSize/2; var cy = pipeOffsetY + gy*cellSize + cellSize/2; 
+        var size = Math.max(1, cellSize * 0.95); var thick = Math.max(1, cellSize * 0.35); 
+        ctx.save(); ctx.translate(cx, cy); ctx.rotate(tile.rotation * Math.PI / 180); 
+        
+        try {
+            var pipeGrad = ctx.createLinearGradient(-size/2, -thick/2, -size/2, thick/2);
+            pipeGrad.addColorStop(0, '#7f8c8d'); pipeGrad.addColorStop(0.5, '#ecf0f1'); pipeGrad.addColorStop(1, '#7f8c8d');
+            ctx.fillStyle = pipeGrad;
+        } catch(e) { ctx.fillStyle = '#95a5a6'; }
+        
+        if(isHinting && tile.isPath) { ctx.shadowColor = "yellow"; ctx.shadowBlur = 20; } 
+        if(tile.type==='I') ctx.fillRect(-size/2, -thick/2, size, thick); else { ctx.beginPath(); ctx.moveTo(thick/2, size/2); ctx.lineTo(-thick/2, size/2); ctx.lineTo(-thick/2, -thick/2); ctx.lineTo(size/2, -thick/2); ctx.lineTo(size/2, thick/2); ctx.lineTo(thick/2, thick/2); ctx.closePath(); ctx.fill(); } 
+        
+        ctx.fillStyle = '#34495e'; 
+        if(tile.type==='I') { ctx.fillRect(-size/2-2, -thick/2-2, 6, thick+4); ctx.fillRect(size/2-4, -thick/2-2, 6, thick+4); } 
+        else { ctx.fillRect(-thick/2-2, -thick/2-2, thick+4, 6); ctx.fillRect(-thick/2-2, size/2-4, thick+4, 6); ctx.fillRect(size/2-4, -thick/2-2, 6, thick+4); } 
+        
+        if(tile.connected && isPipeSolved) { 
+            var pathIndex = -1; for(var i=0; i<solvedPath.length; i++) { if(solvedPath[i].x === gx && solvedPath[i].y === gy) { pathIndex = i; break; } } 
+            if(pathIndex !== -1) { 
+                var timePerTile = 10; var startTime = pathIndex * timePerTile; var endTime = (pathIndex + 1) * timePerTile; var progress = Math.min(1, Math.max(0, (solveAnimTimer - startTime) / (endTime - startTime))); 
+                if(progress > 0) { 
+                    try {
+                        var waterGrad = ctx.createLinearGradient(-size/2, -thick/2, -size/2, thick/2);
+                        waterGrad.addColorStop(0, '#2980b9'); waterGrad.addColorStop(0.5, '#6dd5ed'); waterGrad.addColorStop(1, '#2980b9');
+                        ctx.fillStyle = waterGrad;
+                        ctx.shadowColor = '#00ffff'; ctx.shadowBlur = 10; 
+                    } catch(e) { ctx.fillStyle = '#3498db'; }
+                    var wThick = thick * 0.6; 
+                    if(tile.type==='I') { ctx.fillRect(-size/2, -wThick/2, size * progress, wThick); } else { ctx.beginPath(); var w = wThick/2; var len = size/2 + w; var currentLen = len * progress; if (currentLen <= size/2 - w) { ctx.moveTo(-w, -w); ctx.lineTo(-w, -w + currentLen); ctx.lineTo(w, -w + currentLen); ctx.lineTo(w, -w); } else { ctx.moveTo(-w, -w); ctx.lineTo(-w, size/2); ctx.lineTo(w, size/2); ctx.lineTo(w, w); ctx.lineTo(-w + currentLen, w); ctx.lineTo(-w + currentLen, -w); } ctx.fill(); } 
+                } 
+            } 
+        } 
+        ctx.restore(); ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 1; ctx.strokeRect(pipeOffsetX + gx*cellSize, pipeOffsetY + gy*cellSize, cellSize, cellSize); 
+    }
+
+    // --- [3] 오염물질 제로 미션 (슈팅) 로직 ---
+    function updateShooter() {
+        if (inputLeft && player.x > 0) player.x -= player.speed; 
+        if (inputRight && player.x < canvas.width - player.size) player.x += player.speed;
+        if (player.x < 0) player.x = 0; if (player.x > canvas.width - player.size) player.x = canvas.width - player.size;
+
+        var calculatedLevel = Math.floor(score / 200) + 1; 
+        if (calculatedLevel > currentLevel) { 
+            currentLevel = calculatedLevel; 
+            showLevelMsg(); 
+            var lvlEl = document.getElementById('lvlVal'); 
+            if(lvlEl) lvlEl.innerText = currentLevel;
+        }
+
+        if (score >= nextHealScore) {
+            if (pollutionLevel > 0) {
+                pollutionLevel = Math.max(0, pollutionLevel - 20);
+                document.getElementById('pollutionVal').innerText = pollutionLevel;
+                createFloatingText(screenWidth/2, screenHeight/2, "❤️정화 완료!", "#2ecc71");
+                Sound.score();
+            }
+            nextHealScore += 1000;
+        }
+
+        frameCount++;
+        
+        if (frameCount % 480 === 0) { spawnGate(); }
+
+        for (var i = gates.length - 1; i >= 0; i--) {
+            var g = gates[i]; 
+            g.y += 3;
+            g.anim = (g.anim || 0) + 0.1; 
+            
+            if (player.x < g.x + g.w && player.x + player.size > g.x && player.y < g.y + g.h && player.y + player.size > g.y) {
+                applyGateEffect(g.effect); g.dead = true;
+            } else if (g.y > canvas.height) { g.dead = true; }
+        }
+        gates = gates.filter(g => !g.dead);
+
+        if (frameCount % 10 === 0) { 
+            Sound.shoot(); 
+            var laserWidth = 6; var laserColor = '#00ffff'; 
+            if (currentLevel >= 3) { laserColor = '#f1c40f'; laserWidth = 8; }
+            if (currentLevel >= 6) { laserColor = '#9b59b6'; laserWidth = 10; }
+            var spreadAngle = 0.08;
+            var startX = player.x + player.size/2; var startY = player.y;
+            var totalAngle = (laserCount - 1) * spreadAngle; var startAngle = -Math.PI/2 - totalAngle / 2;
+            
+            for(var k=0; k<laserCount; k++) {
+                var currentAngle = startAngle + (k * spreadAngle);
+                var vx = Math.cos(currentAngle) * 25; var vy = Math.sin(currentAngle) * 25;
+                bullets.push({ x: startX, y: startY, vx: vx, vy: vy, w: laserWidth, h: 60, angle: currentAngle + Math.PI/2, color: laserColor, type: 'laser', life: 60 });
+            }
+        }
+
+        if (frameCount % 30 === 0 && missileCount > 0) {
+            for(var m=0; m<missileCount; m++) {
+                var startX = player.x + player.size/2; var startY = player.y;
+                var rx = (Math.random() - 0.5) * 15;
+                var ry = -5 - (Math.random() * 5);
+                bullets.push({ x: startX, y: startY, vx: rx, vy: ry, size: 15, speed: 8, color: '#ff6b81', type: 'missile', target: null, life: 60 });
+            }
+        }
+
+        var totalWeapons = laserCount + missileCount; 
+        
+        var spawnRate = Math.max(25, Math.floor(80 - (currentLevel * 1.5) - (totalWeapons * 4))); 
+        
+        if (frameCount % spawnRate === 0) {
+            var pType = pollutantTypes[Math.floor(Math.random() * pollutantTypes.length)];
+            var size = 60; var x = Math.random() * (canvas.width - size);
+            
+            // [수정] 적 최대 체력 10칸 (레벨 2당 1씩 증가)
+            var hp = Math.min(10, 1 + Math.floor((currentLevel - 1) / 2));
+            var dropSpeed = Math.min(4.5, 1.5 + (currentLevel * 0.1) + (Math.random() * 1.0));
+            var swaySpeed = (currentLevel >= 2) ? (Math.random() - 0.5) * Math.min(3, currentLevel * 0.3) : 0;
+
+            pollutants.push({ 
+                x: x, y: -size, size: size, 
+                text: pType.text, color: pType.color, name: pType.name, 
+                speed: dropSpeed, hp: hp, maxHp: hp, sway: swaySpeed, startX: x, frameOffset: Math.random()*100, hitTimer: 0 
+            });
+        }
+
+        for(var i = 0; i < shooterParticles.length; i++) {
+            var p = shooterParticles[i]; p.x += p.vx; p.y += p.vy; p.life -= 0.05;
+            if(p.life <= 0) p.dead = true;
+        }
+        if(shooterParticles.length > 80) shooterParticles.splice(0, 20); 
+        shooterParticles = shooterParticles.filter(p => !p.dead);
+
+        for(var i = 0; i < floatingTexts.length; i++) {
+            var ft = floatingTexts[i]; ft.y -= 1; ft.life -= 0.02;
+            if(ft.life <= 0) ft.dead = true;
+        }
+        floatingTexts = floatingTexts.filter(ft => !ft.dead);
+
+        for (var i = 0; i < bullets.length; i++) {
+            var b = bullets[i]; 
+            if (b.type === 'missile') {
+                b.life--; if (b.life <= 0) { createExplosion(b.x, b.y, b.color); b.dead = true; continue; }
+                
+                if (!b.target || b.target.dead || pollutants.indexOf(b.target) === -1) { b.target = findNearestPollutant(b); }
+                if (b.target) {
+                    var dx = b.target.x + b.target.size/2 - b.x; var dy = b.target.y + b.target.size/2 - b.y;
+                    var dist = Math.sqrt(dx*dx + dy*dy);
+                    b.vx += (dx/dist) * 1.5; b.vy += (dy/dist) * 1.5;
+                    var vel = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
+                    if (vel > b.speed) { b.vx = (b.vx/vel)*b.speed; b.vy = (b.vy/vel)*b.speed; }
+                    b.angle = Math.atan2(b.vy, b.vx) + Math.PI/2;
+                }
+            } else if (b.type === 'laser') {
+                b.life--; if (b.life <= 0) { b.dead = true; continue; }
+            }
+            
+            b.x += b.vx; b.y += b.vy;
+            if (b.y + b.h < 0 || b.x < 0 || b.x > canvas.width || b.y > canvas.height) { b.dead = true; continue; }
+
+            var hit = false;
+            for (var j = 0; j < pollutants.length; j++) {
+                var p = pollutants[j];
+                if(p.dead) continue;
+                var dx = b.x - (p.x + p.size/2); var dy = b.y - (p.y + p.size/2);
+                var dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < p.size/2 + 20) {
+                    p.hp -= 1;
+                    if (p.hp <= 0) {
+                        score += 10; document.getElementById('scoreVal').innerText = score;
+                        createExplosion(p.x + p.size/2, p.y + p.size/2, p.color);
+                        p.dead = true; 
+                    } else {
+                        p.hitTimer = 5; 
+                        Sound.click();
+                    }
+                    hit = true; break; 
+                }
+            }
+            if (hit) b.dead = true;
+        }
+        
+        for (var i = 0; i < pollutants.length; i++) {
+            var p = pollutants[i]; 
+            if(p.dead) continue;
+            
+            p.y += p.speed;
+            if (p.sway !== 0) {
+                p.x = p.startX + Math.sin((frameCount + p.frameOffset) * 0.05) * (p.sway * 15);
+                if (p.x < 0) p.x = 0;
+                if (p.x > canvas.width - p.size) p.x = canvas.width - p.size;
+            }
+
+            if (p.y > canvas.height) {
+                pollutionLevel += 10; document.getElementById('pollutionVal').innerText = pollutionLevel;
+                p.dead = true;
+                if (pollutionLevel >= 100) { gameOver("대기 오염 경보!", "오염 허용치 초과!"); return; }
+            }
+        }
+
+        bullets = bullets.filter(b => !b.dead);
+        pollutants = pollutants.filter(p => !p.dead);
+    }
+
+    function findNearestPollutant(missile) {
+        var minDst = 9999; var target = null;
+        for(var p of pollutants) {
+            if(p.dead) continue;
+            var dx = p.x - missile.x; var dy = p.y - missile.y;
+            var dst = Math.sqrt(dx*dx + dy*dy);
+            if (dst < minDst && p.y < canvas.height) { minDst = dst; target = p; }
+        }
+        return target;
+    }
+
+    function spawnGate() {
+        var types = [
+            { text: "✨ 무기 +1", color: "#3498db", effect: "plus1", border: "#2980b9" },
+            { text: "🔥 무기 x2", color: "#9b59b6", effect: "double", border: "#8e44ad" },
+            { text: "⚠️ 무기 -1", color: "#e74c3c", effect: "minus1", border: "#c0392b" },
+            { text: "☠️ 무기 ÷2", color: "#c0392b", effect: "half", border: "#922b21" }
+        ];
+        var badProb = Math.min(0.5, 0.1 + (currentLevel * 0.03));
+        var type; if(Math.random() > badProb) { type = types[Math.floor(Math.random() * 2)]; } else { type = types[Math.floor(Math.random() * 2) + 2]; }
+        
+        gates.push({ x: Math.random() * (canvas.width - 130), y: -100, w: 130, h: 60, text: type.text, color: type.color, effect: type.effect, border: type.border, anim: Math.random() * Math.PI * 2 });
+    }
+
+    function applyGateEffect(effect) {
+        var currentTotal = laserCount + missileCount; var nextTotal = currentTotal;
+        if (effect === "plus1") nextTotal++; else if (effect === "double") nextTotal *= 2; else if (effect === "minus1") nextTotal--; else if (effect === "half") nextTotal = Math.floor(nextTotal / 2);
+        nextTotal = Math.max(1, Math.min(8, nextTotal)); 
+        
+        if (nextTotal <= 3) { 
+            laserCount = nextTotal; missileCount = 0; 
+        } else { 
+            laserCount = 3; missileCount = nextTotal - 3; 
+        }
+        
+        var diff = nextTotal - currentTotal; var msg = diff >= 0 ? "POWER UP!" : "DOWN..."; var color = diff >= 0 ? "#2ecc71" : "#e74c3c";
+        createFloatingText(player.x, player.y - 50, msg, color);
+        if (diff >= 0) Sound.levelUp(); else Sound.error(); 
+    }
+
+    function createExplosion(x, y, color) { 
+        Sound.explosion(); 
+        shooterParticles.push({ type: 'wave', x: x, y: y, size: 10, life: 1.0, color: color });
+        for(var i=0; i<10; i++) { 
+            shooterParticles.push({ type: 'spark', x: x, y: y, vx: (Math.random() - 0.5) * 15, vy: (Math.random() - 0.5) * 15, color: Math.random() < 0.5 ? color : '#ffffff', life: 1.0, size: Math.random() * 5 + 2 }); 
+        } 
+    }
+    function createFloatingText(x, y, text, color) { floatingTexts.push({ x: x, y: y, text: text, color: color, life: 1.0 }); }
+
+    function drawShooter() {
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.3)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        drawCoolTurret(player.x, player.y, player.size);
+
+        for(var g of gates) {
+            ctx.save(); 
+            var boxY = g.y + Math.sin(g.anim) * 5; 
+            ctx.translate(g.x + g.w/2, boxY + g.h/2);
+            
+            ctx.shadowBlur = 15; 
+            ctx.shadowColor = g.color; 
+            
+            var grad = ctx.createLinearGradient(-g.w/2, -g.h/2, g.w/2, g.h/2);
+            grad.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+            grad.addColorStop(0.3, g.color);
+            grad.addColorStop(1, g.border);
+            
+            ctx.fillStyle = grad;
+            drawRoundRect(ctx, -g.w/2, -g.h/2, g.w, g.h, 20); 
+            ctx.fill();
+            
+            ctx.strokeStyle = "rgba(255,255,255,0.8)";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            
+            ctx.shadowBlur = 2;
+            ctx.shadowColor = 'rgba(0,0,0,0.5)';
+            ctx.fillStyle = "white"; 
+            ctx.font = "bold 20px Jua"; 
+            ctx.textAlign = "center"; 
+            ctx.textBaseline = "middle"; 
+            ctx.fillText(g.text, 0, 0);
+            ctx.restore();
+        }
+
+        for(var b of bullets) {
+            ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.angle); 
+            if (b.type === 'laser') {
+                ctx.globalAlpha = b.life / 60; 
+                ctx.shadowBlur = 10; ctx.shadowColor = b.color; ctx.fillStyle = b.color; ctx.fillRect(-b.w/2, 0, b.w, b.h); 
+            } else {
+                ctx.shadowBlur = 10; ctx.shadowColor = '#ff6b81'; ctx.fillStyle = '#ff6b81';
+                ctx.beginPath(); ctx.moveTo(0, -10); ctx.lineTo(-5, 5); ctx.lineTo(0, 2); ctx.lineTo(5, 5); ctx.fill();
+                ctx.beginPath(); ctx.fillStyle='orange'; ctx.arc(0, 6, 3 + Math.random()*2, 0, Math.PI*2); ctx.fill();
+            }
+            ctx.restore();
+        }
+        ctx.shadowBlur = 0; ctx.globalAlpha = 1.0;
+
+        ctx.globalCompositeOperation = 'lighter'; 
+        for(var part of shooterParticles) { 
+            ctx.globalAlpha = part.life; 
+            if (part.type === 'wave') {
+                ctx.strokeStyle = part.color; ctx.lineWidth = 5 * part.life;
+                ctx.beginPath(); ctx.arc(part.x, part.y, part.size + (1.0 - part.life) * 50, 0, Math.PI*2); ctx.stroke();
+            } else {
+                ctx.fillStyle = part.color; ctx.beginPath(); ctx.arc(part.x, part.y, part.size, 0, Math.PI*2); ctx.fill(); 
+            }
+        }
+        ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1.0;
+
+        for(var ft of floatingTexts) { ctx.globalAlpha = ft.life; ctx.fillStyle = ft.color; ctx.font = "bold 40px Jua"; ctx.textAlign = "center"; ctx.shadowColor = "black"; ctx.shadowBlur = 5; ctx.fillText(ft.text, ft.x, ft.y); ctx.shadowBlur = 0; }
+        ctx.globalAlpha = 1.0;
+
+        for(var p of pollutants) {
+            ctx.save();
+            if (p.hitTimer > 0) {
+                p.hitTimer--;
+                ctx.globalAlpha = 0.5; ctx.fillStyle = 'white';
+                ctx.beginPath(); ctx.arc(p.x + p.size/2, p.y + p.size/2, p.size/2, 0, Math.PI*2); ctx.fill();
+                ctx.globalAlpha = 1.0;
+            }
+            ctx.font = "bold " + (p.size * 0.6) + "px sans-serif"; ctx.fillStyle = p.color; ctx.shadowBlur = 5; ctx.shadowColor = p.color; ctx.fillText(p.text, p.x + p.size/2, p.y + p.size/2);
+            ctx.font = "12px sans-serif"; ctx.fillStyle = "white"; ctx.shadowBlur = 0; ctx.fillText(p.name, p.x + p.size/2, p.y + p.size/2 + 20);
+            
+            if (p.maxHp > 1) {
+                var barW = p.size * 0.8; var barH = 6;
+                ctx.fillStyle = "rgba(0,0,0,0.5)"; ctx.fillRect(p.x + p.size*0.1, p.y - 10, barW, barH);
+                ctx.fillStyle = "#2ecc71"; ctx.fillRect(p.x + p.size*0.1, p.y - 10, barW * (p.hp / p.maxHp), barH);
+            }
+            ctx.restore();
+        }
+        drawLevelMessage();
+    }
+
+    function drawCoolTurret(x, y, size) {
+        var cx = x + size/2; var cy = y + size/2;
+        ctx.save(); ctx.translate(cx, cy);
+        var coreColor = '#00ffff'; if (currentLevel >= 3) coreColor = '#f1c40f'; if (currentLevel >= 6) coreColor = '#9b59b6'; if (currentLevel >= 10) coreColor = '#e74c3c';
+        var baseGrad = ctx.createLinearGradient(-30, 0, 30, 0); baseGrad.addColorStop(0, '#434343'); baseGrad.addColorStop(0.5, '#868f96'); baseGrad.addColorStop(1, '#434343'); ctx.fillStyle = baseGrad; ctx.beginPath(); ctx.arc(0, 20, 30, 0, Math.PI, true); ctx.fill();
+        var barrelGrad = ctx.createLinearGradient(-15, 0, 15, 0); barrelGrad.addColorStop(0, '#243949'); barrelGrad.addColorStop(0.5, '#517fa4'); barrelGrad.addColorStop(1, '#243949'); ctx.fillStyle = barrelGrad; ctx.fillRect(-12, -30, 24, 50);
+        ctx.shadowBlur = 20; ctx.shadowColor = coreColor; ctx.fillStyle = coreColor; ctx.beginPath(); ctx.arc(0, 0, 8, 0, Math.PI*2); ctx.fill();
+        ctx.strokeStyle = coreColor; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(0, -30, 12, 4, 0, 0, Math.PI*2); ctx.stroke();
+        if (missileCount > 0) { ctx.fillStyle = '#ff6b81'; ctx.fillRect(-35, 0, 10, 20); ctx.fillRect(25, 0, 10, 20); }
+        ctx.restore();
+    }
+
+    // --- [4] 에코 정화 링크 (사천성) ---
+    function initSichuanLayout() {
+        var marginX = 10; var headerSpace = 150; var footerSpace = 100;
+        var availableW = Math.max(100, screenWidth - (marginX*2)); var availableH = Math.max(100, screenHeight - (headerSpace + footerSpace));
+        var maxW = availableW / scCols; var maxH = availableH / scRows;
+        scTileSize = Math.max(20, Math.min(maxW, maxH) * 0.95);
+        scOffsetX = (screenWidth - (scTileSize * scCols)) / 2;
+        scOffsetY = Math.max(80, headerSpace + (availableH - (scTileSize * scRows)) / 2);
+    }
+
+    function initSichuanLevel() {
+        var deck = [];
+        for(var i=0; i<4; i++) {
+            for(var pair of scPairs) {
+                deck.push({ id: pair.id, type: 'p', text: pair.p, color: pair.color }); 
+                deck.push({ id: pair.id, type: 'c', text: pair.c, color: pair.color }); 
+            }
+        }
+        deck.sort(() => Math.random() - 0.5);
+
+        scGrid = [];
+        for(var x=0; x<scCols; x++) {
+            scGrid[x] = [];
+            for(var y=0; y<scRows; y++) {
+                scGrid[x][y] = deck.pop();
+            }
+        }
+        scSelected = null; scPath = null; scHintMatch = null; scRemoving = null;
+        if (!hasPossibleScMatch()) doScShuffle();
+    }
+
+    function isScEmpty(x, y) {
+        if (x < 0 || x >= scCols || y < 0 || y >= scRows) return true; 
+        return scGrid[x][y] === null;
+    }
+
+    function getScReachable(x, y) {
+        var pts = [{x:x, y:y}];
+        for(var i=y-1; i>=-1; i--) { if(isScEmpty(x,i)) pts.push({x:x,y:i}); else break; } 
+        for(var i=y+1; i<=scRows; i++) { if(isScEmpty(x,i)) pts.push({x:x,y:i}); else break; } 
+        for(var i=x-1; i>=-1; i--) { if(isScEmpty(i,y)) pts.push({x:i,y:y}); else break; } 
+        for(var i=x+1; i<=scCols; i++) { if(isScEmpty(i,y)) pts.push({x:i,y:y}); else break; } 
+        return pts;
+    }
+
+    function isScClearX(y, x1, x2) {
+        var minX = Math.min(x1, x2); var maxX = Math.max(x1, x2);
+        for(var x = minX + 1; x < maxX; x++) { if(!isScEmpty(x, y)) return false; }
+        return true;
+    }
+
+    function isScClearY(x, y1, y2) {
+        var minY = Math.min(y1, y2); var maxY = Math.max(y1, y2);
+        for(var y = minY + 1; y < maxY; y++) { if(!isScEmpty(x, y)) return false; }
+        return true;
+    }
+
+    function checkScMatch(x1, y1, x2, y2) {
+        var t1 = scGrid[x1][y1]; var t2 = scGrid[x2][y2];
+        if (!t1 || !t2) return null;
+        if (t1.id !== t2.id || t1.type === t2.type) return null; 
+
+        var p1 = {x:x1, y:y1}; var p2 = {x:x2, y:y2};
+        var r1 = getScReachable(p1.x, p1.y); var r2 = getScReachable(p2.x, p2.y);
+        
+        for(var l1 of r1) {
+            for(var l2 of r2) {
+                if (l1.x === l2.x && isScClearY(l1.x, l1.y, l2.y)) return [p1, l1, l2, p2];
+                if (l1.y === l2.y && isScClearX(l1.y, l1.x, l2.x)) return [p1, l1, l2, p2];
+            }
+        }
+        return null;
+    }
+
+    function hasPossibleScMatch() {
+        for(var x1=0; x1<scCols; x1++) {
+            for(var y1=0; y1<scRows; y1++) {
+                if(!scGrid[x1][y1]) continue;
+                for(var x2=0; x2<scCols; x2++) {
+                    for(var y2=0; y2<scRows; y2++) {
+                        if(!scGrid[x2][y2] || (x1===x2 && y1===y2)) continue;
+                        var path = checkScMatch(x1, y1, x2, y2);
+                        if(path) return [ {x:x1,y:y1}, path, {x:x2,y:y2} ];
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    function doScShuffle() {
+        var tiles = [];
+        for(var x=0; x<scCols; x++) {
+            for(var y=0; y<scRows; y++) {
+                if(scGrid[x][y]) tiles.push(scGrid[x][y]);
+            }
+        }
+        if(tiles.length === 0) return;
+        
+        tiles.sort(() => Math.random() - 0.5);
+        var idx = 0;
+        for(var x=0; x<scCols; x++) {
+            for(var y=0; y<scRows; y++) {
+                if(scGrid[x][y] !== null) scGrid[x][y] = tiles[idx++];
+            }
+        }
+        if(!hasPossibleScMatch()) doScShuffle(); 
+        
+        scHintMatch = null;
+        createFloatingText(screenWidth/2, screenHeight/2, "🔄 섞기!", "#f1c40f");
+    }
+
+    function checkScWin() {
+        for(var x=0; x<scCols; x++) {
+            for(var y=0; y<scRows; y++) {
+                if(scGrid[x][y]) return false;
+            }
+        }
+        return true;
+    }
+
+    function updateSichuan() {
+        frameCount++;
+        if (frameCount % 60 === 0) {
+            gameTimeLeft--; 
+            var tVal = document.getElementById('timerVal');
+            if(tVal) tVal.innerText = gameTimeLeft;
+            if (gameTimeLeft <= 0) gameOver("시간 초과!", "정화 실패");
+        }
+        
+        for(var i = 0; i < shooterParticles.length; i++) {
+            var p = shooterParticles[i]; p.x += p.vx; p.y += p.vy; p.life -= 0.05;
+            if(p.life <= 0) p.dead = true;
+        }
+        shooterParticles = shooterParticles.filter(p => !p.dead);
+        
+        for(var i = 0; i < floatingTexts.length; i++) {
+            var ft = floatingTexts[i]; ft.y -= 1; ft.life -= 0.02;
+            if(ft.life <= 0) ft.dead = true;
+        }
+        floatingTexts = floatingTexts.filter(ft => !ft.dead);
+
+        if (scPathTimer > 0) {
+            scPathTimer--;
+            if (scPathTimer === 0) {
+                scPath = null;
+                if (scRemoving) {
+                    var t1 = scRemoving[0]; var t2 = scRemoving[1];
+                    if (scGrid[t1.x] && scGrid[t1.x][t1.y]) {
+                        createExplosion(scOffsetX + t1.x*scTileSize + scTileSize/2, scOffsetY + t1.y*scTileSize + scTileSize/2, scGrid[t1.x][t1.y].color);
+                        createExplosion(scOffsetX + t2.x*scTileSize + scTileSize/2, scOffsetY + t2.y*scTileSize + scTileSize/2, scGrid[t2.x][t2.y].color);
+                        scGrid[t1.x][t1.y] = null;
+                        scGrid[t2.x][t2.y] = null;
+                    }
+                    scRemoving = null;
+                    score += 50; 
+                    var scoreEl = document.getElementById('scoreVal');
+                    if (scoreEl) scoreEl.innerText = score;
+                }
+                
+                if(checkScWin()) {
+                    score += 500; currentLevel++; 
+                    gameTimeLeft = Math.max(15, 65 - (currentLevel * 5)); 
+                    
+                    var lvlEl = document.getElementById('lvlVal'); if(lvlEl) lvlEl.innerText = currentLevel;
+                    var timerEl = document.getElementById('timerVal'); if(timerEl) timerEl.innerText = gameTimeLeft;
+                    var scoreEl2 = document.getElementById('scoreVal'); if(scoreEl2) scoreEl2.innerText = score;
+
+                    showLevelMsg(); initSichuanLevel();
+                } else if(!hasPossibleScMatch()) {
+                    doScShuffle();
+                }
+            }
+        }
+        if (isHinting) { hintTimer--; if(hintTimer <= 0) { isHinting = false; scHintMatch = null; } }
+    }
+
+    function drawTileText(text, cx, cy) {
+        var lines = text.split('\n');
+        if (lines.length === 1) {
+            var ratio = text.length > 4 ? 0.18 : 0.22;
+            ctx.font = "bold " + (scTileSize * ratio) + "px Jua";
+            ctx.fillText(text, cx, cy);
+        } else {
+            ctx.font = "bold " + (scTileSize * 0.2) + "px Jua";
+            ctx.fillText(lines[0], cx, cy - scTileSize * 0.12);
+            ctx.font = "bold " + (scTileSize * 0.14) + "px Jua";
+            ctx.fillText(lines[1], cx, cy + scTileSize * 0.18);
+        }
+    }
+
+    function drawSichuan() {
+        ctx.clearRect(0,0,canvas.width, canvas.height); 
+        ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        for(var x=0; x<scCols; x++) {
+            for(var y=0; y<scRows; y++) {
+                var t = scGrid[x][y];
+                if(!t) continue;
+
+                var tx = scOffsetX + x*scTileSize;
+                var ty = scOffsetY + y*scTileSize;
+                var margin = 3;
+                var tw = scTileSize - margin*2;
+                var th = scTileSize - margin*2;
+                
+                ctx.save();
+                ctx.translate(tx + margin, ty + margin);
+                
+                ctx.fillStyle = '#bdc3c7';
+                drawRoundRect(ctx, 0, 4, tw, th, 8);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                drawRoundRect(ctx, 0, 0, tw, th, 8);
+                ctx.fill();
+
+                ctx.globalAlpha = 0.15;
+                ctx.fillStyle = t.color;
+                drawRoundRect(ctx, 0, 0, tw, th, 8);
+                ctx.fill();
+                ctx.globalAlpha = 1.0;
+
+                ctx.strokeStyle = t.color;
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                if (scSelected && scSelected.x === x && scSelected.y === y) {
+                    ctx.fillStyle = 'rgba(241, 196, 15, 0.4)';
+                    drawRoundRect(ctx, 0, 0, tw, th, 8);
+                    ctx.fill();
+                    ctx.strokeStyle = '#f1c40f'; ctx.lineWidth = 5;
+                    ctx.stroke();
+                }
+
+                if (isHinting && scHintMatch && ((scHintMatch[0].x===x && scHintMatch[0].y===y) || (scHintMatch[2].x===x && scHintMatch[2].y===y))) {
+                    if (frameCount % 30 < 15) {
+                        ctx.fillStyle = 'rgba(46, 204, 113, 0.5)';
+                        drawRoundRect(ctx, 0, 0, tw, th, 8);
+                        ctx.fill();
+                    }
+                }
+
+                ctx.fillStyle = '#2c3e50';
+                ctx.textAlign = "center"; ctx.textBaseline = "middle";
+                drawTileText(t.text, tw/2, th/2);
+                ctx.restore();
+            }
+        }
+
+        if (scPath) {
+            ctx.save();
+            ctx.strokeStyle = '#f1c40f';
+            ctx.lineWidth = 8;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.shadowColor = '#e67e22'; ctx.shadowBlur = 15;
+            
+            ctx.beginPath();
+            ctx.moveTo(scOffsetX + scPath[0].x*scTileSize + scTileSize/2, scOffsetY + scPath[0].y*scTileSize + scTileSize/2);
+            for(var i=1; i<scPath.length; i++) {
+                 ctx.lineTo(scOffsetX + scPath[i].x*scTileSize + scTileSize/2, scOffsetY + scPath[i].y*scTileSize + scTileSize/2);
+            }
+            ctx.stroke();
+            
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 3;
+            ctx.shadowBlur = 0;
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        ctx.globalCompositeOperation = 'lighter'; 
+        for(var part of shooterParticles) { 
+            ctx.globalAlpha = part.life; 
+            if (part.type === 'wave') {
+                ctx.strokeStyle = part.color; ctx.lineWidth = 5 * part.life;
+                ctx.beginPath(); ctx.arc(part.x, part.y, part.size + (1.0 - part.life) * 50, 0, Math.PI*2); ctx.stroke();
+            } else {
+                ctx.fillStyle = part.color; ctx.beginPath(); ctx.arc(part.x, part.y, part.size, 0, Math.PI*2); ctx.fill(); 
+            }
+        }
+        ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1.0;
+
+        for(var ft of floatingTexts) { ctx.globalAlpha = ft.life; ctx.fillStyle = ft.color; ctx.font = "bold 40px Jua"; ctx.textAlign = "center"; ctx.shadowColor = "black"; ctx.shadowBlur = 5; ctx.fillText(ft.text, ft.x, ft.y); ctx.shadowBlur = 0; }
+        ctx.globalAlpha = 1.0;
+
+        drawLevelMessage();
+    }
+
+    function showLevelMsg() { Sound.levelUp(); showLevelMessageTimer = 50; }
+    function drawLevelMessage() {
+        if (showLevelMessageTimer > 0) {
+            showLevelMessageTimer--;
+            ctx.save();
+            ctx.font = 'bold 40px Jua'; ctx.fillStyle = '#ffeb3b'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.strokeStyle = 'black'; ctx.lineWidth = 4;
+            var yPos = canvas.height * 0.2; 
+            ctx.strokeText("⚡ LEVEL UP! ⚡", canvas.width/2, yPos);
+            ctx.fillText("⚡ LEVEL UP! ⚡", canvas.width/2, yPos);
+            ctx.restore();
+        }
+    }
+
+    function showHint() { 
+        if(isHinting) return; 
+        if (currentGameMode === 'pipe') {
+            isHinting = true; hintTimer = 60; 
+        } else if (currentGameMode === 'sichuan') {
+            var match = hasPossibleScMatch();
+            if(match) {
+                scHintMatch = match;
+                isHinting = true;
+                hintTimer = 90;
+            } else {
+                doScShuffle();
+            }
+        }
+    }
+
+    var lastTouchTime = 0;
+    function handleInputStart(x, y) { 
+        if (!gameRunning) return; 
+        if (currentGameMode === 'sorting' || currentGameMode === 'shooter') { 
+            var hitBuffer = 30; if (x >= player.x - hitBuffer && x <= player.x + player.size + hitBuffer && y >= player.y - hitBuffer && y <= player.y + player.size + hitBuffer) { isDragging = true; dragOffsetX = x - player.x; }
+        } else if (currentGameMode === 'pipe') { 
+            if (x >= pipeOffsetX && x < pipeOffsetX + gridCols*cellSize && y >= pipeOffsetY && y < pipeOffsetY + gridRows*cellSize) { 
+                var gx = Math.floor((x - pipeOffsetX) / cellSize); var gy = Math.floor((y - pipeOffsetY) / cellSize); grid[gx][gy].rotation = (grid[gx][gy].rotation + 90) % 360; 
+                Sound.click(); 
+            } 
+        } else if (currentGameMode === 'sichuan') {
+            if(scPathTimer > 0) return; 
+            
+            var gx = Math.floor((x - scOffsetX) / scTileSize);
+            var gy = Math.floor((y - scOffsetY) / scTileSize);
+            
+            if (gx >= 0 && gx < scCols && gy >= 0 && gy < scRows) {
+                if (scGrid[gx][gy]) { 
+                    Sound.click(); 
+                    if (!scSelected) {
+                        scSelected = {x:gx, y:gy};
+                    } else {
+                        if (scSelected.x === gx && scSelected.y === gy) {
+                            scSelected = null; 
+                        } else {
+                            var path = checkScMatch(scSelected.x, scSelected.y, gx, gy);
+                            if (path) {
+                                scPath = path; 
+                                scPathTimer = 15; 
+                                scRemoving = [scSelected, {x:gx, y:gy}]; 
+                                scSelected = null; 
+                                isHinting = false; 
+                                Sound.score(); 
+                            } else {
+                                scSelected = {x:gx, y:gy}; 
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    function handleInputMove(x, y) {
+        if (!gameRunning) return;
+        if ((currentGameMode === 'sorting' || currentGameMode === 'shooter') && isDragging) {
+            player.x = x - dragOffsetX; if (player.x < 0) player.x = 0; if (player.x > canvas.width - player.size) player.x = canvas.width - player.size;
+        }
+    }
+    function stopInput() { isDragging = false; inputLeft = false; inputRight = false; }
+    
+    window.addEventListener('mousedown', function(e) { if (Date.now() - lastTouchTime < 500) return; handleInputStart(e.clientX, e.clientY); });
+    window.addEventListener('mousemove', function(e) { handleInputMove(e.clientX, e.clientY); });
+    window.addEventListener('mouseup', stopInput);
+    window.addEventListener('touchstart', function(e) { if (!gameRunning) return; lastTouchTime = Date.now(); var t = e.touches[0]; handleInputStart(t.clientX, t.clientY); }, {passive: false});
+    window.addEventListener('touchmove', function(e) { if (!gameRunning) return; e.preventDefault(); var t = e.touches[0]; handleInputMove(t.clientX, t.clientY); }, {passive: false});
+    window.addEventListener('touchend', stopInput);
+    window.addEventListener('keydown', function(e) { if(e.keyCode === 37) inputLeft = true; if(e.keyCode === 39) inputRight = true; });
+    window.addEventListener('keyup', function(e) { if(e.keyCode === 37) inputLeft = false; if(e.keyCode === 39) inputRight = false; });
+
+    function saveScore(newScore) { 
+        var key = 'gimpoScores'; if (currentGameMode === 'pipe') key = 'gimpoPipeScores'; if (currentGameMode === 'shooter') key = 'gimpoShooterScores'; if (currentGameMode === 'sichuan') key = 'gimpoSichuanScores';
+        var scores = JSON.parse(safeGetItem(key) || "[]"); var dateStr = new Date().toLocaleDateString(); 
+        scores.push({ score: newScore, date: dateStr, level: currentLevel }); scores.sort(function(a, b) { return b.score - a.score; }); scores = scores.slice(0, 10); safeSetItem(key, JSON.stringify(scores)); 
+    }
+    function showRanking() { 
+        var key = 'gimpoScores'; if (currentGameMode === 'pipe') key = 'gimpoPipeScores'; if (currentGameMode === 'shooter') key = 'gimpoShooterScores'; if (currentGameMode === 'sichuan') key = 'gimpoSichuanScores';
+        var scores = JSON.parse(safeGetItem(key) || "[]"); var html = ""; 
+        if (scores.length === 0) html = "<div style='text-align:center; padding:10px;'>기록 없음</div>"; 
+        else { 
+            var len = Math.min(scores.length, 3);
+            for (var i = 0; i < len; i++) { 
+                var text = scores[i].score + "점"; if ((currentGameMode === 'pipe' || currentGameMode === 'sichuan') && scores[i].level) text = "Lv." + scores[i].level + " (" + scores[i].score + ")"; html += "<div class='rank-item'><span>" + (i+1) + "위</span><span>" + text + "</span></div>"; 
+            } 
+        } 
+        rankBoard.innerHTML = html; 
+    }
+    
+    function showRandomEcoQuote() {
+        var qArea = document.getElementById('eco-quote');
+        if(qArea) {
+            var randomQuote = CONFIG.ecoQuotes[Math.floor(Math.random() * CONFIG.ecoQuotes.length)];
+            qArea.innerHTML = randomQuote;
+        }
+    }
+
+    function gameClear() { 
+        document.getElementById('ingame-home-btn').style.display = 'none'; 
+        gameRunning = false; score += 10000; saveScore(score); showRanking(); showRandomEcoQuote();
+        uiLayer.style.display = 'flex'; uiLayer.style.background = 'rgba(0,0,0,0.95)'; 
+        gameTitle.innerText = "🏆 명예의 전당 등극! 🏆"; 
+        gameGuide.innerHTML = "<span style='color:#f1c40f; font-size:28px; font-weight:bold;'>축하합니다!</span><br>모든 레벨(38)을 클리어했습니다!<br>최종 점수: " + score; 
+        rankArea.style.display = 'flex'; startBtnArea.style.display = 'none'; gameoverBtnArea.style.display = 'block'; 
+    }
+
+    function gameOver(reason1, reason2) { 
+        document.getElementById('ingame-home-btn').style.display = 'none';
+        Sound.error(); 
+        gameRunning = false; if(currentGameMode === 'pipe' || currentGameMode === 'sichuan') score += (currentLevel - 1) * 1000; 
+        saveScore(score); showRanking(); showRandomEcoQuote();
+        uiLayer.style.display = 'flex'; uiLayer.style.background = 'rgba(0,0,0,0.95)'; 
+        var titleText = "게임 오버"; if(currentGameMode === 'sorting') titleText = "혼입 적발!"; else if(currentGameMode === 'pipe') titleText = "온수 공급 실패"; else if(currentGameMode === 'shooter') titleText = "환경 오염 발생"; else if(currentGameMode === 'sichuan') titleText = "정화 시간 초과";
+        gameTitle.innerText = "🚨 " + titleText; 
+        gameGuide.innerHTML = "<span style='color:#ff4444; font-size:24px; font-weight:bold;'>[" + reason1 + " " + reason2 + "]</span><br><br>최종 점수: " + score; 
+        rankArea.style.display = 'flex'; startBtnArea.style.display = 'none'; gameoverBtnArea.style.display = 'block'; 
+    }
+</script>
+</body>
+</html>
