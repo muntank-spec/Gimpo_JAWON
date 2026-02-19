@@ -415,12 +415,27 @@
     function increaseUserCount() { totalPlayCount = parseInt(safeGetItem('gimpoPlayCount') || "0"); totalPlayCount++; safeSetItem('gimpoPlayCount', totalPlayCount); updateMainCounter(); }
     function updateMainCounter() { var count = parseInt(safeGetItem('gimpoPlayCount') || "0"); var el = document.getElementById('mainUserCount'); if(el) el.innerText = count; }
     
+    // [수정] 나가기 버튼 클릭 시 게임 오버 화면(홍보 문구 및 점수 저장)으로 넘어가도록 변경
     function forceQuitGame() {
         Sound.click();
-        if (confirm("게임을 종료하고 메뉴로 돌아가시겠습니까?")) {
-            gameRunning = false;
+        if (confirm("게임을 중단하시겠습니까? 지금까지의 기록이 명예의 전당에 저장됩니다.")) {
             document.getElementById('ingame-home-btn').style.display = 'none';
-            goHome();
+            gameRunning = false; 
+            
+            if(currentGameMode === 'pipe' || currentGameMode === 'sichuan') score += (currentLevel - 1) * 1000; 
+            
+            saveScore(score); 
+            showRanking(); 
+            showRandomEcoQuote();
+            
+            uiLayer.style.display = 'flex'; 
+            uiLayer.style.background = 'rgba(0,0,0,0.95)'; 
+            gameTitle.innerText = "🛑 미션 중단"; 
+            gameGuide.innerHTML = "<span style='color:#3498db; font-size:24px; font-weight:bold;'>[ 플레이 종료 ]</span><br><br>최종 점수: " + score; 
+            
+            rankArea.style.display = 'flex'; 
+            startBtnArea.style.display = 'none'; 
+            gameoverBtnArea.style.display = 'block'; 
         }
     }
 
@@ -826,13 +841,14 @@
 
         var totalWeapons = laserCount + missileCount; 
         
-        var spawnRate = Math.max(25, Math.floor(80 - (currentLevel * 1.5) - (totalWeapons * 4))); 
+        // [수정] 스폰율 1.2배 상향 (기존 공식을 1.2로 나누어 쿨타임 감소. 최소 20프레임)
+        var baseSpawnRate = 80 - (currentLevel * 1.5) - (totalWeapons * 4);
+        var spawnRate = Math.max(20, Math.floor(baseSpawnRate / 1.2)); 
         
         if (frameCount % spawnRate === 0) {
             var pType = pollutantTypes[Math.floor(Math.random() * pollutantTypes.length)];
             var size = 60; var x = Math.random() * (canvas.width - size);
             
-            // [수정] 적 최대 체력 10칸 (레벨 2당 1씩 증가)
             var hp = Math.min(10, 1 + Math.floor((currentLevel - 1) / 2));
             var dropSpeed = Math.min(4.5, 1.5 + (currentLevel * 0.1) + (Math.random() * 1.0));
             var swaySpeed = (currentLevel >= 2) ? (Math.random() - 0.5) * Math.min(3, currentLevel * 0.3) : 0;
