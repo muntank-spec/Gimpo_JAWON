@@ -1681,25 +1681,35 @@
         rankArea.style.display = 'flex'; startBtnArea.style.display = 'none'; gameoverBtnArea.style.display = 'block'; 
     }
 </script>
-    // [추가] 실행 시 캐시를 비워 새로운 버전을 강제로 가져오게 함
+// [사파리/웹앱 대응 업데이트 로직]
 if ('serviceWorker' in navigator) {
-    // 1. 기존 파일 캐시 삭제 (카운터 데이터는 유지됨)
+    // 1. 서비스 워커 등록 시 버전을 붙여 사파리가 새 파일로 인식하게 함
+    navigator.serviceWorker.register('./service-worker.js?v=2').then(reg => {
+        reg.update(); // 업데이트 체크 강제 실행
+    });
+
+    // 2. 새로운 서비스 워커가 설치되면 페이지를 즉시 새로고침함
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+            window.location.reload();
+            refreshing = true;
+        }
+    });
+
+    // 3. 기존 파일 캐시 정리 (카운터 등 LocalStorage 데이터는 유지됨)
     caches.keys().then(cacheNames => {
         cacheNames.forEach(cacheName => {
-            if (cacheName !== 'gimpo-center-v1') { // 현재 버전이 아니면 삭제
+            if (cacheName !== 'gimpo-center-v2') {
                 caches.delete(cacheName);
             }
         });
     });
-    
-    // 2. 서비스 워커가 업데이트가 있는지 체크
-    navigator.serviceWorker.ready.then(registration => {
-        registration.update();
-    });
-}
+}    
 </body>
 
 </html>
+
 
 
 
