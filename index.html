@@ -1683,12 +1683,12 @@
 </script>
 // [사파리/웹앱 대응 업데이트 로직]
 if ('serviceWorker' in navigator) {
-    // 1. 서비스 워커 등록 시 버전을 붙여 사파리가 새 파일로 인식하게 함
+    // 1. 서비스 워커 등록 (버전 쿼리 추가로 사파리 캐시 무력화)
     navigator.serviceWorker.register('./service-worker.js?v=2').then(reg => {
-        reg.update(); // 업데이트 체크 강제 실행
+        reg.update(); 
     });
 
-    // 2. 새로운 서비스 워커가 설치되면 페이지를 즉시 새로고침함
+    // 2. 업데이트 감지 시 자동 새로고침
     let refreshing = false;
     navigator.serviceWorker.addEventListener('controllerchange', () => {
         if (!refreshing) {
@@ -1697,7 +1697,7 @@ if ('serviceWorker' in navigator) {
         }
     });
 
-    // 3. 기존 파일 캐시 정리 (카운터 등 LocalStorage 데이터는 유지됨)
+    // 3. 구버전 캐시 삭제 (방문자 카운터 LocalStorage는 안전함)
     caches.keys().then(cacheNames => {
         cacheNames.forEach(cacheName => {
             if (cacheName !== 'gimpo-center-v2') {
@@ -1705,10 +1705,11 @@ if ('serviceWorker' in navigator) {
             }
         });
     });
-}    
+}
 </body>
 
 </html>
+
 
 
 
