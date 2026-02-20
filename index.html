@@ -33,6 +33,7 @@
             display: none; flex-direction: column; 
             align-items: center; justify-content: center; text-align: center;
             z-index: 100; overflow-y: auto; -webkit-overflow-scrolling: touch;
+            box-sizing: border-box;
         }
         
         #main-menu { display: flex; padding-top: 20px; box-sizing: border-box; } 
@@ -43,6 +44,34 @@
             z-index: 10; letter-spacing: 2px; font-weight: 900; word-break: keep-all; line-height: 1.2;
         }
         #logoCanvas { margin-bottom: 10px; margin-top: 20px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2)); }
+
+        /* [신규] 주제가 말풍선 애니메이션 버튼 */
+        .theme-song-bubble {
+            position: absolute;
+            top: -15px;
+            right: -30px;
+            background: #ff4757;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            animation: bounce-bubble 1.5s infinite;
+            border: 2px solid white;
+            z-index: 20;
+            white-space: nowrap;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .theme-song-bubble::after {
+            content: ''; position: absolute; bottom: -6px; left: 20px;
+            border-width: 6px 6px 0; border-style: solid; border-color: #ff4757 transparent transparent transparent; display: block; width: 0;
+        }
+        @keyframes bounce-bubble {
+            0%, 100% { transform: translateY(0) rotate(3deg); }
+            50% { transform: translateY(-8px) rotate(-3deg); }
+        }
 
         .white-panel {
             background: rgba(255, 255, 255, 0.95); border-radius: 20px;
@@ -132,6 +161,53 @@
             #orientation-warning { display: flex !important; }
             .page, #gameCanvas, #background-shapes, #game-ui-layer { display: none !important; }
         }
+
+        /* --- 카툰 공정 흐름도용 스타일 --- */
+        .process-step {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 15px;
+            margin: 5px 0;
+            width: 85%;
+            max-width: 320px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.1s;
+            border: 3px solid #fff;
+        }
+        .process-step:active { transform: scale(0.98); }
+        .step-icon { font-size: 45px; margin-bottom: 5px; }
+        .step-title { font-size: 20px; font-weight: bold; color: #2c3e50; letter-spacing: -0.5px;}
+        
+        /* 말풍선 CSS */
+        .speech-bubble {
+            display: none;
+            position: relative;
+            background: #f8f9fa;
+            color: #2c3e50;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 15px;
+            margin-top: 15px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+            text-align: left;
+            line-height: 1.4;
+            border: 2px solid #bdc3c7; 
+            word-break: keep-all;
+        }
+        .speech-bubble::before {
+            content: ""; position: absolute; bottom: 100%; left: 50%; margin-left: -10px;
+            border-width: 10px; border-style: solid; border-color: transparent transparent #bdc3c7 transparent;
+        }
+        .speech-bubble::after {
+            content: ""; position: absolute; bottom: 100%; left: 50%; margin-left: -7px;
+            border-width: 7px; border-style: solid; border-color: transparent transparent #f8f9fa transparent;
+        }
+        .process-step.active .speech-bubble { display: block; animation: popDown 0.2s ease-out; }
+        @keyframes popDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .step-arrow { font-size: 24px; color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); margin: 3px 0; }
     </style>
 </head>
 <body>
@@ -152,7 +228,13 @@
         <div class="top-counter">🌱 환경에 다가간 횟수: <span id="mainUserCount">0</span>회</div>
         
         <canvas id="logoCanvas" width="200" height="160"></canvas>
-        <h1 class="main-logo">김포시<br>자원화센터</h1>
+        
+        <div style="position: relative;">
+            <h1 class="main-logo" style="margin-bottom: 20px;">김포시<br>자원화센터</h1>
+            <div class="theme-song-bubble" onclick="Sound.click(); window.open('https://youtube.com/shorts/F0coCr8baLE?si=Uw08HIWJy2EaY-od', '_blank')">
+                🎵 주제가
+            </div>
+        </div>
         
         <button class="btn btn-info" onclick="Sound.click(); goPage('notice')">📢 이용 안내사항</button>
         <button class="btn btn-promo" onclick="Sound.click(); goPage('promo')">🏢 시설 홍보</button>
@@ -164,9 +246,8 @@
         </div>
     </div>
 
-    <div id="game-select-page" class="page">
+    <div id="game-select-page" class="page" style="justify-content: flex-start; padding-top: 110px;">
         <button class="btn btn-home" onclick="Sound.click(); goHome()">🏠 홈</button>
-        <div style="height: 60px;"></div>
         <div class="content-title">🎮 게임을 선택하세요</div>
         <button class="btn btn-select-sort" onclick="Sound.click(); selectGame('sorting')">
             <div style="text-align:left;">
@@ -196,20 +277,80 @@
             </div>
             <div style="font-size:24px;">👉</div>
         </button>
+        <div style="height: 50px;"></div>
     </div>
 
-    <div id="notice-page" class="page">
+    <div id="notice-page" class="page" style="justify-content: flex-start; padding-top: 110px;">
         <button class="btn btn-home" onclick="Sound.click(); goHome()">🏠 홈</button>
-        <div style="height: 60px;"></div>
         <div class="content-title">📢 이용 안내사항</div>
         <div id="notice-content" class="content-box white-panel"></div>
+        <div style="height: 50px;"></div>
     </div>
 
-    <div id="promo-page" class="page">
+    <div id="promo-page" class="page" style="justify-content: flex-start; padding-top: 110px;">
         <button class="btn btn-home" onclick="Sound.click(); goHome()">🏠 홈</button>
-        <div style="height: 60px;"></div>
         <div class="content-title">🏢 깨끗한 김포, 맑은 에너지</div>
         <div id="promo-content" class="content-box white-panel"></div>
+        <div style="height: 50px;"></div>
+    </div>
+
+    <div id="process-page" class="page" style="justify-content: flex-start; padding-top: 100px;">
+        <button class="btn btn-home" onclick="Sound.click(); goPage('promo')">🔙 뒤로</button>
+        
+        <div class="content-title" style="margin-bottom:5px;">🏭 자원화센터 세부 공정</div>
+        <div style="font-size:15px; color:#fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); margin-bottom:15px;">(각 단계를 터치하면 설명이 뿅! 나옵니다)</div>
+        
+        <div class="process-flow-container" style="width:100%; display:flex; flex-direction:column; align-items:center; padding-bottom: 100px;">
+            
+            <div class="process-step" style="border-color: #8e44ad;" onclick="toggleBubble(this, '#8e44ad')">
+                <div class="step-icon">🚚🏗️</div>
+                <div class="step-title">1. 반입 및 저장설비</div>
+                <div class="speech-bubble">쓰레기를 반입장 벙커에 모으고, 거대한 크레인으로 잘 섞어서 호퍼로 쏙 넣어요! (악취제거설비도 가동 중입니다)</div>
+            </div>
+            <div class="step-arrow">⬇️</div>
+            
+            <div class="process-step" style="border-color: #e74c3c;" onclick="toggleBubble(this, '#e74c3c')">
+                <div class="step-icon">🔥🌪️</div>
+                <div class="step-title">2. 가스화 및 용융 (1200℃)</div>
+                <div class="speech-bubble">가스화로와 선회용융로를 거쳐 1200℃ 이상의 초고온으로 쓰레기를 완벽하게 태우고 녹여 안전한 슬래그로 만듭니다.</div>
+            </div>
+            <div class="step-arrow">⬇️</div>
+            
+            <div class="process-step" style="border-color: #e67e22;" onclick="toggleBubble(this, '#e67e22')">
+                <div class="step-icon">♨️🏊</div>
+                <div class="step-title">3. 폐열보일러 (에너지 회수)</div>
+                <div class="speech-bubble">펄펄 끓는 연소가스를 냉각시키면서 물을 끓여 증기를 만듭니다. 발생한 증기는 스포츠센터 수영장에 온수를 공급하고 인근 지역난방에 알차게 활용됩니다!</div>
+            </div>
+            <div class="step-arrow">⬇️</div>
+            
+            <div class="process-step" style="border-color: #2ecc71;" onclick="toggleBubble(this, '#2ecc71')">
+                <div class="step-icon">🧪💦</div>
+                <div class="step-title">4. 반건식 반응탑</div>
+                <div class="speech-bubble">소석회(약품) 슬러리를 뿜어서, 연소가스 속 나쁜 산성 가스(염화수소, 황산화물 등)를 중화시키는 1차 정화 구역입니다.</div>
+            </div>
+            <div class="step-arrow">⬇️</div>
+            
+            <div class="process-step" style="border-color: #34495e;" onclick="toggleBubble(this, '#34495e')">
+                <div class="step-icon">😷🧽</div>
+                <div class="step-title">5. 여과집진기</div>
+                <div class="speech-bubble">거대한 미세 필터(백필터)와 활성탄을 이용해, 미세먼지(분진)와 남은 다이옥신을 꼼꼼하게 걸러내는 핵심 정화 장치입니다!</div>
+            </div>
+            <div class="step-arrow">⬇️</div>
+            
+            <div class="process-step" style="border-color: #2980b9;" onclick="toggleBubble(this, '#2980b9')">
+                <div class="step-icon">♻️✨</div>
+                <div class="step-title">6. 선택적 촉매환원탑 (SCR)</div>
+                <div class="speech-bubble">암모니아를 뿌리고 특수 촉매를 통과시켜, 온실가스의 원인 질소산화물(NOx)을 인체에 무해한 물과 질소로 완벽 분해합니다.</div>
+            </div>
+            <div class="step-arrow">⬇️</div>
+            
+            <div class="process-step" style="border-color: #00cec9;" onclick="toggleBubble(this, '#00cec9')">
+                <div class="step-icon">🏭☁️</div>
+                <div class="step-title">7. 유인송풍기 & 굴뚝</div>
+                <div class="speech-bubble">3단계의 철저한 정화를 거쳐 완벽하게 깨끗해진 공기만을 강력한 송풍기로 밀어내어, 굴뚝을 통해 하얀 수증기로 내보냅니다!</div>
+            </div>
+            
+        </div>
     </div>
 
     <div id="game-play-page" class="page" style="display:none; overflow: hidden;">
@@ -247,14 +388,23 @@
             <p>✅ <b style="color:#27ae60;">반입 가능 폐기물 (소각용):</b><br>종량제 봉투에 담긴 가연성 쓰레기, 헌옷, 신발, 가방 등 타는 쓰레기.</p><br>
             <p>❌ <b style="color:#c0392b;">반입 불가 폐기물:</b><br>음식물류, 재활용품(캔, 병, 플라스틱), 불연성(도자기, 유리), 폭발성 위험물.</p>
             <br><hr style="border: 1px dashed #ccc; margin: 10px 0;"><br>
-            <p style="font-size: 16px;">📞 <b style="color:#2c3e50;">문의처 안내:</b><br>
+            <p style="font-size: 16px; line-height: 1.8;">📞 <b style="color:#2c3e50;">문의처 안내:</b><br>
+            <span style="font-size:14px; color:#7f8c8d;">(번호를 터치하면 바로 통화가 연결됩니다)</span><br><br>
             - <b>폐기물 허가/배출:</b> 김포시청 자원순환과<br>
-            - <b>크린넷 키 구입:</b> 브니엘네이처</p>
+              👉 <a href="tel:031-980-2761" style="color:#2980b9; font-weight:bold; text-decoration:none; background:#ecf0f1; padding:4px 10px; border-radius:8px; display:inline-block; margin-top:5px; margin-bottom:10px;">☎ 031-980-2761</a><br>
+            - <b>크린넷 키 구입:</b> 브니엘네이처<br>
+              👉 <a href="tel:032-566-0010" style="color:#2980b9; font-weight:bold; text-decoration:none; background:#ecf0f1; padding:4px 10px; border-radius:8px; display:inline-block; margin-top:5px;">☎ 032-566-0010</a></p>
         `,
         promoText: `
             <p>🌱 <b style="color:#27ae60;">친환경 소각 기술:</b><br>최첨단 오염 방지 시설을 통해 다이옥신 등 유해 물질을 완벽하게 제거합니다.</p><br>
             <p>⚡ <b style="color:#f39c12;">폐기물을 에너지로:</b><br>쓰레기를 태울 때 발생하는 열을 이용하여 스포츠센터에 온수와 냉난방을 하고 남은 열은 지역 난방에 공급합니다.</p><br>
             <p>🏊 <b style="color:#2980b9;">주민과 함께하는 공간:</b><br>수영장, 헬스장 등 주민 편익 시설을 운영하며 지역 사회와 상생합니다.</p>
+            
+            <div style="text-align:center; margin-top:25px;">
+                <button class="btn btn-promo" style="font-size:22px; padding:15px; width:100%; box-shadow:0 4px 10px rgba(0,0,0,0.2);" onclick="Sound.click(); goPage('process')">
+                    🔍 애니메이션 공정흐름도 보기
+                </button>
+            </div>
         `,
         ecoQuotes: [
             "🌱 환경보호는 나 자신부터",
@@ -265,6 +415,27 @@
         ]
     };
     // =========================================================================
+
+    function toggleBubble(element, color) {
+        Sound.click();
+        var isActive = element.classList.contains('active');
+        
+        document.querySelectorAll('.process-step.active').forEach(step => {
+            step.classList.remove('active');
+        });
+        
+        if (!isActive) {
+            element.classList.add('active');
+            var bubble = element.querySelector('.speech-bubble');
+            if(bubble) {
+                bubble.style.borderColor = color;
+            }
+            setTimeout(() => {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 50);
+        }
+    }
+
 
     // --- 🎧 사운드 매니저 ---
     const Sound = {
@@ -415,7 +586,6 @@
     function increaseUserCount() { totalPlayCount = parseInt(safeGetItem('gimpoPlayCount') || "0"); totalPlayCount++; safeSetItem('gimpoPlayCount', totalPlayCount); updateMainCounter(); }
     function updateMainCounter() { var count = parseInt(safeGetItem('gimpoPlayCount') || "0"); var el = document.getElementById('mainUserCount'); if(el) el.innerText = count; }
     
-    // [수정] 나가기 버튼 클릭 시 게임 오버 화면(홍보 문구 및 점수 저장)으로 넘어가도록 변경
     function forceQuitGame() {
         Sound.click();
         if (confirm("게임을 중단하시겠습니까? 지금까지의 기록이 명예의 전당에 저장됩니다.")) {
@@ -444,10 +614,12 @@
         document.getElementById('ingame-home-btn').style.display = 'none';
 
         if(logoAnimId && pageName !== 'main') cancelAnimationFrame(logoAnimId);
+        
         if (pageName === 'game-select') document.getElementById('game-select-page').style.display = 'flex';
         else if (pageName === 'game-play') document.getElementById('game-play-page').style.display = 'block';
         else if (pageName === 'notice') { document.getElementById('notice-page').style.display = 'flex'; increaseUserCount(); }
         else if (pageName === 'promo') { document.getElementById('promo-page').style.display = 'flex'; increaseUserCount(); }
+        else if (pageName === 'process') { document.getElementById('process-page').style.display = 'flex'; }
         else { document.getElementById('main-menu').style.display = 'flex'; updateMainCounter(); startMenuLogo(); }
     }
     function goHome() { gameRunning = false; goPage('main'); }
@@ -841,7 +1013,6 @@
 
         var totalWeapons = laserCount + missileCount; 
         
-        // [수정] 스폰율 1.2배 상향 (기존 공식을 1.2로 나누어 쿨타임 감소. 최소 20프레임)
         var baseSpawnRate = 80 - (currentLevel * 1.5) - (totalWeapons * 4);
         var spawnRate = Math.max(20, Math.floor(baseSpawnRate / 1.2)); 
         
