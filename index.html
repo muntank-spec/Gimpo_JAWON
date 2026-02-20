@@ -230,7 +230,7 @@
         <canvas id="logoCanvas" width="200" height="160"></canvas>
         
         <div style="position: relative;">
-            <h1 class="main-logo" style="margin-bottom: 20px;">김포시<br>자원화센터</h1>
+            <h1 class="main-logo" style="margin-bottom: 20px;">김포시<br>자원회수센터</h1>
             <div class="theme-song-bubble" onclick="Sound.click(); window.open('https://youtube.com/shorts/F0coCr8baLE?si=Uw08HIWJy2EaY-od', '_blank')">
                 🎵 주제가
             </div>
@@ -297,7 +297,7 @@
     <div id="process-page" class="page" style="justify-content: flex-start; padding-top: 100px;">
         <button class="btn btn-home" onclick="Sound.click(); goPage('promo')">🔙 뒤로</button>
         
-        <div class="content-title" style="margin-bottom:5px;">🏭 자원화센터 세부 공정</div>
+        <div class="content-title" style="margin-bottom:5px;">🏭 자원회수센터 세부 공정</div>
         <div style="font-size:15px; color:#fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); margin-bottom:15px;">(각 단계를 터치하면 설명이 뿅! 나옵니다)</div>
         
         <div class="process-flow-container" style="width:100%; display:flex; flex-direction:column; align-items:center; padding-bottom: 100px;">
@@ -408,7 +408,7 @@
         `,
         ecoQuotes: [
             "🌱 환경보호는 나 자신부터",
-            "🏭 자원화센터는 깨끗한 김포를 위해 항상 노력합니다",
+            "🏭 자원회수센터는 깨끗한 김포를 위해 항상 노력합니다",
             "♻️ 올바른 분리수거는 미래를 위한 첫 노력",
             "💧 아껴 쓴 자원, 후대에게 물려줄 소중한 유산입니다",
             "✨ 깨끗한 김포, 맑은 에너지! 우리가 만들어갑니다"
@@ -533,7 +533,6 @@
     document.body.addEventListener('touchstart', unlockAudio, {once:true});
     document.body.addEventListener('click', unlockAudio, {once:true});
 
-    if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./service-worker.js').catch(err => console.log(err)); }); }
     function safeGetItem(key) { try { return localStorage.getItem(key); } catch(e) { return "0"; } }
     function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
     function safeClear() { try { localStorage.clear(); } catch(e) {} }
@@ -787,7 +786,7 @@
         
         ctx.fillStyle = '#1e272e'; drawRoundRect(ctx, -65, 35, 130, 28, 14); ctx.fill();
         ctx.strokeStyle = '#f1c40f'; ctx.lineWidth = 2; ctx.stroke();
-        ctx.fillStyle = '#ffffff'; ctx.font = 'bold 16px Jua'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText("🔥자원화센터", 0, 49); 
+        ctx.fillStyle = '#ffffff'; ctx.font = 'bold 16px Jua'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText("🔥자원회수센터", 0, 49); 
         ctx.restore(); 
     }
     
@@ -1680,37 +1679,30 @@
         gameGuide.innerHTML = "<span style='color:#ff4444; font-size:24px; font-weight:bold;'>[" + reason1 + " " + reason2 + "]</span><br><br>최종 점수: " + score; 
         rankArea.style.display = 'flex'; startBtnArea.style.display = 'none'; gameoverBtnArea.style.display = 'block'; 
     }
-</script>
-// [사파리/웹앱 대응 업데이트 로직]
-if ('serviceWorker' in navigator) {
-    // 1. 서비스 워커 등록 (버전 쿼리 추가로 사파리 캐시 무력화)
-    navigator.serviceWorker.register('./service-worker.js?v=2').then(reg => {
-        reg.update(); 
-    });
 
-    // 2. 업데이트 감지 시 자동 새로고침
-    let refreshing = false;
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-        if (!refreshing) {
-            window.location.reload();
-            refreshing = true;
-        }
-    });
+    // 서비스 워커 등록 및 업데이트 로직 (정상 위치)
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js?v=2').then(reg => {
+            reg.update(); 
+        });
 
-    // 3. 구버전 캐시 삭제 (방문자 카운터 LocalStorage는 안전함)
-    caches.keys().then(cacheNames => {
-        cacheNames.forEach(cacheName => {
-            if (cacheName !== 'gimpo-center-v2') {
-                caches.delete(cacheName);
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!refreshing) {
+                window.location.reload();
+                refreshing = true;
             }
         });
-    });
-}
+
+        caches.keys().then(cacheNames => {
+            cacheNames.forEach(cacheName => {
+                if (cacheName !== 'gimpo-center-v2') {
+                    caches.delete(cacheName);
+                }
+            });
+        });
+    }
+</script>
+
 </body>
-
 </html>
-
-
-
-
-
