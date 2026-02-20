@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gimpo-center-v4';
+const CACHE_NAME = 'gimpo-center-v1';
 const urlsToCache = [
   './',
   './index.html',
@@ -20,5 +20,6 @@ self.addEventListener('fetch', event => {
   );
 
 });
+
 
 
