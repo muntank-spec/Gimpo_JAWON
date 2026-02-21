@@ -21,7 +21,7 @@ self.addEventListener('activate', event => {
     })
   );
 });
-const CACHE_NAME = 'gimpo-center-v3';
+const CACHE_NAME = 'gimpo-center-v5';
 const urlsToCache = [
   './',
   './index.html',
@@ -43,6 +43,7 @@ self.addEventListener('fetch', event => {
   );
 
 });
+
 
 
 
