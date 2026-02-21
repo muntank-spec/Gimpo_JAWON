@@ -628,25 +628,3 @@
     function goHome() { gameRunning = false; goPage('main'); }
     function resetData() { var pwd = prompt("관리자 비밀번호:"); if (pwd === "9730") { safeClear(); alert("완료"); location.reload(); } }
 
-    var currentGameMode = ''; var score = 0; var currentLevel = 1; var gameRunning = false;
-    var canvas = document.getElementById('gameCanvas'); var ctx = canvas.getContext('2d');
-    var uiLayer = document.getElementById('game-ui-layer'); var gameTitle = document.getElementById('gameTitle'); 
-    var startBtnArea = document.getElementById('start-btn-area'); var gameoverBtnArea = document.getElementById('gameover-btn-area');
-    var rankArea = document.getElementById('rankArea'); var rankBoard = document.getElementById('rank-board');
-
-    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    
-    // (기존 미니게임 로직 updateSorting, drawSorting 등 생략 - 이전 index.html과 동일)
-    // ... 미니게임 관련 모든 JS 함수들이 여기에 들어갑니다 ...
-
-    // 서비스 워커 등록 (태그 내부 고정)
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./service-worker.js?v=2').then(reg => { reg.update(); });
-        let refreshing = false;
-        navigator.serviceWorker.addEventListener('controllerchange', () => { if (!refreshing) { window.location.reload(); refreshing = true; } });
-        caches.keys().then(cacheNames => { cacheNames.forEach(cacheName => { if (cacheName !== 'gimpo-center-v3') { caches.delete(cacheName); } }); });
-    }
-</script>
-
-</body>
-</html>
