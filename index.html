@@ -46,22 +46,11 @@
         #logoCanvas { margin-bottom: 10px; margin-top: 20px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2)); }
 
         .theme-song-bubble {
-            position: absolute;
-            top: -15px;
-            right: -30px;
-            background: #ff4757;
-            color: white;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 16px;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            cursor: pointer;
-            animation: bounce-bubble 1.5s infinite;
-            border: 2px solid white;
-            z-index: 20;
-            white-space: nowrap;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            position: absolute; top: -15px; right: -30px;
+            background: #ff4757; color: white; padding: 6px 14px; border-radius: 20px;
+            font-size: 16px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer; animation: bounce-bubble 1.5s infinite; border: 2px solid white;
+            z-index: 20; white-space: nowrap; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
         .theme-song-bubble::after {
             content: ''; position: absolute; bottom: -6px; left: 20px;
@@ -104,8 +93,7 @@
             background: rgba(255, 235, 59, 0.8); border: 2px solid #fbc02d;
             border-radius: 50%; width: 50px; height: 50px; font-size: 24px;
             display: flex; justify-content: center; align-items: center; cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            display: none; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); display: none; 
         }
 
         .btn-game { background: linear-gradient(to bottom, #2ecc71, #27ae60); font-size: 32px; padding: 20px 0; }
@@ -149,8 +137,7 @@
 
         /* 가로 모드 차단 */
         #orientation-warning {
-            display: none;
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #2c3e50; z-index: 99999;
             flex-direction: column; justify-content: center; align-items: center;
             color: white; text-align: center;
@@ -163,17 +150,9 @@
 
         /* --- 카툰 공정 흐름도용 스타일 --- */
         .process-step {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 15px;
-            margin: 5px 0;
-            width: 85%;
-            max-width: 320px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.1s;
-            border: 3px solid #fff;
+            background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 15px; margin: 5px 0;
+            width: 85%; max-width: 320px; box-shadow: 0 5px 15px rgba(0,0,0,0.15); text-align: center;
+            cursor: pointer; transition: transform 0.1s; border: 3px solid #fff;
         }
         .process-step:active { transform: scale(0.98); }
         .step-icon { font-size: 45px; margin-bottom: 5px; }
@@ -181,31 +160,14 @@
         
         /* 말풍선 CSS */
         .speech-bubble {
-            display: none;
-            position: relative;
-            background: #f8f9fa;
-            color: #2c3e50;
-            padding: 15px;
-            border-radius: 15px;
-            font-size: 15px;
-            margin-top: 15px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-            text-align: left;
-            line-height: 1.4;
-            border: 2px solid #bdc3c7; 
-            word-break: keep-all;
+            display: none; position: relative; background: #f8f9fa; color: #2c3e50; padding: 15px;
+            border-radius: 15px; font-size: 15px; margin-top: 15px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+            text-align: left; line-height: 1.4; border: 2px solid #bdc3c7; word-break: keep-all;
         }
-        .speech-bubble::before {
-            content: ""; position: absolute; bottom: 100%; left: 50%; margin-left: -10px;
-            border-width: 10px; border-style: solid; border-color: transparent transparent #bdc3c7 transparent;
-        }
-        .speech-bubble::after {
-            content: ""; position: absolute; bottom: 100%; left: 50%; margin-left: -7px;
-            border-width: 7px; border-style: solid; border-color: transparent transparent #f8f9fa transparent;
-        }
+        .speech-bubble::before { content: ""; position: absolute; bottom: 100%; left: 50%; margin-left: -10px; border-width: 10px; border-style: solid; border-color: transparent transparent #bdc3c7 transparent; }
+        .speech-bubble::after { content: ""; position: absolute; bottom: 100%; left: 50%; margin-left: -7px; border-width: 7px; border-style: solid; border-color: transparent transparent #f8f9fa transparent; }
         .process-step.active .speech-bubble { display: block; animation: popDown 0.2s ease-out; }
         @keyframes popDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        
         .step-arrow { font-size: 24px; color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); margin: 3px 0; }
     </style>
 </head>
@@ -227,12 +189,9 @@
         <div class="top-counter">🌱 환경에 다가간 횟수: <span id="mainUserCount">0</span>회</div>
         
         <canvas id="logoCanvas" width="200" height="160"></canvas>
-        
         <div style="position: relative;">
             <h1 class="main-logo" style="margin-bottom: 20px;">김포시<br>자원화센터</h1>
-            <div class="theme-song-bubble" onclick="Sound.click(); window.open('https://youtube.com/shorts/F0coCr8baLE?si=Uw08HIWJy2EaY-od', '_blank')">
-                🎵 주제가
-            </div>
+            <div class="theme-song-bubble" onclick="Sound.click(); window.open('https://youtube.com/shorts/F0coCr8baLE?si=Uw08HIWJy2EaY-od', '_blank')">🎵 주제가</div>
         </div>
         
         <button class="btn btn-info" onclick="Sound.click(); goPage('notice')">📢 이용 안내사항</button>
@@ -251,7 +210,7 @@
         <button class="btn btn-select-sort" onclick="Sound.click(); selectGame('sorting')">
             <div style="text-align:left;">
                 <div style="font-size:22px; color:#27ae60;">♻️ <b>분리배출 마스터</b></div>
-                <div style="font-size:13px; font-weight:normal; color:#555; margin-top:3px;">쓰레기를 올바르게 담으세요!</div>
+                <div style="font-size:13px; font-weight:normal; color:#555; margin-top:3px;">바구니를 움직여 쓰레기를 담으세요!</div>
             </div>
             <div style="font-size:24px;">👉</div>
         </button>
@@ -272,7 +231,7 @@
         <button class="btn btn-select-sichuan" onclick="Sound.click(); selectGame('sichuan')">
             <div style="text-align:left;">
                 <div style="font-size:22px; color:#f39c12;">🧩 <b>에코 정화 링크</b></div>
-                <div style="font-size:13px; font-weight:normal; color:#555; margin-top:3px;">오염물질과 정화약품을 연결!</div>
+                <div style="font-size:13px; font-weight:normal; color:#555; margin-top:3px;">오염물질과 정화설비를 연결!</div>
             </div>
             <div style="font-size:24px;">👉</div>
         </button>
@@ -295,103 +254,31 @@
 
     <div id="process-page" class="page" style="justify-content: flex-start; padding-top: 140px;">
         <button class="btn btn-home" onclick="Sound.click(); goPage('promo')">🔙 뒤로</button>
-        
         <div class="content-title" style="margin-bottom:15px; margin-top: 15px;">🏭 소각 시설 세부 공정</div>
-        <div style="font-size:15px; color:#fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); margin-bottom:25px;">(각 단계를 터치하면 설명이 뿅! 나옵니다)</div>
-        
+        <div style="font-size:15px; color:#fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); margin-bottom:25px;">(각 단계를 터치하면 설명이 나옵니다)</div>
         <div class="process-flow-container" style="width:100%; display:flex; flex-direction:column; align-items:center; padding-bottom: 100px;">
-            <div class="process-step" style="border-color: #8e44ad;" onclick="toggleBubble(this, '#8e44ad')">
-                <div class="step-icon">🚚🏗️</div>
-                <div class="step-title">1. 반입 및 저장설비</div>
-                <div class="speech-bubble">쓰레기를 반입장 벙커에 모으고, 거대한 크레인으로 잘 섞어서 호퍼로 쏙 넣어요!</div>
-            </div>
-            <div class="step-arrow">⬇️</div>
-            <div class="process-step" style="border-color: #e74c3c;" onclick="toggleBubble(this, '#e74c3c')">
-                <div class="step-icon">🔥🌪️</div>
-                <div class="step-title">2. 가스화 및 용융 (1200℃)</div>
-                <div class="speech-bubble">1200℃ 이상의 초고온으로 쓰레기를 완벽하게 태우고 녹여 안전한 슬래그로 만듭니다.</div>
-            </div>
-            <div class="step-arrow">⬇️</div>
-            <div class="process-step" style="border-color: #e67e22;" onclick="toggleBubble(this, '#e67e22')">
-                <div class="step-icon">♨️🏊</div>
-                <div class="step-title">3. 폐열보일러 (에너지 회수)</div>
-                <div class="speech-bubble">연소가스를 냉각하며 증기를 만듭니다. 이 증기로 스포츠센터 수영장에 온수를 공급합니다!</div>
-            </div>
-            <div class="step-arrow">⬇️</div>
-            <div class="process-step" style="border-color: #2ecc71;" onclick="toggleBubble(this, '#2ecc71')">
-                <div class="step-icon">🧪💦</div>
-                <div class="step-title">4. 반건식 반응탑</div>
-                <div class="speech-bubble">소석회 슬러리를 뿜어 연소가스 속 나쁜 산성 가스를 중화시키는 1차 정화 구역입니다.</div>
-            </div>
-            <div class="step-arrow">⬇️</div>
-            <div class="process-step" style="border-color: #34495e;" onclick="toggleBubble(this, '#34495e')">
-                <div class="step-icon">😷🧽</div>
-                <div class="step-title">5. 여과집진기</div>
-                <div class="speech-bubble">미세 필터와 활성탄을 이용해 미세먼지와 다이옥신을 꼼꼼하게 걸러냅니다.</div>
-            </div>
-            <div class="step-arrow">⬇️</div>
-            <div class="process-step" style="border-color: #2980b9;" onclick="toggleBubble(this, '#2980b9')">
-                <div class="step-icon">♻️✨</div>
-                <div class="step-title">6. 선택적 촉매환원탑 (SCR)</div>
-                <div class="speech-bubble">특수 촉매를 통해 온실가스의 원인인 질소산화물을 물과 질소로 완벽 분해합니다.</div>
-            </div>
-            <div class="step-arrow">⬇️</div>
-            <div class="process-step" style="border-color: #00cec9;" onclick="toggleBubble(this, '#00cec9')">
-                <div class="step-icon">🏭☁️</div>
-                <div class="step-title">7. 유인송풍기 & 굴뚝</div>
-                <div class="speech-bubble">철저히 정화된 깨끗한 공기만을 강력한 송풍기로 밀어내어 수증기로 내보냅니다.</div>
-            </div>
+            <div class="process-step" style="border-color: #8e44ad;" onclick="toggleBubble(this, '#8e44ad')"><div class="step-icon">🚚🏗️</div><div class="step-title">1. 반입 및 저장설비</div><div class="speech-bubble">쓰레기를 반입장 벙커에 모으고, 거대한 크레인으로 잘 섞어서 호퍼로 쏙 넣어요!</div></div><div class="step-arrow">⬇️</div>
+            <div class="process-step" style="border-color: #e74c3c;" onclick="toggleBubble(this, '#e74c3c')"><div class="step-icon">🔥🌪️</div><div class="step-title">2. 가스화 및 용융 (1200℃)</div><div class="speech-bubble">1200℃ 이상의 초고온으로 쓰레기를 완벽하게 태우고 녹여 안전한 슬래그로 만듭니다.</div></div><div class="step-arrow">⬇️</div>
+            <div class="process-step" style="border-color: #e67e22;" onclick="toggleBubble(this, '#e67e22')"><div class="step-icon">♨️🏊</div><div class="step-title">3. 폐열보일러 (에너지 회수)</div><div class="speech-bubble">연소가스를 냉각하며 증기를 만듭니다. 이 증기로 스포츠센터 수영장에 온수를 공급합니다!</div></div><div class="step-arrow">⬇️</div>
+            <div class="process-step" style="border-color: #2ecc71;" onclick="toggleBubble(this, '#2ecc71')"><div class="step-icon">🧪💦</div><div class="step-title">4. 반건식 반응탑</div><div class="speech-bubble">소석회 슬러리를 뿜어 연소가스 속 나쁜 산성 가스를 중화시키는 1차 정화 구역입니다.</div></div><div class="step-arrow">⬇️</div>
+            <div class="process-step" style="border-color: #34495e;" onclick="toggleBubble(this, '#34495e')"><div class="step-icon">😷🧽</div><div class="step-title">5. 여과집진기</div><div class="speech-bubble">미세 필터와 활성탄을 이용해 미세먼지와 다이옥신을 꼼꼼하게 걸러냅니다.</div></div><div class="step-arrow">⬇️</div>
+            <div class="process-step" style="border-color: #2980b9;" onclick="toggleBubble(this, '#2980b9')"><div class="step-icon">♻️✨</div><div class="step-title">6. 선택적 촉매환원탑 (SCR)</div><div class="speech-bubble">특수 촉매를 통해 온실가스의 원인인 질소산화물을 물과 질소로 완벽 분해합니다.</div></div><div class="step-arrow">⬇️</div>
+            <div class="process-step" style="border-color: #00cec9;" onclick="toggleBubble(this, '#00cec9')"><div class="step-icon">🏭☁️</div><div class="step-title">7. 유인송풍기 & 굴뚝</div><div class="speech-bubble">철저히 정화된 깨끗한 공기만을 강력한 송풍기로 밀어내어 수증기로 내보냅니다.</div></div>
         </div>
     </div>
 
     <div id="feed-process-page" class="page" style="justify-content: flex-start; padding-top: 140px;">
         <button class="btn btn-home" onclick="Sound.click(); goPage('promo')">🔙 뒤로</button>
-        
         <div class="content-title" style="margin-bottom:15px; margin-top: 15px;">🍱 사료화 시설 세부 공정</div>
-        <div style="font-size:15px; color:#fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); margin-bottom:25px;">(각 단계를 터치하면 설명이 뿅! 나옵니다)</div>
-        
+        <div style="font-size:15px; color:#fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); margin-bottom:25px;">(각 단계를 터치하면 설명이 나옵니다)</div>
         <div class="process-flow-container" style="width:100%; display:flex; flex-direction:column; align-items:center; padding-bottom: 100px;">
-            <div class="process-step" style="border-color: #f39c12;" onclick="toggleBubble(this, '#f39c12')">
-                <div class="step-icon">🚚📥</div>
-                <div class="step-title">1. 반입설비</div>
-                <div class="speech-bubble">김포한강신도시 크린넷과 차량으로 수거된 음식물 쓰레기를 투입 호퍼에 모으는 단계입니다.</div>
-            </div>
-            <div class="step-arrow">⬇️</div>
-            <div class="process-step" style="border-color: #27ae60;" onclick="toggleBubble(this, '#27ae60')">
-                <div class="step-icon">⚙️✂️</div>
-                <div class="step-title">2. 전처리설비 (선별/파쇄)</div>
-                <div class="speech-bubble">선별파쇄기를 통해 커다란 이물질을 골라내고 음식물을 잘게 부순 뒤, 싸이클론으로 협잡물을 제거합니다.</div>
-            </div>
-            <div class="step-arrow">⬇️</div>
-            <div class="process-step" style="border-color: #e67e22;" onclick="toggleBubble(this, '#e67e22')">
-                <div class="step-icon">🔥🌡️</div>
-                <div class="step-title">3. 건식 사료화 설비 (건조)</div>
-                <div class="speech-bubble">건조기에서 고온으로 수분을 제거하여 미생물을 사멸시키고 사료의 기초 형태를 만듭니다.</div>
-            </div>
-            <div class="step-arrow">⬇️</div>
-            <div class="process-step" style="border-color: #7f8c8d;" onclick="toggleBubble(this, '#7f8c8d')">
-                <div class="step-icon">🧲🔍</div>
-                <div class="step-title">4. 이물질 반출 설비</div>
-                <div class="speech-bubble">자력선별기와 진동스크린을 사용하여 사료 속에 섞인 금속 물질이나 작은 이물질을 완벽하게 걸러냅니다.</div>
-            </div>
-            <div class="step-arrow">⬇️</div>
-            <div class="process-step" style="border-color: #c0392b;" onclick="toggleBubble(this, '#c0392b')">
-                <div class="step-icon">🧬📦</div>
-                <div class="step-title">5. 사료 저장 및 포장</div>
-                <div class="speech-bubble">제품저장조에서 생산된 사료를 톤백으로 포장합니다.</div>
-            </div>
-            <div class="step-arrow">⬇️</div>
-            <div class="process-step" style="border-color: #2980b9;" onclick="toggleBubble(this, '#2980b9')">
-                <div class="step-icon">📤🚚</div>
-                <div class="step-title">6. 건조사료 반출</div>
-                <div class="speech-bubble">완성된 사료를 호이스트로 운반하여 제품 반출 차량에 실어 자원으로 재탄생시킵니다.</div>
-            </div>
-            <div class="step-arrow">⬇️</div>
-            <div class="process-step" style="border-color: #1abc9c;" onclick="toggleBubble(this, '#1abc9c')">
-                <div class="step-icon">🧼🌬️</div>
-                <div class="step-title">7. 탈취 설비</div>
-                <div class="speech-bubble">공정 중 발생하는 냄새를 약액세정탑과 바이오필터를 통해 정화하며, 추가 설치한 탈취로에서 악취를 연소하여 발생한 열은 사료 생산할때 활용됩니다.</div>
-            </div>
+            <div class="process-step" style="border-color: #f39c12;" onclick="toggleBubble(this, '#f39c12')"><div class="step-icon">🚚📥</div><div class="step-title">1. 반입설비</div><div class="speech-bubble">크린넷과 차량으로 수거된 음식물 쓰레기를 투입 호퍼에 모으는 단계입니다.</div></div><div class="step-arrow">⬇️</div>
+            <div class="process-step" style="border-color: #27ae60;" onclick="toggleBubble(this, '#27ae60')"><div class="step-icon">⚙️✂️</div><div class="step-title">2. 전처리설비 (선별/파쇄)</div><div class="speech-bubble">선별파쇄기를 통해 커다란 이물질을 골라내고 음식물을 잘게 부순 뒤 협잡물을 제거합니다.</div></div><div class="step-arrow">⬇️</div>
+            <div class="process-step" style="border-color: #e67e22;" onclick="toggleBubble(this, '#e67e22')"><div class="step-icon">🔥🌡️</div><div class="step-title">3. 건식 사료화 설비 (건조)</div><div class="speech-bubble">건조기에서 고온으로 수분을 제거하여 미생물을 사멸시키고 사료의 기초 형태를 만듭니다.</div></div><div class="step-arrow">⬇️</div>
+            <div class="process-step" style="border-color: #7f8c8d;" onclick="toggleBubble(this, '#7f8c8d')"><div class="step-icon">🧲🔍</div><div class="step-title">4. 이물질 반출 설비</div><div class="speech-bubble">자력선별기와 진동스크린을 사용하여 사료 속에 섞인 이물질을 완벽하게 걸러냅니다.</div></div><div class="step-arrow">⬇️</div>
+            <div class="process-step" style="border-color: #c0392b;" onclick="toggleBubble(this, '#c0392b')"><div class="step-icon">🧬📦</div><div class="step-title">5. 사료 저장 및 포장</div><div class="speech-bubble">제품저장조에서 생산된 사료를 톤백으로 포장합니다.</div></div><div class="step-arrow">⬇️</div>
+            <div class="process-step" style="border-color: #2980b9;" onclick="toggleBubble(this, '#2980b9')"><div class="step-icon">📤🚚</div><div class="step-title">6. 건조사료 반출</div><div class="speech-bubble">완성된 사료를 호이스트로 운반하여 차량에 실어 자원으로 재탄생시킵니다.</div></div><div class="step-arrow">⬇️</div>
+            <div class="process-step" style="border-color: #1abc9c;" onclick="toggleBubble(this, '#1abc9c')"><div class="step-icon">🧼🌬️</div><div class="step-title">7. 탈취 설비</div><div class="speech-bubble">공정 중 발생하는 냄새를 정화하고, 탈취로에서 발생한 열은 사료 생산할 때 활용됩니다.</div></div>
         </div>
     </div>
 
@@ -400,6 +287,7 @@
         <div id="score-board"></div>
         <canvas id="gameCanvas"></canvas>
         <div id="hint-btn" class="btn-hint" onclick="Sound.click(); showHint()">💡</div>
+
         <div id="game-ui-layer">
             <h1 id="gameTitle" style="font-size: 40px; margin-bottom: 20px; color:#fff; text-shadow: 3px 3px 0 #000;">게임 제목</h1>
             <div id="gameGuide" class="white-panel" style="width: 80%; text-align:center; font-size:20px;">가이드 내용</div>
@@ -419,7 +307,7 @@
 
 <script>
     // =========================================================================
-    // 💡 [텍스트 설정] 안내사항, 홍보내용, 랜덤 문구를 여기서 손쉽게 수정하세요!
+    // 💡 스크립트 시작: 중복 코드를 모두 제거한 단일 엔진
     // =========================================================================
     const CONFIG = {
         noticeText: `
@@ -429,80 +317,57 @@
             <p style="font-size: 16px; line-height: 1.8;">📞 <b style="color:#2c3e50;">문의처 안내:</b><br>
             <span style="font-size:14px; color:#7f8c8d;">(번호를 터치하면 바로 통화가 연결됩니다)</span><br><br>
             - <b>폐기물 허가/배출:</b> 김포시청 자원순환과<br>
-              👉 <a href="tel:031-980-2761" style="color:#2980b9; font-weight:bold; text-decoration:none; background:#ecf0f1; padding:4px 10px; border-radius:8px; display:inline-block; margin-top:5px; margin-bottom:10px;">☎ 031-980-2761</a><br>
+              👉 <a href="tel:031-980-2767" style="color:#2980b9; font-weight:bold; text-decoration:none; background:#ecf0f1; padding:4px 10px; border-radius:8px; display:inline-block; margin-top:5px; margin-bottom:10px;">☎ 031-980-2767</a><br>
             - <b>크린넷 키 구입:</b> 브니엘네이처<br>
-              👉 <a href="tel:032-566-0010" style="color:#2980b9; font-weight:bold; text-decoration:none; background:#ecf0f1; padding:4px 10px; border-radius:8px; display:inline-block; margin-top:5px;">☎ 032-566-0010</a></p>
+              👉 <a href="tel:031-981-6081" style="color:#2980b9; font-weight:bold; text-decoration:none; background:#ecf0f1; padding:4px 10px; border-radius:8px; display:inline-block; margin-top:5px;">☎ 031-981-6081</a></p>
         `,
         promoText: `
             <p>🌱 <b style="color:#27ae60;">친환경 소각 기술:</b><br>최첨단 오염 방지 시설을 통해 다이옥신 등 유해 물질을 완벽하게 제거합니다.</p><br>
             <p>⚡ <b style="color:#f39c12;">폐기물을 에너지로:</b><br>쓰레기를 태울 때 발생하는 열을 이용하여 스포츠센터에 온수와 냉난방을 하고 남은 열은 지역 난방에 공급합니다.</p><br>
             <p>🍱 <b style="color:#e67e22;">음식물 자원화:</b><br>수거된 음식물 쓰레기를 친환경 공법으로 건조하여 안전한 사료와 비료로 재생산합니다.</p>
-            
             <div style="text-align:center; margin-top:25px;">
-                <button class="btn btn-promo" style="font-size:18px; padding:12px; width:100%; margin-bottom:10px; box-shadow:0 4px 10px rgba(0,0,0,0.2);" onclick="Sound.click(); goPage('process')">
-                    🔥 소각 시설 공정흐름도 보기
-                </button>
-                <button class="btn btn-promo" style="font-size:18px; padding:12px; width:100%; background:linear-gradient(to bottom, #f39c12, #e67e22); box-shadow:0 4px 10px rgba(0,0,0,0.2);" onclick="Sound.click(); goPage('feed-process')">
-                    🍱 사료화 시설 공정흐름도 보기
-                </button>
+                <button class="btn btn-promo" style="font-size:18px; padding:12px; width:100%; margin-bottom:10px; box-shadow:0 4px 10px rgba(0,0,0,0.2);" onclick="Sound.click(); goPage('process')">🔥 소각 시설 공정흐름도 보기</button>
+                <button class="btn btn-promo" style="font-size:18px; padding:12px; width:100%; background:linear-gradient(to bottom, #f39c12, #e67e22); box-shadow:0 4px 10px rgba(0,0,0,0.2);" onclick="Sound.click(); goPage('feed-process')">🍱 사료화 시설 공정흐름도 보기</button>
             </div>
         `,
         ecoQuotes: [
-            "🌱 환경보호는 나 자신부터",
-            "🏭 자원화센터는 깨끗한 김포를 위해 항상 노력합니다",
-            "♻️ 올바른 분리수거는 미래를 위한 첫 노력",
-            "💧 아껴 쓴 자원, 후대에게 물려줄 소중한 유산입니다",
+            "🌱 환경보호는 나 자신부터", "🏭 자원화센터는 깨끗한 김포를 위해 항상 노력합니다",
+            "♻️ 올바른 분리수거는 미래를 위한 첫 노력", "💧 아껴 쓴 자원, 후대에게 물려줄 소중한 유산입니다",
             "✨ 깨끗한 김포, 맑은 에너지! 우리가 만들어갑니다"
         ]
     };
 
     function toggleBubble(element, color) {
-        Sound.click();
-        var isActive = element.classList.contains('active');
-        document.querySelectorAll('.process-step.active').forEach(step => {
-            step.classList.remove('active');
-        });
+        Sound.click(); var isActive = element.classList.contains('active');
+        document.querySelectorAll('.process-step.active').forEach(step => step.classList.remove('active'));
         if (!isActive) {
             element.classList.add('active');
             var bubble = element.querySelector('.speech-bubble');
-            if(bubble) {
-                bubble.style.borderColor = color;
-            }
-            setTimeout(() => {
-                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 50);
+            if(bubble) bubble.style.borderColor = color;
+            setTimeout(() => element.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
         }
     }
 
     const Sound = {
         ctx: null, bgmInterval: null, isSoundOn: false,
         init: function() {
-            if(!this.ctx) { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); }
-            if(this.ctx.state === 'suspended') { this.ctx.resume(); }
+            if(!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); 
+            if(this.ctx.state === 'suspended') this.ctx.resume(); 
         },
         playTone: function(freq, type, duration, vol) {
-            this.init(); 
-            if(!this.ctx || this.ctx.state !== 'running' || !this.isSoundOn) return; 
-            let osc = this.ctx.createOscillator(); 
-            let gain = this.ctx.createGain();
-            osc.type = type; 
-            osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+            this.init(); if(!this.ctx || this.ctx.state !== 'running' || !this.isSoundOn) return; 
+            let osc = this.ctx.createOscillator(); let gain = this.ctx.createGain();
+            osc.type = type; osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
             gain.gain.setValueAtTime(vol, this.ctx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
-            osc.connect(gain); gain.connect(this.ctx.destination);
-            osc.start(); osc.stop(this.ctx.currentTime + duration);
+            osc.connect(gain); gain.connect(this.ctx.destination); osc.start(); osc.stop(this.ctx.currentTime + duration);
         },
         playNoise: function(duration, vol) {
-            this.init();
-            if(!this.ctx || this.ctx.state !== 'running' || !this.isSoundOn) return; 
-            let bufferSize = this.ctx.sampleRate * duration;
-            let buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-            let data = buffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-            let noise = this.ctx.createBufferSource(); noise.buffer = buffer;
-            let gain = this.ctx.createGain();
-            gain.gain.setValueAtTime(vol, this.ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+            this.init(); if(!this.ctx || this.ctx.state !== 'running' || !this.isSoundOn) return; 
+            let bufferSize = this.ctx.sampleRate * duration; let buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+            let data = buffer.getChannelData(0); for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+            let noise = this.ctx.createBufferSource(); noise.buffer = buffer; let gain = this.ctx.createGain();
+            gain.gain.setValueAtTime(vol, this.ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
             noise.connect(gain); gain.connect(this.ctx.destination); noise.start();
         },
         shoot: function() { this.playTone(800, 'square', 0.1, 0.08); },
@@ -512,22 +377,18 @@
         click: function() { this.playTone(500, 'sine', 0.05, 0.2); },
         levelUp: function() { [440, 554, 659, 880].forEach((f, i) => setTimeout(() => this.playTone(f, 'square', 0.2, 0.2), i * 120)); },
         toggleBGM: function() {
-            this.init();
-            this.isSoundOn = !this.isSoundOn;
+            this.init(); this.isSoundOn = !this.isSoundOn;
             let btn = document.getElementById('bgm-toggle');
             if(btn) btn.innerText = this.isSoundOn ? "🔊 사운드: ON" : "🔇 사운드: OFF";
             if(this.isSoundOn) {
                 const melody = [261.6, 329.6, 392.0, 523.3, 392.0, 329.6, 349.2, 440.0, 523.3, 698.5, 523.3, 440.0, 392.0, 493.9, 587.3, 784.0, 587.3, 493.9]; 
-                let idx = 0;
-                if(this.bgmInterval) clearInterval(this.bgmInterval);
+                let idx = 0; if(this.bgmInterval) clearInterval(this.bgmInterval);
                 this.bgmInterval = setInterval(() => {
                     if(this.ctx && this.ctx.state === 'running' && this.isSoundOn) {
                         let osc = this.ctx.createOscillator(); let gain = this.ctx.createGain();
                         osc.type = 'square'; osc.frequency.setValueAtTime(melody[idx], this.ctx.currentTime);
-                        gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
-                        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.15);
-                        osc.connect(gain); gain.connect(this.ctx.destination);
-                        osc.start(); osc.stop(this.ctx.currentTime + 0.15);
+                        gain.gain.setValueAtTime(0.1, this.ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.15);
+                        osc.connect(gain); gain.connect(this.ctx.destination); osc.start(); osc.stop(this.ctx.currentTime + 0.15);
                     }
                     idx = (idx + 1) % melody.length;
                 }, 200); 
@@ -537,24 +398,18 @@
 
     let audioUnlocked = false;
     function unlockAudio() {
-        if (audioUnlocked) return;
-        Sound.init();
+        if (audioUnlocked) return; Sound.init();
         if(Sound.ctx) {
             Sound.ctx.resume().then(() => {
-                let buffer = Sound.ctx.createBuffer(1, 1, 22050);
-                let source = Sound.ctx.createBufferSource();
-                source.buffer = buffer;
-                source.connect(Sound.ctx.destination);
-                source.start(0);
-                audioUnlocked = true;
-                if (!Sound.isSoundOn) { Sound.toggleBGM(); }
+                let buffer = Sound.ctx.createBuffer(1, 1, 22050); let source = Sound.ctx.createBufferSource();
+                source.buffer = buffer; source.connect(Sound.ctx.destination); source.start(0); audioUnlocked = true;
+                if (!Sound.isSoundOn) Sound.toggleBGM(); 
             });
         }
     }
     document.body.addEventListener('touchstart', unlockAudio, {once:true});
     document.body.addEventListener('click', unlockAudio, {once:true});
 
-    if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./service-worker.js').catch(err => console.log(err)); }); }
     function safeGetItem(key) { try { return localStorage.getItem(key); } catch(e) { return "0"; } }
     function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
     function safeClear() { try { localStorage.clear(); } catch(e) {} }
@@ -565,28 +420,65 @@
         for(let i=0; i<20; i++) {
             let el = document.createElement('div'); el.classList.add('bg-icon');
             el.innerText = icons[Math.floor(Math.random() * icons.length)];
-            el.style.left = Math.random() * 100 + '%';
-            el.style.animationDuration = (Math.random() * 8 + 12) + 's'; 
-            el.style.animationDelay = (Math.random() * 10) + 's';
-            el.style.fontSize = (Math.random() * 30 + 40) + 'px';
+            el.style.left = Math.random() * 100 + '%'; el.style.animationDuration = (Math.random() * 8 + 12) + 's'; 
+            el.style.animationDelay = (Math.random() * 10) + 's'; el.style.fontSize = (Math.random() * 30 + 40) + 'px';
             container.appendChild(el);
         }
     }
     createBackgroundShapes();
 
-    var logoCanvas = document.getElementById('logoCanvas'); var logoCtx = logoCanvas.getContext('2d');
-    var logoSmoke = []; var logoFrame = 0; var logoAnimId;
+    // ==========================================
+    // 🎮 글로벌 변수 및 DOM 할당
+    // ==========================================
+    var uiLayer, gameTitle, gameGuide, startBtnArea, gameoverBtnArea, rankArea, scoreBoard, rankBoard, canvas, ctx, hintBtn;
+    var gameRunning = false, score = 0, currentLevel = 1, frameCount = 0, currentGameMode = '';
+    var gameTimeLeft = 30, totalPlayCount = 0;
+    var logoCanvas, logoCtx, logoSmoke = [], logoFrame = 0, logoAnimId;
+    
+    var player = { x: 0, y: 0, size: 105, speed: 8 };
+    var enemies = []; 
+    var itemsList = [ 
+        { text: "🧻", type: 1, name: "더러운 휴지" }, { text: "😷", type: 1, name: "마스크" }, { text: "🦴", type: 1, name: "뼈다귀" }, { text: "🧣", type: 1, name: "헝겊" }, { text: "👕", type: 1, name: "헌 옷" },
+        { text: "🔋", type: 0, name: "건전지" }, { text: "🍎", type: 0, name: "음식물" }, { text: "🔩", type: 0, name: "고철" }, { text: "🍾", type: 0, name: "빈 병" }
+    ];
+
+    var gridCols = 3, gridRows = 3, cellSize = 0, grid = [], pipeOffsetX = 0, pipeOffsetY = 0, isPipeSolved = false, solveAnimTimer = 0, startCol = 0, endCol = 0, solvedPath = [];
+    var showLevelMessageTimer = 0, isHinting = false, hintTimer = 0;
+
+    var bullets = [], pollutants = [], shooterParticles = [], floatingTexts = [], gates = [];
+    var pollutionLevel = 0, nextHealScore = 1000, laserCount = 1, missileCount = 0; 
+    var pollutantTypes = [
+        { text: "NOx", color: "#e74c3c", name: "질소산화물" }, { text: "SOx", color: "#f1c40f", name: "황산화물" }, 
+        { text: "HCl", color: "#2ecc71", name: "염화수소" }, { text: "☠️", color: "#9b59b6", name: "다이옥신" }, { text: "☁️", color: "#95a5a6", name: "미세먼지" }
+    ];
+
+    var scCols = 4, scRows = 8, scTileSize = 0, scOffsetX = 0, scOffsetY = 0, scGrid = [], scSelected = null, scPath = null, scPathTimer = 0, scHintMatch = null, scRemoving = null; 
+    var scPairs = [
+        { id: 1, p: "☁️NOx\n(질소)", c: "💧암모니아", color: "#3498db" }, { id: 2, p: "☠️HCl\n(염소)", c: "🧂소석회", color: "#e74c3c" },
+        { id: 3, p: "🌫️먼지\n(분진)", c: "⚙️집진기", color: "#2ecc71" }, { id: 4, p: "☣️다이옥신", c: "🪨활성탄", color: "#9b59b6" }
+    ];
+
+    var fps = 60, fpsInterval = 1000 / fps, then = Date.now(), startTime = then;
 
     window.onload = function() { 
         document.getElementById('notice-content').innerHTML = CONFIG.noticeText;
         document.getElementById('promo-content').innerHTML = CONFIG.promoText;
+        
+        uiLayer = document.getElementById('game-ui-layer'); gameTitle = document.getElementById('gameTitle'); 
+        gameGuide = document.getElementById('gameGuide'); startBtnArea = document.getElementById('start-btn-area'); 
+        gameoverBtnArea = document.getElementById('gameover-btn-area'); rankArea = document.getElementById('rankArea'); 
+        scoreBoard = document.getElementById('score-board'); rankBoard = document.getElementById('rank-board'); 
+        canvas = document.getElementById('gameCanvas'); ctx = canvas.getContext('2d');
+        hintBtn = document.getElementById('hint-btn'); logoCanvas = document.getElementById('logoCanvas'); 
+        logoCtx = logoCanvas.getContext('2d');
+
         resize(); window.addEventListener('resize', resize); updateMainCounter(); startMenuLogo(); 
     };
 
     function startMenuLogo() { if(logoAnimId) cancelAnimationFrame(logoAnimId); logoSmoke = []; animLoopLogo(); }
     function animLoopLogo() { logoFrame++; drawMenuLogo(); logoAnimId = requestAnimationFrame(animLoopLogo); }
     function drawMenuLogo() {
-        logoCtx.clearRect(0,0, 200, 160); var cx = 100; var cy = 100;
+        logoCtx.clearRect(0,0, 200, 160); var cx = 100, cy = 100;
         logoCtx.save(); logoCtx.shadowBlur = 10; logoCtx.shadowColor = 'rgba(0,0,0,0.2)';
         logoCtx.fillStyle = '#f1f2f6'; logoCtx.fillRect(cx - 60, cy, 80, 50); logoCtx.fillRect(cx - 20, cy - 20, 70, 70);
         logoCtx.strokeStyle = '#ced6e0'; logoCtx.lineWidth=3; logoCtx.strokeRect(cx-60, cy, 80, 50); logoCtx.strokeRect(cx-20, cy-20, 70, 70);
@@ -603,20 +495,14 @@
         }
     }
 
-    function increaseUserCount() { var count = parseInt(safeGetItem('gimpoPlayCount') || "0"); count++; safeSetItem('gimpoPlayCount', count); updateMainCounter(); }
+    function increaseUserCount() { totalPlayCount = parseInt(safeGetItem('gimpoPlayCount') || "0"); totalPlayCount++; safeSetItem('gimpoPlayCount', totalPlayCount); updateMainCounter(); }
     function updateMainCounter() { var count = parseInt(safeGetItem('gimpoPlayCount') || "0"); var el = document.getElementById('mainUserCount'); if(el) el.innerText = count; }
-    
-    function forceQuitGame() {
-        Sound.click();
-        if (confirm("게임을 중단하시겠습니까? 지금까지의 기록이 명예의 전당에 저장됩니다.")) {
-            gameRunning = false; saveScore(score); showRanking(); showRandomEcoQuote();
-            uiLayer.style.display = 'flex'; gameTitle.innerText = "🛑 미션 중단"; rankArea.style.display = 'flex'; startBtnArea.style.display = 'none'; gameoverBtnArea.style.display = 'block'; 
-        }
-    }
 
     function goPage(pageName) {
         document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+        document.getElementById('ingame-home-btn').style.display = 'none';
         if(logoAnimId && pageName !== 'main') cancelAnimationFrame(logoAnimId);
+        
         if (pageName === 'game-select') document.getElementById('game-select-page').style.display = 'flex';
         else if (pageName === 'game-play') document.getElementById('game-play-page').style.display = 'block';
         else if (pageName === 'notice') { document.getElementById('notice-page').style.display = 'flex'; increaseUserCount(); }
@@ -625,6 +511,501 @@
         else if (pageName === 'feed-process') { document.getElementById('feed-process-page').style.display = 'flex'; }
         else { document.getElementById('main-menu').style.display = 'flex'; updateMainCounter(); startMenuLogo(); }
     }
+    
     function goHome() { gameRunning = false; goPage('main'); }
-    function resetData() { var pwd = prompt("관리자 비밀번호:"); if (pwd === "9730") { safeClear(); alert("완료"); location.reload(); } }
+    function resetData() { var pwd = prompt("관리자 비밀번호를 입력하세요:"); if (pwd === "9730") { if(confirm("초기화 하시겠습니까?")) { safeClear(); alert("완료"); location.reload(); } } else if(pwd!==null) alert("비밀번호 오류"); }
 
+    function drawRoundRect(ctx, x, y, width, height, radius) {
+        if (width < 0) width = 0; if (height < 0) height = 0;
+        ctx.beginPath(); ctx.moveTo(x + radius, y); ctx.lineTo(x + width - radius, y); ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius); ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height); ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius); ctx.lineTo(x, y + radius); ctx.quadraticCurveTo(x, y, x + radius, y); ctx.closePath();
+    }
+
+    function selectGame(mode) {
+        currentGameMode = mode; goPage('game-play'); resize(); 
+        uiLayer.style.display = 'flex'; uiLayer.style.background = 'rgba(0,0,0,0.85)';
+        rankArea.style.display = 'none'; startBtnArea.style.display = 'block'; gameoverBtnArea.style.display = 'none';
+        document.getElementById('ingame-home-btn').style.display = 'none';
+
+        if (mode === 'sorting') {
+            gameTitle.innerText = "분리배출 마스터";
+            gameGuide.innerHTML = "⭕ <b>먹기:</b> 휴지, 마스크, 뼈, 헌옷<br>❌ <b>피하기:</b> 건전지, 음식물, 고철, 병<br><br><span style='color:#3498db'>💡 바구니를 터치한 상태로 좌우로 드래그하세요!</span>";
+            scoreBoard.innerHTML = "점수: <span id='scoreVal'>0</span>";
+            hintBtn.style.display = 'none';
+        } else if (mode === 'pipe') {
+            gameTitle.innerText = "온수 공급 대작전";
+            gameGuide.innerHTML = "🔥소각장 → 🏊수영장<br>터치하여 배관을 회전시켜 연결하세요!";
+            scoreBoard.innerHTML = "Lv <span id='lvlVal'>1</span> | <span id='timerVal'>30</span>초";
+            hintBtn.style.display = 'flex'; 
+        } else if (mode === 'shooter') {
+            gameTitle.innerText = "오염물질 제로 미션";
+            gameGuide.innerHTML = "<b style='color:#9b59b6; font-size:26px;'>레이저(3) + 유도탄(5)</b><br><br><b>게이트</b>를 통과해 무기를 늘리고<br>스마트 유도탄으로 적을 추적하세요!<br><br><span style='color:#3498db'>💡 포탑을 터치한 상태로 이동하세요!</span>";
+            scoreBoard.innerHTML = "Lv <span id='lvlVal'>1</span> | 점수: <span id='scoreVal'>0</span> | 오염도: <span id='pollutionVal'>0</span>%";
+            hintBtn.style.display = 'none';
+        } else if (mode === 'sichuan') {
+            gameTitle.innerText = "에코 정화 링크";
+            gameGuide.innerHTML = "<b style='color:#f39c12; font-size:24px;'>오염물질과 정화설비를 짝지어주세요!</b><br><br><span style='color:#3498db'>☁️NOx ↔ 💧암모니아</span><br><span style='color:#e74c3c'>☠️HCl ↔ 🧂소석회</span><br><span style='color:#2ecc71'>🌫️먼지 ↔ ⚙️집진기</span><br><span style='color:#9b59b6'>☣️다이옥신 ↔ 🪨활성탄</span><br><br><span style='font-size:16px; color:#bdc3c7'>💡 꺾이는 횟수가 2번 이하일 때 파괴됩니다!</span>";
+            scoreBoard.innerHTML = "Lv <span id='lvlVal'>1</span> | 점수: <span id='scoreVal'>0</span> | <span id='timerVal'>60</span>초";
+            hintBtn.style.display = 'flex'; 
+        }
+    }
+
+    function resize() { 
+        if(!canvas) return;
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight; 
+        player.x = canvas.width / 2 - player.size / 2; player.y = canvas.height - player.size - 20; 
+        if(currentGameMode === 'pipe') initPipeLevel(); 
+        if(currentGameMode === 'sichuan') initSichuanLayout();
+    }
+    
+    function startGame() { 
+        gameRunning = true; score = 0; currentLevel = 1; frameCount = 0; increaseUserCount(); uiLayer.style.display = 'none'; 
+        document.getElementById('ingame-home-btn').style.display = 'block';
+
+        if(currentGameMode === 'sorting') { enemies = []; scoreBoard.innerHTML = "점수: <span id='scoreVal'>0</span>"; } 
+        else if(currentGameMode === 'pipe') { gameTimeLeft = 30; scoreBoard.innerHTML = "Lv <span id='lvlVal'>1</span> | <span id='timerVal'>30</span>초"; initPipeLevel(); } 
+        else if(currentGameMode === 'shooter') {
+            bullets = []; pollutants = []; shooterParticles = []; floatingTexts = []; gates = [];
+            pollutionLevel = 0; nextHealScore = 1000; laserCount = 1; missileCount = 0;
+            scoreBoard.innerHTML = "Lv <span id='lvlVal'>1</span> | 점수: <span id='scoreVal'>0</span> | 오염도: <span id='pollutionVal'>0</span>%";
+        } 
+        else if(currentGameMode === 'sichuan') {
+            gameTimeLeft = 60; scoreBoard.innerHTML = "Lv <span id='lvlVal'>1</span> | 점수: <span id='scoreVal'>0</span> | <span id='timerVal'>60</span>초"; 
+            shooterParticles = []; floatingTexts = []; initSichuanLayout(); initSichuanLevel();
+        }
+        then = Date.now(); startTime = then; requestAnimationFrame(loop); 
+    }
+    
+    function loop() { 
+        if (!gameRunning) return; 
+        requestAnimationFrame(loop); 
+        var now = Date.now(); var elapsed = now - then;
+        if (elapsed > fpsInterval) {
+            then = now - (elapsed % fpsInterval);
+            try {
+                if (currentGameMode === 'sorting') { updateSorting(); drawSorting(); } 
+                else if (currentGameMode === 'pipe') { updatePipePuzzle(); drawPipePuzzle(); }
+                else if (currentGameMode === 'shooter') { updateShooter(); drawShooter(); } 
+                else if (currentGameMode === 'sichuan') { updateSichuan(); drawSichuan(); }
+            } catch(e) { console.error(e); } 
+        }
+    }
+
+    // --- [1] 분리배출 로직 ---
+    function updateSorting() {
+        var calculatedLevel = Math.floor(score / 100) + 1; 
+        if (calculatedLevel > currentLevel) { currentLevel = calculatedLevel; showLevelMsg(); }
+        
+        frameCount++; var spawnRate = Math.max(15, 35 - (currentLevel * 3)); 
+        if (frameCount % spawnRate === 0) { 
+            var size = 55; var x = Math.random() * (canvas.width - size); var randObj = itemsList[Math.floor(Math.random() * itemsList.length)]; var dropSpeed = 5 + (currentLevel * 1.5); enemies.push({ x: x, y: -size, size: size, text: randObj.text, type: randObj.type, name: randObj.name, speed: dropSpeed }); 
+        }
+        for (var i = 0; i < enemies.length; i++) { 
+            var e = enemies[i]; if(!e) continue; e.y += e.speed; 
+            if (player.x < e.x + e.size - 15 && player.x + player.size > e.x + 15 && player.y + 25 < e.y + e.size && player.y + player.size > e.y) { 
+                if (e.type === 1) { score += 10; document.getElementById('scoreVal').innerText = score; enemies.splice(i, 1); i--; Sound.score(); } 
+                else { gameOver(e.text, "혼입 적발!"); return; } 
+            } else if (e.y > canvas.height) { enemies.splice(i, 1); i--; } 
+        }
+    }
+    function drawSorting() { 
+        ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.fillRect(0, 0, canvas.width, canvas.height); 
+        drawBag(player.x, player.y, player.size); ctx.textAlign = "center"; ctx.textBaseline = "middle"; 
+        for (var i=0; i<enemies.length; i++) { var e = enemies[i]; if(!e) continue; ctx.save(); ctx.shadowColor = 'white'; ctx.shadowBlur = 25; ctx.fillStyle = 'white'; ctx.font = "bold " + (e.size * 1.2) + "px sans-serif"; ctx.fillText(e.text, e.x + e.size/2, e.y + e.size/2); ctx.restore(); } 
+        drawLevelMessage(); 
+    }
+    function drawBag(x, y, size) { ctx.save(); ctx.shadowColor = 'rgba(0,0,0,0.3)'; ctx.shadowBlur = 10; ctx.shadowOffsetY = 5; ctx.fillStyle = '#ffffff'; ctx.strokeStyle = '#dddddd'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x+size*0.1, y+size*0.25); ctx.quadraticCurveTo(x-size*0.05, y+size*0.6, x+size*0.1, y+size*0.95); ctx.quadraticCurveTo(x+size*0.5, y+size*1.05, x+size*0.9, y+size*0.95); ctx.quadraticCurveTo(x+size*1.05, y+size*0.6, x+size*0.9, y+size*0.25); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.shadowColor = 'transparent'; ctx.fillStyle = '#ffffff'; ctx.strokeStyle = '#cccccc'; ctx.beginPath(); ctx.arc(x+size*0.35, y+size*0.2, size*0.12, 0, Math.PI*2); ctx.arc(x+size*0.65, y+size*0.2, size*0.12, 0, Math.PI*2); ctx.fill(); ctx.stroke(); ctx.beginPath(); ctx.arc(x+size*0.5, y+size*0.2, size*0.08, 0, Math.PI*2); ctx.fill(); ctx.stroke(); ctx.fillStyle = '#2c3e50'; ctx.textAlign = 'center'; ctx.font = 'bold '+(size*0.2)+'px Arial'; ctx.fillText("김포", x+size/2, y+size*0.6); ctx.fillStyle = '#e74c3c'; ctx.font = 'bold '+(size*0.14)+'px Arial'; ctx.fillText("소각용", x+size/2, y+size*0.8); ctx.restore(); }
+
+    // --- [2] 파이프 게임 로직 ---
+    function drawValve(x, y, spin) { 
+        ctx.save(); ctx.translate(x, y); if(spin) ctx.rotate(frameCount * 0.1); 
+        ctx.beginPath(); ctx.arc(0, 0, 18, 0, Math.PI*2); ctx.fillStyle = '#c0392b'; ctx.fill(); 
+        ctx.strokeStyle='#e74c3c'; ctx.lineWidth=4; ctx.stroke(); 
+        ctx.strokeStyle = '#922b21'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(0, -18); ctx.lineTo(0, 18); ctx.moveTo(-18, 0); ctx.lineTo(18, 0); ctx.stroke(); 
+        ctx.fillStyle = '#ecf0f1'; ctx.beginPath(); ctx.arc(0, 0, 5, 0, Math.PI*2); ctx.fill(); ctx.restore(); 
+    }
+    function drawIncinerator(x, y) { 
+        ctx.save(); ctx.translate(x, y); 
+        ctx.fillStyle = 'rgba(255,255,255,0.6)'; ctx.beginPath(); ctx.arc(30, -50 - (frameCount%20), 10+(frameCount%10), 0, Math.PI*2); ctx.fill(); 
+        ctx.fillStyle = '#2c3e50'; ctx.fillRect(-50, -30, 100, 60); ctx.fillStyle = '#e74c3c'; ctx.fillRect(-50, -30, 100, 10); 
+        ctx.fillStyle = '#7f8c8d'; ctx.fillRect(20, -60, 20, 30); ctx.fillStyle = '#f1c40f'; ctx.fillRect(20, -60, 20, 5); 
+        ctx.fillStyle = '#ecf0f1'; ctx.fillRect(-40, -10, 15, 20); ctx.fillRect(-15, -10, 15, 20); 
+        ctx.fillStyle = '#1e272e'; drawRoundRect(ctx, -65, 35, 130, 28, 14); ctx.fill(); ctx.strokeStyle = '#f1c40f'; ctx.lineWidth = 2; ctx.stroke();
+        ctx.fillStyle = '#ffffff'; ctx.font = 'bold 16px Jua'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText("🔥자원화센터", 0, 49); ctx.restore(); 
+    }
+    function drawPool(x, y) { 
+        ctx.save(); ctx.translate(x, y); 
+        ctx.fillStyle = '#ecf0f1'; ctx.fillRect(-60, -30, 120, 60); ctx.fillStyle = '#3498db'; ctx.fillRect(-50, -20, 100, 40); 
+        ctx.strokeStyle = '#bdc3c7'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(-35, -25); ctx.lineTo(-35, -5); ctx.moveTo(-25, -25); ctx.lineTo(-25, -5); ctx.stroke(); 
+        if(isPipeSolved) { var totalTiles = solvedPath.length; var startDelay = totalTiles * 10 + 30; if (solveAnimTimer > startDelay) { ctx.fillStyle = 'rgba(0, 255, 255, 0.4)'; var waterH = Math.min(40, (solveAnimTimer - startDelay) * 1.5); ctx.fillRect(-50, 20 - waterH, 100, waterH); } } 
+        ctx.fillStyle = '#1e272e'; drawRoundRect(ctx, -65, 35, 130, 28, 14); ctx.fill(); ctx.strokeStyle = '#3498db'; ctx.lineWidth = 2; ctx.stroke();
+        ctx.fillStyle = '#ffffff'; ctx.font = 'bold 16px Jua'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText("🏊스포츠센터", 0, 49); ctx.restore(); 
+    }
+    function initPipeLevel() {
+        gridCols = 4 + Math.floor((currentLevel-1)/3); gridRows = 5 + Math.floor((currentLevel-1)/2); if(gridCols > 6) gridCols = 6; if(gridRows > 8) gridRows = 8;
+        var availableW = Math.max(100, canvas.width - 20); var availableH = Math.max(100, canvas.height - 320); 
+        cellSize = Math.max(10, Math.min(availableW / gridCols, availableH / gridRows));
+        pipeOffsetX = (canvas.width - (cellSize * gridCols)) / 2; pipeOffsetY = 160 + (availableH - (cellSize * gridRows)) / 2; 
+        startCol = Math.floor(Math.random() * gridCols); endCol = Math.floor(Math.random() * gridCols); generatePuzzle(); isPipeSolved = false; solveAnimTimer = 0; solvedPath = []; isHinting = false; hintTimer = 0;
+    }
+    function generatePuzzle() {
+        grid = []; for(var x=0; x<gridCols; x++) { grid[x] = []; for(var y=0; y<gridRows; y++) { grid[x][y] = { type: 'I', rotation: 0, connected: false, isPath: false }; } }
+        var currX = startCol, currY = 0, path = [{x:currX, y:currY}]; grid[currX][currY].isPath = true; var loop1 = 0;
+        while(currY < gridRows - 1 && loop1++ < 200) {
+            var pM = []; pM.push({dx:0, dy:1}); if(currX > 0 && !isVisited(path, currX-1, currY)) pM.push({dx:-1, dy:0}); if(currX < gridCols - 1 && !isVisited(path, currX+1, currY)) pM.push({dx:1, dy:0});
+            var move; var wantDir = (endCol > currX) ? 1 : (endCol < currX ? -1 : 0);
+            if(Math.random() < 0.4) { move = {dx:0, dy:1}; } else { var hM = pM.filter(m => m.dy === 0); if(hM.length > 0) { var bM = hM.find(m => m.dx === wantDir); move = bM ? bM : hM[Math.floor(Math.random() * hM.length)]; } else move = {dx:0, dy:1}; }
+            currX += move.dx; currY += move.dy; path.push({x:currX, y:currY}); grid[currX][currY].isPath = true;
+        }
+        var loop2 = 0; while(currX !== endCol && loop2++ < 200) { currX += (endCol > currX) ? 1 : -1; path.push({x:currX, y:currY}); grid[currX][currY].isPath = true; }
+        for(var i=0; i<path.length; i++) { var curr = path[i]; var prev = (i>0) ? path[i-1] : {x:startCol, y:-1}; var next = (i<path.length-1) ? path[i+1] : {x:endCol, y:gridRows}; setPipeType(curr.x, curr.y, getDir(curr, prev), getDir(curr, next)); }
+        for(var x=0; x<gridCols; x++) for(var y=0; y<gridRows; y++) { if(!grid[x][y].isPath) grid[x][y].type = Math.random() < 0.5 ? 'I' : 'L'; grid[x][y].rotation = Math.floor(Math.random() * 4) * 90; }
+    }
+    function isVisited(path, x, y) { return path.some(p => p.x === x && p.y === y); }
+    function getDir(curr, target) { if(target.x < curr.x) return 'left'; if(target.x > curr.x) return 'right'; if(target.y < curr.y) return 'up'; if(target.y > curr.y) return 'down'; return 'none'; }
+    function setPipeType(x, y, d1, d2) { var dirs = [d1, d2].sort(); var type = 'L'; if((dirs[0]==='left' && dirs[1]==='right') || (dirs[0]==='down' && dirs[1]==='up')) type = 'I'; grid[x][y].type = type; }
+    function checkConnection() {
+        for(var x=0; x<gridCols; x++) for(var y=0; y<gridRows; y++) grid[x][y].connected = false;
+        if(!isOpen(startCol, 0, 'up')) return null; 
+        var queue = [{x:startCol, y:0, path:[{x:startCol, y:0}]}]; grid[startCol][0].connected = true; var loop3 = 0;
+        while(queue.length > 0 && loop3++ < 1000) {
+            var curr = queue.shift(); if(curr.x === endCol && curr.y === gridRows - 1) { if(isOpen(curr.x, curr.y, 'down')) return curr.path; }
+            var dirs = [{dx:0, dy:-1, dir:'up', opp:'down'}, {dx:0, dy:1, dir:'down', opp:'up'}, {dx:-1, dy:0, dir:'left', opp:'right'}, {dx:1, dy:0, dir:'right', opp:'left'}];
+            for(var d of dirs) { var nx = curr.x + d.dx; var ny = curr.y + d.dy; if(nx>=0 && nx<gridCols && ny>=0 && ny<gridRows) { if(!grid[nx][ny].connected && isOpen(curr.x, curr.y, d.dir) && isOpen(nx, ny, d.opp)) { grid[nx][ny].connected = true; var newPath = curr.path.slice(); newPath.push({x:nx, y:ny}); queue.push({x:nx, y:ny, path:newPath}); } } }
+        } return null;
+    }
+    function isOpen(x, y, dir) { var t = grid[x][y]; var rot = t.rotation % 360; var c = {t:false, r:false, b:false, l:false}; if (t.type === 'I') { if (rot === 0 || rot === 180) { c.l=true; c.r=true; } else { c.t=true; c.b=true; } } else { if (rot === 0) { c.r=true; c.b=true; } else if (rot === 90) { c.b=true; c.l=true; } else if (rot === 180) { c.l=true; c.t=true; } else if (rot === 270) { c.t=true; c.r=true; } } if(dir==='up') return c.t; if(dir==='right') return c.r; if(dir==='down') return c.b; if(dir==='left') return c.l; return false; }
+    function updatePipePuzzle() {
+        if(isPipeSolved) { solveAnimTimer++; var totalTiles = solvedPath.length > 0 ? solvedPath.length : gridRows; if (solveAnimTimer > totalTiles * 10 + 60 || solveAnimTimer > 180) levelUpPipeGame(); return; }
+        frameCount++; if (frameCount % 60 === 0) { gameTimeLeft--; document.getElementById('timerVal').innerText = gameTimeLeft; if (gameTimeLeft <= 0) gameOver("시간 초과!", "온수 공급 실패"); }
+        var path = checkConnection(); if(path) { isPipeSolved = true; solvedPath = path; solveAnimTimer = 0; Sound.score(); }
+        if(isHinting) { hintTimer--; if(hintTimer <= 0) isHinting = false; }
+    }
+    function levelUpPipeGame() { 
+        score += 1000; currentLevel++; if(currentLevel > 38) { gameClear(); return; } 
+        gameTimeLeft = Math.max(10, 30 - Math.floor((currentLevel - 1) / 10) * 5); showLevelMsg(); 
+        document.getElementById('lvlVal').innerText = currentLevel; document.getElementById('timerVal').innerText = gameTimeLeft;
+        initPipeLevel(); 
+    }
+    function drawConnectors(x1, y1, x2, y2, isStart) { 
+        var thick = Math.max(6, cellSize * 0.3); ctx.lineWidth = thick; ctx.lineCap = 'round'; ctx.strokeStyle = '#7f8c8d'; var midY = (y1 + y2) / 2; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1, midY); ctx.lineTo(x2, midY); ctx.lineTo(x2, y2); ctx.stroke(); 
+        if(isPipeSolved) { ctx.strokeStyle = '#3498db'; ctx.lineWidth = thick * 0.7; var shouldDraw = false; var totalTiles = solvedPath.length; if(isStart) { if(solveAnimTimer > 0) shouldDraw = true; } else { if(solveAnimTimer > totalTiles * 10) shouldDraw = true; } if(shouldDraw) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1, midY); ctx.lineTo(x2, midY); ctx.lineTo(x2, y2); ctx.stroke(); } } 
+    }
+    function drawPipePuzzle() {
+        ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'; drawRoundRect(ctx, pipeOffsetX - 15, pipeOffsetY - 15, gridCols * cellSize + 30, gridRows * cellSize + 30, 15); ctx.fill();
+        var startX = pipeOffsetX + startCol*cellSize + cellSize/2; var endX = pipeOffsetX + endCol*cellSize + cellSize/2;
+        var topY = pipeOffsetY; var bottomY = pipeOffsetY + gridRows*cellSize; var incineratorY = pipeOffsetY - 90; var poolY = bottomY + 60; 
+        for(var x=0; x<gridCols; x++) for(var y=0; y<gridRows; y++) drawTile(x, y);
+        drawConnectors(canvas.width / 2, incineratorY + 50, startX, topY, true); drawConnectors(endX, bottomY, canvas.width / 2, poolY - 30, false);
+        drawValve(startX, topY, isPipeSolved); drawValve(endX, bottomY, isPipeSolved);
+        drawIncinerator(canvas.width / 2, incineratorY); drawPool(canvas.width / 2, poolY); 
+        ctx.fillStyle = (frameCount % 60 < 30) ? '#ffeb3b' : '#ff9800'; ctx.font = '30px Jua'; ctx.textAlign='center'; ctx.fillText("⬇️", startX, topY - 15); ctx.fillText("⬇️", endX, bottomY + 30);
+        drawLevelMessage();
+    }
+    function drawTile(gx, gy) { 
+        var tile = grid[gx][gy]; var cx = pipeOffsetX + gx*cellSize + cellSize/2; var cy = pipeOffsetY + gy*cellSize + cellSize/2; 
+        var size = Math.max(1, cellSize * 0.95); var thick = Math.max(1, cellSize * 0.35); 
+        ctx.save(); ctx.translate(cx, cy); ctx.rotate(tile.rotation * Math.PI / 180); 
+        try { var pipeGrad = ctx.createLinearGradient(-size/2, -thick/2, -size/2, thick/2); pipeGrad.addColorStop(0, '#7f8c8d'); pipeGrad.addColorStop(0.5, '#ecf0f1'); pipeGrad.addColorStop(1, '#7f8c8d'); ctx.fillStyle = pipeGrad; } catch(e) { ctx.fillStyle = '#95a5a6'; }
+        if(isHinting && tile.isPath) { ctx.shadowColor = "yellow"; ctx.shadowBlur = 20; } 
+        if(tile.type==='I') ctx.fillRect(-size/2, -thick/2, size, thick); else { ctx.beginPath(); ctx.moveTo(thick/2, size/2); ctx.lineTo(-thick/2, size/2); ctx.lineTo(-thick/2, -thick/2); ctx.lineTo(size/2, -thick/2); ctx.lineTo(size/2, thick/2); ctx.lineTo(thick/2, thick/2); ctx.closePath(); ctx.fill(); } 
+        ctx.fillStyle = '#34495e'; 
+        if(tile.type==='I') { ctx.fillRect(-size/2-2, -thick/2-2, 6, thick+4); ctx.fillRect(size/2-4, -thick/2-2, 6, thick+4); } else { ctx.fillRect(-thick/2-2, -thick/2-2, thick+4, 6); ctx.fillRect(-thick/2-2, size/2-4, thick+4, 6); ctx.fillRect(size/2-4, -thick/2-2, 6, thick+4); } 
+        if(tile.connected && isPipeSolved) { 
+            var pathIndex = -1; for(var i=0; i<solvedPath.length; i++) { if(solvedPath[i].x === gx && solvedPath[i].y === gy) { pathIndex = i; break; } } 
+            if(pathIndex !== -1) { 
+                var progress = Math.min(1, Math.max(0, (solveAnimTimer - pathIndex * 10) / 10)); 
+                if(progress > 0) { 
+                    try { var waterGrad = ctx.createLinearGradient(-size/2, -thick/2, -size/2, thick/2); waterGrad.addColorStop(0, '#2980b9'); waterGrad.addColorStop(0.5, '#6dd5ed'); waterGrad.addColorStop(1, '#2980b9'); ctx.fillStyle = waterGrad; ctx.shadowColor = '#00ffff'; ctx.shadowBlur = 10; } catch(e) { ctx.fillStyle = '#3498db'; }
+                    var wThick = thick * 0.6; 
+                    if(tile.type==='I') { ctx.fillRect(-size/2, -wThick/2, size * progress, wThick); } else { ctx.beginPath(); var w = wThick/2; var len = size/2 + w; var currentLen = len * progress; if (currentLen <= size/2 - w) { ctx.moveTo(-w, -w); ctx.lineTo(-w, -w + currentLen); ctx.lineTo(w, -w + currentLen); ctx.lineTo(w, -w); } else { ctx.moveTo(-w, -w); ctx.lineTo(-w, size/2); ctx.lineTo(w, size/2); ctx.lineTo(w, w); ctx.lineTo(-w + currentLen, w); ctx.lineTo(-w + currentLen, -w); } ctx.fill(); } 
+                } 
+            } 
+        } 
+        ctx.restore(); ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 1; ctx.strokeRect(pipeOffsetX + gx*cellSize, pipeOffsetY + gy*cellSize, cellSize, cellSize); 
+    }
+
+    // --- [3] 오염물질 제로 미션 (슈팅) 로직 ---
+    function updateShooter() {
+        var calculatedLevel = Math.floor(score / 200) + 1; 
+        if (calculatedLevel > currentLevel) { currentLevel = calculatedLevel; showLevelMsg(); document.getElementById('lvlVal').innerText = currentLevel; }
+        if (score >= nextHealScore) { if (pollutionLevel > 0) { pollutionLevel = Math.max(0, pollutionLevel - 20); document.getElementById('pollutionVal').innerText = pollutionLevel; createFloatingText(canvas.width/2, canvas.height/2, "❤️정화 완료!", "#2ecc71"); Sound.score(); } nextHealScore += 1000; }
+        frameCount++; if (frameCount % 480 === 0) spawnGate();
+        for (var i = gates.length - 1; i >= 0; i--) {
+            var g = gates[i]; g.y += 3; g.anim = (g.anim || 0) + 0.1; 
+            if (player.x < g.x + g.w && player.x + player.size > g.x && player.y < g.y + g.h && player.y + player.size > g.y) { applyGateEffect(g.effect); g.dead = true; } else if (g.y > canvas.height) { g.dead = true; }
+        }
+        gates = gates.filter(g => !g.dead);
+        if (frameCount % 10 === 0) { 
+            Sound.shoot(); var laserWidth = currentLevel>=6 ? 10 : (currentLevel>=3 ? 8 : 6); var laserColor = currentLevel>=6 ? '#9b59b6' : (currentLevel>=3 ? '#f1c40f' : '#00ffff'); 
+            var spreadAngle = 0.08; var totalAngle = (laserCount - 1) * spreadAngle; var startAngle = -Math.PI/2 - totalAngle / 2;
+            for(var k=0; k<laserCount; k++) { var cA = startAngle + (k * spreadAngle); bullets.push({ x: player.x + player.size/2, y: player.y, vx: Math.cos(cA)*25, vy: Math.sin(cA)*25, w: laserWidth, h: 60, angle: cA + Math.PI/2, color: laserColor, type: 'laser', life: 60 }); }
+        }
+        if (frameCount % 30 === 0 && missileCount > 0) {
+            for(var m=0; m<missileCount; m++) { bullets.push({ x: player.x + player.size/2, y: player.y, vx: (Math.random() - 0.5) * 15, vy: -5 - (Math.random() * 5), size: 15, speed: 8, color: '#ff6b81', type: 'missile', target: null, life: 60 }); }
+        }
+        var spawnRate = Math.max(20, Math.floor((80 - (currentLevel * 1.5) - ((laserCount+missileCount) * 4)) / 1.2)); 
+        if (frameCount % spawnRate === 0) {
+            var pType = pollutantTypes[Math.floor(Math.random() * pollutantTypes.length)]; var size = 60; var x = Math.random() * (canvas.width - size); var hp = Math.min(10, 1 + Math.floor((currentLevel - 1) / 2));
+            pollutants.push({ x: x, y: -size, size: size, text: pType.text, color: pType.color, name: pType.name, speed: Math.min(4.5, 1.5 + (currentLevel * 0.1) + (Math.random() * 1.0)), hp: hp, maxHp: hp, sway: (currentLevel >= 2) ? (Math.random() - 0.5) * Math.min(3, currentLevel * 0.3) : 0, startX: x, frameOffset: Math.random()*100, hitTimer: 0 });
+        }
+        for(var i = 0; i < shooterParticles.length; i++) { var p = shooterParticles[i]; p.x += p.vx; p.y += p.vy; p.life -= 0.05; if(p.life <= 0) p.dead = true; }
+        if(shooterParticles.length > 80) shooterParticles.splice(0, 20); shooterParticles = shooterParticles.filter(p => !p.dead);
+        for(var i = 0; i < floatingTexts.length; i++) { var ft = floatingTexts[i]; ft.y -= 1; ft.life -= 0.02; if(ft.life <= 0) ft.dead = true; } floatingTexts = floatingTexts.filter(ft => !ft.dead);
+        for (var i = 0; i < bullets.length; i++) {
+            var b = bullets[i]; 
+            if (b.type === 'missile') {
+                b.life--; if (b.life <= 0) { createExplosion(b.x, b.y, b.color); b.dead = true; continue; }
+                if (!b.target || b.target.dead || pollutants.indexOf(b.target) === -1) { b.target = findNearestPollutant(b); }
+                if (b.target) { var dx = b.target.x + b.target.size/2 - b.x; var dy = b.target.y + b.target.size/2 - b.y; var dist = Math.sqrt(dx*dx + dy*dy); b.vx += (dx/dist) * 1.5; b.vy += (dy/dist) * 1.5; var vel = Math.sqrt(b.vx*b.vx + b.vy*b.vy); if (vel > b.speed) { b.vx = (b.vx/vel)*b.speed; b.vy = (b.vy/vel)*b.speed; } b.angle = Math.atan2(b.vy, b.vx) + Math.PI/2; }
+            } else { b.life--; if (b.life <= 0) { b.dead = true; continue; } }
+            b.x += b.vx; b.y += b.vy; if (b.y + b.h < 0 || b.x < 0 || b.x > canvas.width || b.y > canvas.height) { b.dead = true; continue; }
+            var hit = false;
+            for (var j = 0; j < pollutants.length; j++) {
+                var p = pollutants[j]; if(p.dead) continue;
+                var dist = Math.sqrt(Math.pow(b.x - (p.x + p.size/2), 2) + Math.pow(b.y - (p.y + p.size/2), 2));
+                if (dist < p.size/2 + 20) {
+                    p.hp -= 1; if (p.hp <= 0) { score += 10; document.getElementById('scoreVal').innerText = score; createExplosion(p.x + p.size/2, p.y + p.size/2, p.color); p.dead = true; } else { p.hitTimer = 5; Sound.click(); }
+                    hit = true; break; 
+                }
+            } if (hit) b.dead = true;
+        }
+        for (var i = 0; i < pollutants.length; i++) {
+            var p = pollutants[i]; if(p.dead) continue; p.y += p.speed;
+            if (p.sway !== 0) { p.x = p.startX + Math.sin((frameCount + p.frameOffset) * 0.05) * (p.sway * 15); if (p.x < 0) p.x = 0; if (p.x > canvas.width - p.size) p.x = canvas.width - p.size; }
+            if (p.y > canvas.height) { pollutionLevel += 10; document.getElementById('pollutionVal').innerText = pollutionLevel; p.dead = true; if (pollutionLevel >= 100) { gameOver("대기 오염 경보!", "오염 허용치 초과!"); return; } }
+        }
+        bullets = bullets.filter(b => !b.dead); pollutants = pollutants.filter(p => !p.dead);
+    }
+    function findNearestPollutant(missile) { var minDst = 9999; var target = null; for(var p of pollutants) { if(p.dead) continue; var dst = Math.sqrt(Math.pow(p.x - missile.x, 2) + Math.pow(p.y - missile.y, 2)); if (dst < minDst && p.y < canvas.height) { minDst = dst; target = p; } } return target; }
+    function spawnGate() {
+        var types = [ { text: "✨ 무기 +1", color: "#3498db", effect: "plus1", border: "#2980b9" }, { text: "🔥 무기 x2", color: "#9b59b6", effect: "double", border: "#8e44ad" }, { text: "⚠️ 무기 -1", color: "#e74c3c", effect: "minus1", border: "#c0392b" }, { text: "☠️ 무기 ÷2", color: "#c0392b", effect: "half", border: "#922b21" } ];
+        var type = Math.random() > Math.min(0.5, 0.1 + (currentLevel * 0.03)) ? types[Math.floor(Math.random() * 2)] : types[Math.floor(Math.random() * 2) + 2];
+        gates.push({ x: Math.random() * (canvas.width - 130), y: -100, w: 130, h: 60, text: type.text, color: type.color, effect: type.effect, border: type.border, anim: Math.random() * Math.PI * 2 });
+    }
+    function applyGateEffect(effect) {
+        var cTotal = laserCount + missileCount; var nTotal = cTotal;
+        if (effect === "plus1") nTotal++; else if (effect === "double") nTotal *= 2; else if (effect === "minus1") nTotal--; else if (effect === "half") nTotal = Math.floor(nTotal / 2);
+        nTotal = Math.max(1, Math.min(8, nTotal)); if (nTotal <= 3) { laserCount = nTotal; missileCount = 0; } else { laserCount = 3; missileCount = nTotal - 3; }
+        var diff = nTotal - cTotal; createFloatingText(player.x, player.y - 50, diff >= 0 ? "POWER UP!" : "DOWN...", diff >= 0 ? "#2ecc71" : "#e74c3c");
+        if (diff >= 0) Sound.levelUp(); else Sound.error(); 
+    }
+    function createExplosion(x, y, color) { Sound.explosion(); shooterParticles.push({ type: 'wave', x: x, y: y, size: 10, life: 1.0, color: color }); for(var i=0; i<10; i++) shooterParticles.push({ type: 'spark', x: x, y: y, vx: (Math.random() - 0.5) * 15, vy: (Math.random() - 0.5) * 15, color: Math.random() < 0.5 ? color : '#ffffff', life: 1.0, size: Math.random() * 5 + 2 }); }
+    function createFloatingText(x, y, text, color) { floatingTexts.push({ x: x, y: y, text: text, color: color, life: 1.0 }); }
+    function drawShooter() {
+        ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = 'rgba(0, 0, 0, 0.3)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        drawCoolTurret(player.x, player.y, player.size);
+        for(var g of gates) {
+            ctx.save(); ctx.translate(g.x + g.w/2, g.y + Math.sin(g.anim) * 5 + g.h/2); ctx.shadowBlur = 15; ctx.shadowColor = g.color; 
+            var grad = ctx.createLinearGradient(-g.w/2, -g.h/2, g.w/2, g.h/2); grad.addColorStop(0, 'rgba(255, 255, 255, 0.9)'); grad.addColorStop(0.3, g.color); grad.addColorStop(1, g.border);
+            ctx.fillStyle = grad; drawRoundRect(ctx, -g.w/2, -g.h/2, g.w, g.h, 20); ctx.fill(); ctx.strokeStyle = "rgba(255,255,255,0.8)"; ctx.lineWidth = 3; ctx.stroke();
+            ctx.shadowBlur = 2; ctx.shadowColor = 'rgba(0,0,0,0.5)'; ctx.fillStyle = "white"; ctx.font = "bold 20px Jua"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(g.text, 0, 0); ctx.restore();
+        }
+        for(var b of bullets) {
+            ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.angle); 
+            if (b.type === 'laser') { ctx.globalAlpha = b.life / 60; ctx.shadowBlur = 10; ctx.shadowColor = b.color; ctx.fillStyle = b.color; ctx.fillRect(-b.w/2, 0, b.w, b.h); } 
+            else { ctx.shadowBlur = 10; ctx.shadowColor = '#ff6b81'; ctx.fillStyle = '#ff6b81'; ctx.beginPath(); ctx.moveTo(0, -10); ctx.lineTo(-5, 5); ctx.lineTo(0, 2); ctx.lineTo(5, 5); ctx.fill(); ctx.beginPath(); ctx.fillStyle='orange'; ctx.arc(0, 6, 3 + Math.random()*2, 0, Math.PI*2); ctx.fill(); }
+            ctx.restore();
+        } ctx.shadowBlur = 0; ctx.globalAlpha = 1.0;
+        ctx.globalCompositeOperation = 'lighter'; 
+        for(var part of shooterParticles) { ctx.globalAlpha = part.life; if (part.type === 'wave') { ctx.strokeStyle = part.color; ctx.lineWidth = 5 * part.life; ctx.beginPath(); ctx.arc(part.x, part.y, part.size + (1.0 - part.life) * 50, 0, Math.PI*2); ctx.stroke(); } else { ctx.fillStyle = part.color; ctx.beginPath(); ctx.arc(part.x, part.y, part.size, 0, Math.PI*2); ctx.fill(); } }
+        ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1.0;
+        for(var ft of floatingTexts) { ctx.globalAlpha = ft.life; ctx.fillStyle = ft.color; ctx.font = "bold 40px Jua"; ctx.textAlign = "center"; ctx.shadowColor = "black"; ctx.shadowBlur = 5; ctx.fillText(ft.text, ft.x, ft.y); ctx.shadowBlur = 0; } ctx.globalAlpha = 1.0;
+        for(var p of pollutants) {
+            ctx.save(); if (p.hitTimer > 0) { p.hitTimer--; ctx.globalAlpha = 0.5; ctx.fillStyle = 'white'; ctx.beginPath(); ctx.arc(p.x + p.size/2, p.y + p.size/2, p.size/2, 0, Math.PI*2); ctx.fill(); ctx.globalAlpha = 1.0; }
+            ctx.font = "bold " + (p.size * 0.6) + "px sans-serif"; ctx.fillStyle = p.color; ctx.shadowBlur = 5; ctx.shadowColor = p.color; ctx.fillText(p.text, p.x + p.size/2, p.y + p.size/2); ctx.font = "12px sans-serif"; ctx.fillStyle = "white"; ctx.shadowBlur = 0; ctx.fillText(p.name, p.x + p.size/2, p.y + p.size/2 + 20);
+            if (p.maxHp > 1) { var barW = p.size * 0.8; var barH = 6; ctx.fillStyle = "rgba(0,0,0,0.5)"; ctx.fillRect(p.x + p.size*0.1, p.y - 10, barW, barH); ctx.fillStyle = "#2ecc71"; ctx.fillRect(p.x + p.size*0.1, p.y - 10, barW * (p.hp / p.maxHp), barH); } ctx.restore();
+        }
+        drawLevelMessage();
+    }
+    function drawCoolTurret(x, y, size) {
+        var cx = x + size/2; var cy = y + size/2; ctx.save(); ctx.translate(cx, cy);
+        var coreColor = currentLevel>=10 ? '#e74c3c' : (currentLevel>=6 ? '#9b59b6' : (currentLevel>=3 ? '#f1c40f' : '#00ffff'));
+        var baseGrad = ctx.createLinearGradient(-30, 0, 30, 0); baseGrad.addColorStop(0, '#434343'); baseGrad.addColorStop(0.5, '#868f96'); baseGrad.addColorStop(1, '#434343'); ctx.fillStyle = baseGrad; ctx.beginPath(); ctx.arc(0, 20, 30, 0, Math.PI, true); ctx.fill();
+        var barrelGrad = ctx.createLinearGradient(-15, 0, 15, 0); barrelGrad.addColorStop(0, '#243949'); barrelGrad.addColorStop(0.5, '#517fa4'); barrelGrad.addColorStop(1, '#243949'); ctx.fillStyle = barrelGrad; ctx.fillRect(-12, -30, 24, 50);
+        ctx.shadowBlur = 20; ctx.shadowColor = coreColor; ctx.fillStyle = coreColor; ctx.beginPath(); ctx.arc(0, 0, 8, 0, Math.PI*2); ctx.fill(); ctx.strokeStyle = coreColor; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(0, -30, 12, 4, 0, 0, Math.PI*2); ctx.stroke();
+        if (missileCount > 0) { ctx.fillStyle = '#ff6b81'; ctx.fillRect(-35, 0, 10, 20); ctx.fillRect(25, 0, 10, 20); } ctx.restore();
+    }
+
+    // --- [4] 에코 정화 링크 (사천성) ---
+    function initSichuanLayout() {
+        var availableW = Math.max(100, canvas.width - 20); var availableH = Math.max(100, canvas.height - 250);
+        scTileSize = Math.max(20, Math.min(availableW / scCols, availableH / scRows) * 0.95);
+        scOffsetX = (canvas.width - (scTileSize * scCols)) / 2; scOffsetY = Math.max(80, 150 + (availableH - (scTileSize * scRows)) / 2);
+    }
+    function initSichuanLevel() {
+        var deck = []; for(var i=0; i<4; i++) for(var pair of scPairs) { deck.push({ id: pair.id, type: 'p', text: pair.p, color: pair.color }); deck.push({ id: pair.id, type: 'c', text: pair.c, color: pair.color }); }
+        deck.sort(() => Math.random() - 0.5); scGrid = []; for(var x=0; x<scCols; x++) { scGrid[x] = []; for(var y=0; y<scRows; y++) scGrid[x][y] = deck.pop(); }
+        scSelected = null; scPath = null; scHintMatch = null; scRemoving = null; if (!hasPossibleScMatch()) doScShuffle();
+    }
+    function isScEmpty(x, y) { return (x < 0 || x >= scCols || y < 0 || y >= scRows) ? true : scGrid[x][y] === null; }
+    function getScReachable(x, y) {
+        var pts = [{x:x, y:y}];
+        for(var i=y-1; i>=-1; i--) { if(isScEmpty(x,i)) pts.push({x:x,y:i}); else break; } for(var i=y+1; i<=scRows; i++) { if(isScEmpty(x,i)) pts.push({x:x,y:i}); else break; } 
+        for(var i=x-1; i>=-1; i--) { if(isScEmpty(i,y)) pts.push({x:i,y:y}); else break; } for(var i=x+1; i<=scCols; i++) { if(isScEmpty(i,y)) pts.push({x:i,y:y}); else break; } return pts;
+    }
+    function isScClearX(y, x1, x2) { for(var x = Math.min(x1, x2) + 1; x < Math.max(x1, x2); x++) if(!isScEmpty(x, y)) return false; return true; }
+    function isScClearY(x, y1, y2) { for(var y = Math.min(y1, y2) + 1; y < Math.max(y1, y2); y++) if(!isScEmpty(x, y)) return false; return true; }
+    function checkScMatch(x1, y1, x2, y2) {
+        var t1 = scGrid[x1][y1]; var t2 = scGrid[x2][y2]; if (!t1 || !t2 || t1.id !== t2.id || t1.type === t2.type) return null; 
+        var p1 = {x:x1, y:y1}; var p2 = {x:x2, y:y2}; var r1 = getScReachable(p1.x, p1.y); var r2 = getScReachable(p2.x, p2.y);
+        for(var l1 of r1) for(var l2 of r2) { if (l1.x === l2.x && isScClearY(l1.x, l1.y, l2.y)) return [p1, l1, l2, p2]; if (l1.y === l2.y && isScClearX(l1.y, l1.x, l2.x)) return [p1, l1, l2, p2]; } return null;
+    }
+    function hasPossibleScMatch() {
+        for(var x1=0; x1<scCols; x1++) for(var y1=0; y1<scRows; y1++) if(scGrid[x1][y1]) for(var x2=0; x2<scCols; x2++) for(var y2=0; y2<scRows; y2++) {
+            if(!scGrid[x2][y2] || (x1===x2 && y1===y2)) continue; var path = checkScMatch(x1, y1, x2, y2); if(path) return [ {x:x1,y:y1}, path, {x:x2,y:y2} ];
+        } return null;
+    }
+    function doScShuffle() {
+        var tiles = []; for(var x=0; x<scCols; x++) for(var y=0; y<scRows; y++) if(scGrid[x][y]) tiles.push(scGrid[x][y]); if(tiles.length === 0) return;
+        tiles.sort(() => Math.random() - 0.5); var idx = 0; for(var x=0; x<scCols; x++) for(var y=0; y<scRows; y++) if(scGrid[x][y] !== null) scGrid[x][y] = tiles[idx++];
+        if(!hasPossibleScMatch()) doScShuffle(); scHintMatch = null; createFloatingText(canvas.width/2, canvas.height/2, "🔄 섞기!", "#f1c40f");
+    }
+    function checkScWin() { for(var x=0; x<scCols; x++) for(var y=0; y<scRows; y++) if(scGrid[x][y]) return false; return true; }
+    function updateSichuan() {
+        frameCount++; if (frameCount % 60 === 0) { gameTimeLeft--; document.getElementById('timerVal').innerText = gameTimeLeft; if (gameTimeLeft <= 0) gameOver("시간 초과!", "정화 실패"); }
+        for(var i = 0; i < shooterParticles.length; i++) { var p = shooterParticles[i]; p.x += p.vx; p.y += p.vy; p.life -= 0.05; if(p.life <= 0) p.dead = true; } shooterParticles = shooterParticles.filter(p => !p.dead);
+        for(var i = 0; i < floatingTexts.length; i++) { var ft = floatingTexts[i]; ft.y -= 1; ft.life -= 0.02; if(ft.life <= 0) ft.dead = true; } floatingTexts = floatingTexts.filter(ft => !ft.dead);
+        if (scPathTimer > 0) {
+            scPathTimer--;
+            if (scPathTimer === 0) {
+                scPath = null;
+                if (scRemoving) {
+                    var t1 = scRemoving[0]; var t2 = scRemoving[1];
+                    if (scGrid[t1.x] && scGrid[t1.x][t1.y]) { createExplosion(scOffsetX + t1.x*scTileSize + scTileSize/2, scOffsetY + t1.y*scTileSize + scTileSize/2, scGrid[t1.x][t1.y].color); createExplosion(scOffsetX + t2.x*scTileSize + scTileSize/2, scOffsetY + t2.y*scTileSize + scTileSize/2, scGrid[t2.x][t2.y].color); scGrid[t1.x][t1.y] = null; scGrid[t2.x][t2.y] = null; }
+                    scRemoving = null; score += 50; document.getElementById('scoreVal').innerText = score;
+                }
+                if(checkScWin()) { score += 500; currentLevel++; gameTimeLeft = Math.max(15, 65 - (currentLevel * 5)); document.getElementById('lvlVal').innerText = currentLevel; document.getElementById('timerVal').innerText = gameTimeLeft; document.getElementById('scoreVal').innerText = score; showLevelMsg(); initSichuanLevel(); } else if(!hasPossibleScMatch()) { doScShuffle(); }
+            }
+        } if (isHinting) { hintTimer--; if(hintTimer <= 0) { isHinting = false; scHintMatch = null; } }
+    }
+    function drawTileText(text, cx, cy) {
+        var lines = text.split('\n');
+        if (lines.length === 1) { ctx.font = "bold " + (scTileSize * (text.length > 4 ? 0.18 : 0.22)) + "px Jua"; ctx.fillText(text, cx, cy); } else { ctx.font = "bold " + (scTileSize * 0.2) + "px Jua"; ctx.fillText(lines[0], cx, cy - scTileSize * 0.12); ctx.font = "bold " + (scTileSize * 0.14) + "px Jua"; ctx.fillText(lines[1], cx, cy + scTileSize * 0.18); }
+    }
+    function drawSichuan() {
+        ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        for(var x=0; x<scCols; x++) for(var y=0; y<scRows; y++) {
+            var t = scGrid[x][y]; if(!t) continue;
+            var tx = scOffsetX + x*scTileSize; var ty = scOffsetY + y*scTileSize; var margin = 3; var tw = scTileSize - margin*2; var th = scTileSize - margin*2;
+            ctx.save(); ctx.translate(tx + margin, ty + margin);
+            ctx.fillStyle = '#bdc3c7'; drawRoundRect(ctx, 0, 4, tw, th, 8); ctx.fill(); ctx.fillStyle = '#ffffff'; drawRoundRect(ctx, 0, 0, tw, th, 8); ctx.fill(); ctx.globalAlpha = 0.15; ctx.fillStyle = t.color; drawRoundRect(ctx, 0, 0, tw, th, 8); ctx.fill(); ctx.globalAlpha = 1.0; ctx.strokeStyle = t.color; ctx.lineWidth = 3; ctx.stroke();
+            if (scSelected && scSelected.x === x && scSelected.y === y) { ctx.fillStyle = 'rgba(241, 196, 15, 0.4)'; drawRoundRect(ctx, 0, 0, tw, th, 8); ctx.fill(); ctx.strokeStyle = '#f1c40f'; ctx.lineWidth = 5; ctx.stroke(); }
+            if (isHinting && scHintMatch && ((scHintMatch[0].x===x && scHintMatch[0].y===y) || (scHintMatch[2].x===x && scHintMatch[2].y===y))) { if (frameCount % 30 < 15) { ctx.fillStyle = 'rgba(46, 204, 113, 0.5)'; drawRoundRect(ctx, 0, 0, tw, th, 8); ctx.fill(); } }
+            ctx.fillStyle = '#2c3e50'; ctx.textAlign = "center"; ctx.textBaseline = "middle"; drawTileText(t.text, tw/2, th/2); ctx.restore();
+        }
+        if (scPath) { ctx.save(); ctx.strokeStyle = '#f1c40f'; ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.shadowColor = '#e67e22'; ctx.shadowBlur = 15; ctx.beginPath(); ctx.moveTo(scOffsetX + scPath[0].x*scTileSize + scTileSize/2, scOffsetY + scPath[0].y*scTileSize + scTileSize/2); for(var i=1; i<scPath.length; i++) { ctx.lineTo(scOffsetX + scPath[i].x*scTileSize + scTileSize/2, scOffsetY + scPath[i].y*scTileSize + scTileSize/2); } ctx.stroke(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 3; ctx.shadowBlur = 0; ctx.stroke(); ctx.restore(); }
+        ctx.globalCompositeOperation = 'lighter'; for(var part of shooterParticles) { ctx.globalAlpha = part.life; if (part.type === 'wave') { ctx.strokeStyle = part.color; ctx.lineWidth = 5 * part.life; ctx.beginPath(); ctx.arc(part.x, part.y, part.size + (1.0 - part.life) * 50, 0, Math.PI*2); ctx.stroke(); } else { ctx.fillStyle = part.color; ctx.beginPath(); ctx.arc(part.x, part.y, part.size, 0, Math.PI*2); ctx.fill(); } } ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1.0;
+        for(var ft of floatingTexts) { ctx.globalAlpha = ft.life; ctx.fillStyle = ft.color; ctx.font = "bold 40px Jua"; ctx.textAlign = "center"; ctx.shadowColor = "black"; ctx.shadowBlur = 5; ctx.fillText(ft.text, ft.x, ft.y); ctx.shadowBlur = 0; } ctx.globalAlpha = 1.0;
+        drawLevelMessage();
+    }
+
+    function showLevelMsg() { Sound.levelUp(); showLevelMessageTimer = 50; }
+    function drawLevelMessage() { if (showLevelMessageTimer > 0) { showLevelMessageTimer--; ctx.save(); ctx.font = 'bold 40px Jua'; ctx.fillStyle = '#ffeb3b'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.strokeStyle = 'black'; ctx.lineWidth = 4; var yPos = canvas.height * 0.2; ctx.strokeText("⚡ LEVEL UP! ⚡", canvas.width/2, yPos); ctx.fillText("⚡ LEVEL UP! ⚡", canvas.width/2, yPos); ctx.restore(); } }
+    function showHint() { 
+        if(isHinting) return; 
+        if (currentGameMode === 'pipe') { isHinting = true; hintTimer = 60; } 
+        else if (currentGameMode === 'sichuan') { var match = hasPossibleScMatch(); if(match) { scHintMatch = match; isHinting = true; hintTimer = 90; } else { doScShuffle(); } }
+    }
+
+    // ==========================================
+    // ✋ 통합 조작(터치/마우스) 로직
+    // ==========================================
+    var isDragging = false; var dragOffsetX = 0;
+
+    function handleInputStart(x, y) { 
+        if (!gameRunning) return; 
+        if (currentGameMode === 'sorting' || currentGameMode === 'shooter') { 
+            // 💡 화면 어디를 터치해도 바구니/우주선이 손가락 위치로 부드럽게 오도록 설정
+            isDragging = true; 
+            player.x = x - player.size / 2;
+            if (player.x < 0) player.x = 0;
+            if (player.x > canvas.width - player.size) player.x = canvas.width - player.size;
+        } else if (currentGameMode === 'pipe') { 
+            if (x >= pipeOffsetX && x < pipeOffsetX + gridCols*cellSize && y >= pipeOffsetY && y < pipeOffsetY + gridRows*cellSize) { 
+                var gx = Math.floor((x - pipeOffsetX) / cellSize); var gy = Math.floor((y - pipeOffsetY) / cellSize); grid[gx][gy].rotation = (grid[gx][gy].rotation + 90) % 360; Sound.click(); 
+            } 
+        } else if (currentGameMode === 'sichuan') {
+            if(scPathTimer > 0) return; 
+            var gx = Math.floor((x - scOffsetX) / scTileSize); var gy = Math.floor((y - scOffsetY) / scTileSize);
+            if (gx >= 0 && gx < scCols && gy >= 0 && gy < scRows) {
+                if (scGrid[gx][gy]) { 
+                    Sound.click(); 
+                    if (!scSelected) { scSelected = {x:gx, y:gy}; } 
+                    else {
+                        if (scSelected.x === gx && scSelected.y === gy) { scSelected = null; } 
+                        else {
+                            var path = checkScMatch(scSelected.x, scSelected.y, gx, gy);
+                            if (path) { scPath = path; scPathTimer = 15; scRemoving = [scSelected, {x:gx, y:gy}]; scSelected = null; isHinting = false; Sound.score(); } 
+                            else { scSelected = {x:gx, y:gy}; }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    function handleInputMove(x, y) {
+        if (!gameRunning) return;
+        if ((currentGameMode === 'sorting' || currentGameMode === 'shooter') && isDragging) {
+            player.x = x - player.size / 2; // 드래그 시 항상 중앙에 고정
+            if (player.x < 0) player.x = 0;
+            if (player.x > canvas.width - player.size) player.x = canvas.width - player.size;
+        }
+    }
+    
+    function stopInput() { isDragging = false; }
+    
+    window.addEventListener('mousedown', function(e) { handleInputStart(e.clientX, e.clientY); });
+    window.addEventListener('mousemove', function(e) { handleInputMove(e.clientX, e.clientY); });
+    window.addEventListener('mouseup', stopInput);
+    window.addEventListener('touchstart', function(e) { if (!gameRunning) return; var t = e.touches[0]; handleInputStart(t.clientX, t.clientY); }, {passive: false});
+    window.addEventListener('touchmove', function(e) { if (!gameRunning) return; e.preventDefault(); var t = e.touches[0]; handleInputMove(t.clientX, t.clientY); }, {passive: false});
+    window.addEventListener('touchend', stopInput);
+
+    // ==========================================
+    // 🏆 랭킹 및 게임오버
+    // ==========================================
+    function saveScore(newScore) { 
+        var key = 'gimpoScores'; if (currentGameMode === 'pipe') key = 'gimpoPipeScores'; if (currentGameMode === 'shooter') key = 'gimpoShooterScores'; if (currentGameMode === 'sichuan') key = 'gimpoSichuanScores';
+        var scores = JSON.parse(safeGetItem(key) || "[]"); var dateStr = new Date().toLocaleDateString(); 
+        scores.push({ score: newScore, date: dateStr, level: currentLevel }); scores.sort(function(a, b) { return b.score - a.score; }); scores = scores.slice(0, 10); safeSetItem(key, JSON.stringify(scores)); 
+    }
+    function showRanking() { 
+        var key = 'gimpoScores'; if (currentGameMode === 'pipe') key = 'gimpoPipeScores'; if (currentGameMode === 'shooter') key = 'gimpoShooterScores'; if (currentGameMode === 'sichuan') key = 'gimpoSichuanScores';
+        var scores = JSON.parse(safeGetItem(key) || "[]"); var html = ""; 
+        if (scores.length === 0) html = "<div style='text-align:center; padding:10px;'>기록 없음</div>"; 
+        else { var len = Math.min(scores.length, 3); for (var i = 0; i < len; i++) { var text = scores[i].score + "점"; if ((currentGameMode === 'pipe' || currentGameMode === 'sichuan') && scores[i].level) text = "Lv." + scores[i].level + " (" + scores[i].score + ")"; html += "<div class='rank-item'><span>" + (i+1) + "위</span><span>" + text + "</span></div>"; } } 
+        rankBoard.innerHTML = html; 
+    }
+    function showRandomEcoQuote() { var qArea = document.getElementById('eco-quote'); if(qArea) { qArea.innerHTML = CONFIG.ecoQuotes[Math.floor(Math.random() * CONFIG.ecoQuotes.length)]; } }
+
+    function gameClear() { 
+        document.getElementById('ingame-home-btn').style.display = 'none'; gameRunning = false; score += 10000; saveScore(score); showRanking(); showRandomEcoQuote();
+        uiLayer.style.display = 'flex'; uiLayer.style.background = 'rgba(0,0,0,0.95)'; gameTitle.innerText = "🏆 명예의 전당 등극! 🏆"; 
+        gameGuide.innerHTML = "<span style='color:#f1c40f; font-size:28px; font-weight:bold;'>축하합니다!</span><br>모든 레벨을 클리어했습니다!<br>최종 점수: " + score; 
+        rankArea.style.display = 'flex'; startBtnArea.style.display = 'none'; gameoverBtnArea.style.display = 'block'; 
+    }
+
+    function gameOver(reason1, reason2) { 
+        document.getElementById('ingame-home-btn').style.display = 'none'; Sound.error(); gameRunning = false; if(currentGameMode === 'pipe' || currentGameMode === 'sichuan') score += (currentLevel - 1) * 1000; 
+        saveScore(score); showRanking(); showRandomEcoQuote();
+        uiLayer.style.display = 'flex'; uiLayer.style.background = 'rgba(0,0,0,0.95)'; 
+        var titleText = "게임 오버"; if(currentGameMode === 'sorting') titleText = "혼입 적발!"; else if(currentGameMode === 'pipe') titleText = "온수 공급 실패"; else if(currentGameMode === 'shooter') titleText = "환경 오염 발생"; else if(currentGameMode === 'sichuan') titleText = "정화 시간 초과";
+        gameTitle.innerText = "🚨 " + titleText; 
+        gameGuide.innerHTML = "<span style='color:#ff4444; font-size:24px; font-weight:bold;'>[" + reason1 + " " + reason2 + "]</span><br><br>최종 점수: " + score; 
+        rankArea.style.display = 'flex'; startBtnArea.style.display = 'none'; gameoverBtnArea.style.display = 'block'; 
+    }
+
+    // 서비스 워커 (캐시 강제 갱신용 버전 v5)
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js?v=5').then(reg => { reg.update(); });
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => { if (!refreshing) { window.location.reload(); refreshing = true; } });
+        caches.keys().then(cacheNames => { cacheNames.forEach(cacheName => { if (cacheName !== 'gimpo-center-v5') { caches.delete(cacheName); } }); });
+    }
+</script>
+</body>
+</html>
