@@ -45,7 +45,6 @@
         }
         #logoCanvas { margin-bottom: 10px; margin-top: 20px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2)); }
 
-        /* [신규] 주제가 말풍선 애니메이션 버튼 */
         .theme-song-bubble {
             position: absolute;
             top: -15px;
@@ -230,7 +229,7 @@
         <canvas id="logoCanvas" width="200" height="160"></canvas>
         
         <div style="position: relative;">
-            <h1 class="main-logo" style="margin-bottom: 20px;">김포시<br>자원회수센터</h1>
+            <h1 class="main-logo" style="margin-bottom: 20px;">김포시<br>자원화센터</h1>
             <div class="theme-song-bubble" onclick="Sound.click(); window.open('https://youtube.com/shorts/F0coCr8baLE?si=Uw08HIWJy2EaY-od', '_blank')">
                 🎵 주제가
             </div>
@@ -294,11 +293,11 @@
         <div style="height: 50px;"></div>
     </div>
 
-    <div id="process-page" class="page" style="justify-content: flex-start; padding-top: 100px;">
+    <div id="process-page" class="page" style="justify-content: flex-start; padding-top: 140px;">
         <button class="btn btn-home" onclick="Sound.click(); goPage('promo')">🔙 뒤로</button>
         
-        <div class="content-title" style="margin-bottom:5px;">🏭 자원회수센터 세부 공정</div>
-        <div style="font-size:15px; color:#fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); margin-bottom:15px;">(각 단계를 터치하면 설명이 뿅! 나옵니다)</div>
+        <div class="content-title" style="margin-bottom:15px; margin-top: 15px;">🏭 자원화센터 세부 공정</div>
+        <div style="font-size:15px; color:#fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); margin-bottom:25px;">(각 단계를 터치하면 설명이 뿅! 나옵니다)</div>
         
         <div class="process-flow-container" style="width:100%; display:flex; flex-direction:column; align-items:center; padding-bottom: 100px;">
             
@@ -326,7 +325,7 @@
             <div class="process-step" style="border-color: #2ecc71;" onclick="toggleBubble(this, '#2ecc71')">
                 <div class="step-icon">🧪💦</div>
                 <div class="step-title">4. 반건식 반응탑</div>
-                <div class="speech-bubble">액상소석회를 뿜어서, 연소가스 속 나쁜 산성 가스(염화수소, 황산화물 등)를 중화시키는 1차 정화 구역입니다.</div>
+                <div class="speech-bubble">소석회(약품) 슬러리를 뿜어서, 연소가스 속 나쁜 산성 가스(염화수소, 황산화물 등)를 중화시키는 1차 정화 구역입니다.</div>
             </div>
             <div class="step-arrow">⬇️</div>
             
@@ -385,15 +384,15 @@
     // =========================================================================
     const CONFIG = {
         noticeText: `
-            <p>✅ <b style="color:#27ae60;">반입 가능 폐기물 (소각용):</b><br>종량제 봉투에 담긴 가연성 쓰레기, 재사용 불가능한 헌옷 등 타는 쓰레기.</p><br>
-            <p>❌ <b style="color:#c0392b;">반입 불가 폐기물:</b><br>음식물류, 재활용품(종이류, 캔, 병, 플라스틱), 사업장폐기물, 폭발성 위험물.</p>
+            <p>✅ <b style="color:#27ae60;">반입 가능 폐기물 (소각용):</b><br>종량제 봉투에 담긴 가연성 쓰레기, 헌옷, 신발, 가방 등 타는 쓰레기.</p><br>
+            <p>❌ <b style="color:#c0392b;">반입 불가 폐기물:</b><br>음식물류, 재활용품(캔, 병, 플라스틱), 불연성(도자기, 유리), 폭발성 위험물.</p>
             <br><hr style="border: 1px dashed #ccc; margin: 10px 0;"><br>
             <p style="font-size: 16px; line-height: 1.8;">📞 <b style="color:#2c3e50;">문의처 안내:</b><br>
             <span style="font-size:14px; color:#7f8c8d;">(번호를 터치하면 바로 통화가 연결됩니다)</span><br><br>
             - <b>폐기물 허가/배출:</b> 김포시청 자원순환과<br>
-              👉 <a href="tel:031-980-2767" style="color:#2980b9; font-weight:bold; text-decoration:none; background:#ecf0f1; padding:4px 10px; border-radius:8px; display:inline-block; margin-top:5px; margin-bottom:10px;">☎ 031-980-2767</a><br>
+              👉 <a href="tel:031-980-2761" style="color:#2980b9; font-weight:bold; text-decoration:none; background:#ecf0f1; padding:4px 10px; border-radius:8px; display:inline-block; margin-top:5px; margin-bottom:10px;">☎ 031-980-2761</a><br>
             - <b>크린넷 키 구입:</b> 브니엘네이처<br>
-              👉 <a href="tel:031-981-6081" style="color:#2980b9; font-weight:bold; text-decoration:none; background:#ecf0f1; padding:4px 10px; border-radius:8px; display:inline-block; margin-top:5px;">☎ 031-981-6081</a></p>
+              👉 <a href="tel:032-566-0010" style="color:#2980b9; font-weight:bold; text-decoration:none; background:#ecf0f1; padding:4px 10px; border-radius:8px; display:inline-block; margin-top:5px;">☎ 032-566-0010</a></p>
         `,
         promoText: `
             <p>🌱 <b style="color:#27ae60;">친환경 소각 기술:</b><br>최첨단 오염 방지 시설을 통해 다이옥신 등 유해 물질을 완벽하게 제거합니다.</p><br>
@@ -408,7 +407,7 @@
         `,
         ecoQuotes: [
             "🌱 환경보호는 나 자신부터",
-            "🏭 자원회수센터는 깨끗한 김포를 위해 항상 노력합니다",
+            "🏭 자원화센터는 깨끗한 김포를 위해 항상 노력합니다",
             "♻️ 올바른 분리수거는 미래를 위한 첫 노력",
             "💧 아껴 쓴 자원, 후대에게 물려줄 소중한 유산입니다",
             "✨ 깨끗한 김포, 맑은 에너지! 우리가 만들어갑니다"
@@ -786,7 +785,7 @@
         
         ctx.fillStyle = '#1e272e'; drawRoundRect(ctx, -65, 35, 130, 28, 14); ctx.fill();
         ctx.strokeStyle = '#f1c40f'; ctx.lineWidth = 2; ctx.stroke();
-        ctx.fillStyle = '#ffffff'; ctx.font = 'bold 16px Jua'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText("🔥자원회수센터", 0, 49); 
+        ctx.fillStyle = '#ffffff'; ctx.font = 'bold 16px Jua'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText("🔥자원화센터", 0, 49); 
         ctx.restore(); 
     }
     
