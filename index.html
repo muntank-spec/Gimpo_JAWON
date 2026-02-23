@@ -937,6 +937,10 @@
     // ✋ 통합 조작(터치/마우스) 로직
     // ==========================================
     var isDragging = false; var dragOffsetX = 0;
+    
+    // 💡 쿨타임용 변수 추가
+    var lastClickTime = 0; 
+    var clickCooldown = 150; // 💡 0.15초 무시
 
     function handleInputStart(x, y) { 
         if (!gameRunning) return; 
@@ -953,14 +957,23 @@
                 if (player.y > canvas.height - player.size) player.y = canvas.height - player.size;
             }
         } else if (currentGameMode === 'pipe') { 
+            var now = Date.now(); // 💡 쿨타임 체크
+            if (now - lastClickTime < clickCooldown) return;
+
             if (x >= pipeOffsetX && x < pipeOffsetX + gridCols*cellSize && y >= pipeOffsetY && y < pipeOffsetY + gridRows*cellSize) { 
+                lastClickTime = now; // 💡 클릭 시간 갱신
                 var gx = Math.floor((x - pipeOffsetX) / cellSize); var gy = Math.floor((y - pipeOffsetY) / cellSize); grid[gx][gy].rotation = (grid[gx][gy].rotation + 90) % 360; Sound.click(); 
             } 
         } else if (currentGameMode === 'sichuan') {
             if(scPathTimer > 0) return; 
+            
+            var now = Date.now(); // 💡 쿨타임 체크
+            if (now - lastClickTime < clickCooldown) return;
+
             var gx = Math.floor((x - scOffsetX) / scTileSize); var gy = Math.floor((y - scOffsetY) / scTileSize);
             if (gx >= 0 && gx < scCols && gy >= 0 && gy < scRows) {
                 if (scGrid[gx][gy]) { 
+                    lastClickTime = now; // 💡 클릭 시간 갱신
                     Sound.click(); 
                     if (!scSelected) { scSelected = {x:gx, y:gy}; } 
                     else {
@@ -1057,7 +1070,7 @@
         navigator.serviceWorker.register('./service-worker.js?v=5').then(reg => { reg.update(); });
         let refreshing = false;
         navigator.serviceWorker.addEventListener('controllerchange', () => { if (!refreshing) { window.location.reload(); refreshing = true; } });
-        caches.keys().then(cacheNames => { cacheNames.forEach(cacheName => { if (cacheName !== 'gimpo-center-v1') { caches.delete(cacheName); } }); });
+        caches.keys().then(cacheNames => { cacheNames.forEach(cacheName => { if (cacheName !== 'gimpo-center-v2') { caches.delete(cacheName); } }); });
     }
 </script>
 </body>
